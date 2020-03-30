@@ -1,7 +1,6 @@
 package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.User;
-import com.brena.ecommerce.repositories.UserRepo;
 import com.brena.ecommerce.services.UserServ;
 import com.brena.ecommerce.validator.UserValidator;
 import org.springframework.stereotype.Controller;
@@ -16,13 +15,10 @@ import javax.validation.Valid;
 public class RegisterLoginController {
     private final UserServ userServ;
     private final UserValidator userValidator;
-    private final UserRepo userRepo;
 
-
-    public RegisterLoginController(UserServ userServ, UserValidator userValidator, UserRepo userRepo) {
+    public RegisterLoginController(UserServ userServ, UserValidator userValidator) {
         this.userServ = userServ;
         this.userValidator = userValidator;
-        this.userRepo = userRepo;
     }
 
     @GetMapping("/")

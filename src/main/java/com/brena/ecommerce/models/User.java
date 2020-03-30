@@ -33,6 +33,9 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Item> items;
+
     public User() {
     }
 
@@ -130,6 +133,14 @@ public class User {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     @PrePersist
