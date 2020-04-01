@@ -21,7 +21,7 @@ public class User {
     @Size(min = 2, max = 2, message="A STATE is required")
     private String state;
     @Size(min = 5, max = 5, message="A ZIP CODE is required")
-    private String zip;
+    private Integer zip;
     @Email(message="Email must be valid")
     private String email;
     @Size(min=8, message="Password must have a minimum of 8 characters")
@@ -87,11 +87,11 @@ public class User {
         this.state = state;
     }
 
-    public String getZip() {
+    public Integer getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public void setZip(Integer zip) {
         this.zip = zip;
     }
 

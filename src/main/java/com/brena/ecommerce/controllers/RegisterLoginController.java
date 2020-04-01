@@ -60,7 +60,7 @@ public class RegisterLoginController {
     }
 
     @GetMapping("/dashboard")
-    public String home(HttpSession session, Model model) {
+    public String dashboard(HttpSession session, Model model) {
         Long userId = (Long) session.getAttribute("userId");
         User i = userServ.findUserById(userId);
         model.addAttribute("user", i);

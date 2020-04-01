@@ -1,6 +1,7 @@
 package com.brena.ecommerce.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
@@ -9,12 +10,15 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 3, max = 100, message="A TITLE is required and it must contain 3 - 100 characters")
     private String title;
-    private String desc;
-    private int price;
+    @Size(min = 3, max = 100, message="A DESCRIPTION is required and it must contain 3 - 100 characters")
+    private String description;
+    private Integer price;
     @Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
@@ -38,19 +42,19 @@ public class Item {
         this.title = title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String desc) {
+        this.description = desc;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

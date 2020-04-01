@@ -4,6 +4,8 @@ import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.repositories.UserRepo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +23,11 @@ public class UserServ {
         return userRepo.save(user);
     }
 
+    // update a user
+    public User saveUser(User user) {
+        return userRepo.save(user);
+    }
+
     // find user by email
     public User findByEmail(String email) {
         return userRepo.findByEmail(email);
@@ -30,6 +37,11 @@ public class UserServ {
     public User findUserById(Long id) {
         Optional<User> user = userRepo.findById(id);
         return user.orElse(null);
+    }
+
+    // show all users
+    public List<User> allUsers() {
+        return userRepo.findAll();
     }
 
     // authenticate user
@@ -43,5 +55,10 @@ public class UserServ {
             // if the passwords match, return true, else, return false
             return BCrypt.checkpw(password, user.getPassword());
         }
+    }
+
+    // deletes a user
+    public void deleteUser(Long id) {
+        userRepo.deleteById(id);
     }
 }
