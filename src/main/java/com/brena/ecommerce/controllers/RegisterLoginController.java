@@ -21,11 +21,6 @@ public class RegisterLoginController {
         this.userValidator = userValidator;
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "index.jsp";
-    }
-
     @GetMapping("/registration")
     public String register(@ModelAttribute("user") User user) {
         return "register.jsp";
