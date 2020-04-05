@@ -4,7 +4,7 @@
 
 <html>
     <head>
-        <title>Registration Page</title>
+        <title>Please Register</title>
     </head>
     <body>
         <h1>Register!</h1>
