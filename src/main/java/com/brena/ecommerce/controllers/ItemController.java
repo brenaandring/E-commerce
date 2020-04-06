@@ -34,7 +34,7 @@ public class ItemController {
     @PostMapping(value="/items")
     public String create(@Valid @ModelAttribute("item") Item item, BindingResult result) {
         if (result.hasErrors()) {
-            return "/items/new.jsp";
+            return "new.jsp";
         } else {
             itemServ.saveItem(item);
             return "redirect:/dashboard";
@@ -46,7 +46,7 @@ public class ItemController {
     public String showItem(@PathVariable("id") Long id, Model model) {
         Item item = itemServ.findItem(id);
         model.addAttribute("item", item);
-        return "/items/show.jsp";
+        return "show.jsp";
     }
 
     // edit an item
@@ -54,13 +54,13 @@ public class ItemController {
     public String editItem(@PathVariable("id") Long id, Model model) {
         Item item = itemServ.findItem(id);
         model.addAttribute("item", item);
-        return "/items/edit.jsp";
+        return "edit.jsp";
     }
 
     @PostMapping(value="/items/{id}")
     public String update(@Valid @ModelAttribute("item") Item item, BindingResult result) {
         if (result.hasErrors()) {
-            return "/items/edit.jsp";
+            return "edit.jsp";
         } else {
             itemServ.saveItem(item);
             return "redirect:/dashboard";
