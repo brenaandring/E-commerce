@@ -1,40 +1,33 @@
 package com.brena.ecommerce.models;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.util.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="users")
 public class User {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
-    @Size(min = 2, max = 100, message="A FIRST NAME is required and it must contain 2 - 100 characters")
-    private String firstName;
-    @Size(min = 2, max = 100, message="A LAST NAME is required and it must contain 2 - 100 characters")
-    private String lastName;
-    @Size(min = 4, max = 100, message="An ADDRESS is required and it must contain 4 - 100 characters")
-    private String address;
-    @Size(min = 2, max = 50, message="A CITY is required")
-    private String city;
-    @Size(min = 2, max = 2, message="A STATE is required")
-    private String state;
-    @Size(min = 5, max = 5, message="A ZIP CODE is required")
-    private Integer zip;
-    @Email(message="Email must be valid")
+
+    @Email
     private String email;
-    @Size(min=8, message="Password must have a minimum of 8 characters")
+    @Size(min=1)
+    private String firstName;
+    @Size(min=1)
+    private String lastName;
+    @Size(min=8)
     private String password;
+
     @Transient
-    @Size(min = 8, message = "Password did not match!")
     private String passwordConfirmation;
-    @Column(updatable=false)
+
     private Date createdAt;
     private Date updatedAt;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Item> items;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -54,6 +47,14 @@ public class User {
         this.id = id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -68,46 +69,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public Integer getZip() {
-        return zip;
-    }
-
-    public void setZip(Integer zip) {
-        this.zip = zip;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
@@ -142,16 +103,18 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public boolean isAdmin() {
+        List<Role> roles = this.getRoles();
+        for(Role role: roles) {
+            if(role.getName().equals("ROLE_ADMIN")){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setRoles(List<Role> roles) {
@@ -160,10 +123,11 @@ public class User {
 
     @PrePersist
     protected void onCreate(){
-        this.createdAt = new Date();
+        this.setCreatedAt(new Date());
     }
+
     @PreUpdate
     protected void onUpdate(){
-        this.updatedAt = new Date();
+        this.setUpdatedAt(new Date());
     }
 }

@@ -1,8 +1,11 @@
 package com.brena.ecommerce.services;
 
+import com.brena.ecommerce.models.Role;
 import com.brena.ecommerce.models.User;
+import com.brena.ecommerce.repositories.RoleRepo;
 import com.brena.ecommerce.repositories.UserRepo;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,27 +13,54 @@ import java.util.Optional;
 
 @Service
 public class UserServ {
-    private final UserRepo userRepo;
+    private UserRepo userRepo;
+    private RoleRepo roleRepo;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServ(UserRepo userRepo) {
+    public UserServ(UserRepo userRepo, RoleRepo roleRepo, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    // register user and hash their password
-    public User registerUser(User user) {
-        String hashed = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-        user.setPassword(hashed);
-        return userRepo.save(user);
+    // saves a user with only the user role
+    public void saveWithUserRole(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(roleRepo.findByName("ROLE_USER"));
+        userRepo.save(user);
+    }
+
+    // saves a user with only the admin role
+    public void saveUserWithAdminRole(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(roleRepo.findByName("ROLE_ADMIN"));
+        userRepo.save(user);
     }
 
     // update a user
-    public User saveUser(User user) {
+    public User updateUser(User user) {
         return userRepo.save(user);
     }
 
-    // find user by email
-    public User findByEmail(String email) {
+    // find user by username
+    public User findByUsername(String email) {
         return userRepo.findByEmail(email);
+    }
+
+    // admin
+    public Long countAdmins() {
+        List<User> users = (List<User>) userRepo.findAll();
+        Long count = (long) 0;
+        for(User user: users) {
+            List<Role> roles = user.getRoles();
+            for(Role role: roles){
+                if(role.getName().equals("ROLE_ADMIN")) {
+                    count ++;
+                }
+            }
+        }
+        return count;
+
     }
 
     // find user by id
@@ -42,19 +72,6 @@ public class UserServ {
     // show all users
     public List<User> allUsers() {
         return userRepo.findAll();
-    }
-
-    // authenticate user
-    public boolean authenticateUser(String email, String password) {
-        // first find the user by email
-        User user = userRepo.findByEmail(email);
-        // if we can't find it by email, return false
-        if(user == null) {
-            return false;
-        } else {
-            // if the passwords match, return true, else, return false
-            return BCrypt.checkpw(password, user.getPassword());
-        }
     }
 
     // deletes a user

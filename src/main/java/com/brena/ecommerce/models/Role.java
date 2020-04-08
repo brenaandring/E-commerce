@@ -1,20 +1,23 @@
 package com.brena.ecommerce.models;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="roles")
 public class Role {
+
     @Id
     @GeneratedValue
     private Long id;
+
     private String name;
 
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
-    public Role() {
+    public Role(){
     }
 
     public Long getId() {
@@ -40,6 +43,4 @@ public class Role {
     public void setUsers(List<User> users) {
         this.users = users;
     }
-
-
 }
