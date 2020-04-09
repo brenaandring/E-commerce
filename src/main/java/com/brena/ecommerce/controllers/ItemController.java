@@ -12,34 +12,34 @@ import java.util.List;
 
 @Controller
 public class ItemController {
-//    private final ItemServ itemServ;
-//
-//    public ItemController(ItemServ itemServ) {
-//        this.itemServ = itemServ;
-//    }
-//
-////    @GetMapping("/")
-////    public String index(Model model) {
-////        List<Item> item = itemServ.allItems();
-////        model.addAttribute("item", item);
-////        return "index.jsp";
-////    }
-//
-//    // create a new item
-//    @GetMapping("/items/new")
-//    public String newItem(@ModelAttribute("item") Item item) {
-//        return "new.jsp";
-//    }
-//
-//    @PostMapping(value="/items")
-//    public String create(@Valid @ModelAttribute("item") Item item, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "new.jsp";
-//        } else {
-//            itemServ.saveItem(item);
-//            return "redirect:/dashboard";
-//        }
-//    }
+    private ItemServ itemServ;
+
+    public ItemController(ItemServ itemServ) {
+        this.itemServ = itemServ;
+    }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        List<Item> item = itemServ.allItems();
+        model.addAttribute("item", item);
+        return "index.jsp";
+    }
+
+    // admin: create a new item
+    @GetMapping("/items/new")
+    public String newItem(@ModelAttribute("item") Item item) {
+        return "new.jsp";
+    }
+
+    @PostMapping(value="/items")
+    public String create(@Valid @ModelAttribute("item") Item item, BindingResult result) {
+        if (result.hasErrors()) {
+            return "new.jsp";
+        } else {
+            itemServ.saveItem(item);
+            return "redirect:/admin";
+        }
+    }
 //
 //    // show an item
 //    @GetMapping("/items/{id}")

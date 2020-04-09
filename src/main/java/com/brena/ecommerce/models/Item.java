@@ -15,6 +15,7 @@ public class Item {
     @Size(min = 3, max = 100, message="A DESCRIPTION is required and it must contain 3 - 100 characters")
     private String description;
     private Integer price;
+    private byte image;
     @Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;
@@ -46,8 +47,8 @@ public class Item {
         return description;
     }
 
-    public void setDescription(String desc) {
-        this.description = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getPrice() {
@@ -56,6 +57,14 @@ public class Item {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public byte getImage() {
+        return image;
+    }
+
+    public void setImage(byte image) {
+        this.image = image;
     }
 
     public Date getCreatedAt() {

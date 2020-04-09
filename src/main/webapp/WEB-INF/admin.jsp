@@ -14,5 +14,7 @@
             <input type="submit" value="Logout!" />
         </form>
 
+        <p><a href="/items/new">Add Item</a></p>
+
     </body>
 </html>

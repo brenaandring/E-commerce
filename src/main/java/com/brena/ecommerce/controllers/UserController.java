@@ -54,7 +54,7 @@ public class UserController {
         return "login.jsp";
     }
 
-    @RequestMapping(value = {"/", "dashboard"})
+    @RequestMapping("/dashboard")
     public String dashboard(Principal principal, Model model) {
         String username = principal.getName();
         User currentUser = userServ.findByUsername(username);
