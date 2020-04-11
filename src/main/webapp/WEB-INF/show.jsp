@@ -1,3 +1,5 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -5,16 +7,20 @@
     </head>
     <body>
         <h1>Product Information</h1>
-        <a href="/admin">Admin Dashboard</a>
+
+        <sec:authorize access="hasRole('ADMIN')">
+            <a href="/admin">Admin Dashboard</a>
+        </sec:authorize>
 
         <p>Title: ${item.title}</p>
         <p>Description: ${item.description}</p>
         <p>Price: ${item.price}</p>
         <p>Image: ${item.image}</p>
 
-        <p><a href="">Edit</a> |
-            <a href="/items/delete/${item.id}">Delete</a>
-        </p>
-
+        <sec:authorize access="hasRole('ADMIN')">
+            <p><a href="">Edit</a> |
+                <a href="/items/delete/${item.id}">Delete</a>
+            </p>
+        </sec:authorize>
     </body>
 </html>
