@@ -2,6 +2,7 @@ package com.brena.ecommerce.services;
 
 import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.repositories.ItemRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public class ItemServ {
-    private final ItemRepo itemRepo;
+    private ItemRepo itemRepo;
 
     public ItemServ(ItemRepo itemRepo) {
         this.itemRepo = itemRepo;
@@ -21,8 +22,8 @@ public class ItemServ {
     }
 
     // create/update an item
-    public Item saveItem(Item item) {
-        return itemRepo.save(item);
+    public void saveItem(Item item) {
+        itemRepo.save(item);
     }
 
     // find an item

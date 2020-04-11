@@ -10,12 +10,13 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 3, max = 100, message="A TITLE is required and it must contain 3 - 100 characters")
+    @NotBlank(message="A TITLE is required")
     private String title;
-    @Size(min = 3, max = 100, message="A DESCRIPTION is required and it must contain 3 - 100 characters")
+    @NotBlank(message="A DESCRIPTION is required")
     private String description;
+    @NotNull(message="A PRICE is required")
     private Integer price;
-    private byte image;
+    private  byte image;
     @Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;

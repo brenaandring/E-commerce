@@ -2,6 +2,7 @@ package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.ItemServ;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,15 +28,18 @@ public class ItemController {
 
     // admin: create a new item
     @GetMapping("/items/new")
-    public String newItem(@ModelAttribute("item") Item item) {
+    public String newItem(Model model) {
+        model.addAttribute("item", new Item());
         return "new.jsp";
     }
 
-    @PostMapping(value="/items")
+    @PostMapping("/items")
     public String create(@Valid @ModelAttribute("item") Item item, BindingResult result) {
         if (result.hasErrors()) {
+            System.out.println("Item did not save");
             return "new.jsp";
         } else {
+            System.out.println("Item was saved");
             itemServ.saveItem(item);
             return "redirect:/admin";
         }
