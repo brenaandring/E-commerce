@@ -44,14 +44,14 @@ public class ItemController {
             return "redirect:/admin";
         }
     }
-//
-//    // show an item
-//    @GetMapping("/items/{id}")
-//    public String showItem(@PathVariable("id") Long id, Model model) {
-//        Item item = itemServ.findItem(id);
-//        model.addAttribute("item", item);
-//        return "show.jsp";
-//    }
+
+    // show an item
+    @GetMapping("/items/{id}")
+    public String showItem(@PathVariable("id") Long id, Model model) {
+        Item item = itemServ.findItem(id);
+        model.addAttribute("item", item);
+        return "show.jsp";
+    }
 //
 //    // edit an item
 //    @GetMapping("/items/{id}/edit")
@@ -71,11 +71,11 @@ public class ItemController {
 //        }
 //    }
 //
-//    // delete an item
-//    @PostMapping(value="/books/{id}")
-//    public String destroy(@PathVariable("id") Long id) {
-//        itemServ.deleteItem(id);
-//        return "redirect:/dashboard";
-//    }
+    // delete an item
+    @RequestMapping("/items/delete/{id}")
+    public String destroy(@PathVariable("id") Long id) {
+        itemServ.deleteItem(id);
+        return "redirect:/admin";
+    }
 
 }

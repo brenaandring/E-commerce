@@ -29,12 +29,12 @@
             <tbody>
                 <c:forEach items="${item}" var="item">
                     <tr>
-                        <td><a href="">${item.title}</a></td>
+                        <td><a href="/items/${item.id}">${item.title}</a></td>
                         <td>${item.description}</td>
                         <td>${item.price}</td>
                         <td>${item.image} blank</td>
                         <td><a href="">Edit</a> |
-                            <a href="">Delete</a>
+                            <a href="/items/delete/${item.id}">Delete</a>
                         </td>
                     </tr>
                 </c:forEach>
