@@ -35,10 +35,10 @@ public class ItemController {
     @PostMapping("/items")
     public String create(@Valid @ModelAttribute("item") Item item, BindingResult result) {
         if (result.hasErrors()) {
-            System.out.println("Item did not save");
+//            System.out.println("Item did not save");
             return "new.jsp";
         } else {
-            System.out.println("Item was saved");
+//            System.out.println("Item was saved");
             itemServ.saveItem(item);
             return "redirect:/admin";
         }
