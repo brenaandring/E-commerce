@@ -70,7 +70,7 @@ public class ItemController {
 //        }
 //    }
 //
-    // delete an item
+    // admin: delete an item
     @RequestMapping("/items/delete/{id}")
     public String destroy(@PathVariable("id") Long id) {
         itemServ.deleteItem(id);
