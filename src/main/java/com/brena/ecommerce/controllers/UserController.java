@@ -1,6 +1,8 @@
 package com.brena.ecommerce.controllers;
 
+import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.User;
+import com.brena.ecommerce.services.ItemServ;
 import com.brena.ecommerce.services.UserServ;
 import com.brena.ecommerce.validator.UserValidator;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,12 @@ import java.util.List;
 public class UserController {
 
     private UserServ userServ;
+    private ItemServ itemServ;
     private UserValidator userValidator;
 
-    public UserController(UserServ userServ, UserValidator userValidator) {
+    public UserController(UserServ userServ, ItemServ itemServ, UserValidator userValidator) {
         this.userServ = userServ;
+        this.itemServ = itemServ;
         this.userValidator = userValidator;
     }
 
@@ -69,6 +73,8 @@ public class UserController {
         List<User> users = userServ.allUsers();
         model.addAttribute("currentUser", userServ.findByUsername(username));
         model.addAttribute("users", users);
+        List<Item> item = itemServ.allItems();
+        model.addAttribute("item", item);
         return "admin.jsp";
     }
 }

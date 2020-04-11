@@ -16,5 +16,30 @@
 
         <p><a href="/items/new">Add Item</a></p>
 
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${item}" var="item">
+                    <tr>
+                        <td><a href="">${item.title}</a></td>
+                        <td>${item.description}</td>
+                        <td>${item.price}</td>
+                        <td>${item.image} blank</td>
+                        <td><a href="">Edit</a> |
+                            <a href="">Delete</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+
     </body>
 </html>
