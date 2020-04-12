@@ -8,8 +8,10 @@
         <h1>Product Information</h1>
 
         <sec:authorize access="hasRole('ADMIN')">
-            <a href="/admin">Admin Dashboard</a>
+            <a href="/admin">Admin Dashboard</a> |
         </sec:authorize>
+
+        <a href="/">Home</a>
 
         <p>Title: ${item.title}</p>
         <p>Description: ${item.description}</p>
