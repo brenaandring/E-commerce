@@ -77,10 +77,15 @@ public class ItemController {
     }
 
     // admin: cancel button and redirect
-    @RequestMapping("/cancel")
-    public String rateHandler(final HttpServletRequest request) {
-        final String prev = request.getHeader("referer");
-        return "redirect:" + prev;
+//    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
+//    public String rateHandler(HttpServletRequest request) {
+//        String prev = request.getHeader("Referer");
+//        return "redirect:" + prev;
+//    }
+
+    @PostMapping("/cancel")
+    public String cancel() {
+        return "redirect:/admin";
     }
 
 }

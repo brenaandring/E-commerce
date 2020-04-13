@@ -33,11 +33,9 @@
         </table>
     </form:form>
 
-    <p><a href="/cancel">Cancel</a></p>
-
-<%--    <form:form method="POST" action="/cancel">--%>
-<%--        <input type="submit" value="Cancel"/>--%>
-<%--    </form:form>--%>
+    <form:form method="POST" action="/cancel">
+        <input type="submit" value="Cancel"/>
+    </form:form>
 
     </body>
 </html>
