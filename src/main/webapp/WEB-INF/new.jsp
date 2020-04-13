@@ -34,6 +34,10 @@
             </table>
         </form:form>
 
+        <form:form method="POST" action="/cancel">
+            <input type="submit" value="Cancel"/>
+        </form:form>
+
         <%--        <form method="POST" action="${pageContext.request.contextPath}/items" model="item">--%>
 <%--            <p>--%>
 <%--                <label for="title">Title:</label>--%>

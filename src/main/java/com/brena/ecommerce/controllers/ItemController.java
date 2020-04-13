@@ -27,7 +27,7 @@ public class ItemController {
     }
 
     // admin: create a new item
-    @GetMapping("/items/new")
+    @PostMapping("/items/new")
     public String newItem(Model model) {
         model.addAttribute("item", new Item());
         return "new.jsp";
@@ -51,7 +51,7 @@ public class ItemController {
         return "show.jsp";
     }
 
-    // edit an item
+    // admin: edit an item
     @GetMapping("/items/edit/{id}")
     public String editItem(@PathVariable("id") Long id, Model model) {
         Item item = itemServ.findItem(id);

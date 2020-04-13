@@ -9,16 +9,21 @@
     <body>
         <h1>Welcome to the Admin Dashboard, <c:out value="${currentUser.firstName}"></c:out>!</h1>
 
-        <form id="logoutForm" method="POST" action="/logout">
+        <form:form method="POST" id="logoutForm" action="/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <input type="submit" value="Logout!" />
-        </form>
+            <input type="submit" value="Logout!"/>
+        </form:form>
 
-        <p><a href="/items/new">Add Item</a></p>
+        <form:form method="POST" action="/items/new">
+            <input type="submit" value="Add Item"/>
+        </form:form>
+
+        <h1>All Items</h1>
 
         <table>
             <thead>
                 <tr>
+                    <th>Item ID</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Price</th>
@@ -29,6 +34,7 @@
             <tbody>
                 <c:forEach items="${item}" var="item">
                     <tr>
+                        <td>${item.id}</td>
                         <td><a href="/items/${item.id}">${item.title}</a></td>
                         <td>${item.description}</td>
                         <td>${item.price}</td>
@@ -38,6 +44,36 @@
                         </td>
                     </tr>
                 </c:forEach>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h1>All Users</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${users}" var="users">
+                <tr>
+                    <td>${users.id}</td>
+                    <td>${users.lastName}</td>
+                    <td>${users.firstName}</td>
+                    <td>${users.email}</td>
+                    <td>
+<%--                        <a href="/users/edit/${users.id}">Edit</a> |--%>
+                        <a href="/users/delete/${users.id}">Delete</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
 
