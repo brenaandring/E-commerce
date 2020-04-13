@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role {
 
     @Id
@@ -17,7 +17,7 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
-    public Role(){
+    public Role() {
     }
 
     public Long getId() {

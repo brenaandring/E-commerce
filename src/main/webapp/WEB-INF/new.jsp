@@ -29,7 +29,8 @@
                 <tr>
                     <td>
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <input type="submit" value="Create"/></td>
+                        <input type="submit" value="Create"/>
+                    </td>
                 </tr>
             </table>
         </form:form>
@@ -37,27 +38,5 @@
         <form:form method="POST" action="/cancel">
             <input type="submit" value="Cancel"/>
         </form:form>
-
-        <%--        <form method="POST" action="${pageContext.request.contextPath}/items" model="item">--%>
-<%--            <p>--%>
-<%--                <label for="title">Title:</label>--%>
-<%--                <input type="text" id="title" name="title"/>--%>
-<%--            </p>--%>
-<%--            <p>--%>
-<%--                <label for="description">Description:</label>--%>
-<%--                <textarea id="description" name="description"></textarea>--%>
-<%--            </p>--%>
-<%--            <p>--%>
-<%--                <label for="price">Price:</label>--%>
-<%--                <input type="number" id="price" name="price"/>--%>
-<%--            </p>--%>
-<%--            <p>--%>
-<%--                <label for="image">Image:</label>--%>
-<%--                <input type="file" id="image" name="image"/>--%>
-<%--            </p>--%>
-<%--            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>--%>
-<%--            <input type="submit" value="Create!"/>--%>
-<%--        </form>--%>
-
     </body>
 </html>

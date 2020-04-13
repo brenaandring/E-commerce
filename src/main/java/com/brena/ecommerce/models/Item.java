@@ -5,24 +5,24 @@ import javax.validation.constraints.*;
 import java.util.Date;
 
 @Entity
-@Table(name="items")
+@Table(name = "items")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message="A TITLE is required")
+    @NotBlank(message = "A TITLE is required")
     private String title;
-    @NotBlank(message="A DESCRIPTION is required")
+    @NotBlank(message = "A DESCRIPTION is required")
     private String description;
-    @NotNull(message="A PRICE is required")
+    @NotNull(message = "A PRICE is required")
     private Integer price;
-    private  byte image;
-    @Column(updatable=false)
+    private byte image;
+    @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Item() {
@@ -93,11 +93,12 @@ public class Item {
     }
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.createdAt = new Date();
     }
+
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         this.updatedAt = new Date();
     }
 }

@@ -1,4 +1,5 @@
 package com.brena.ecommerce.models;
+
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -16,11 +17,11 @@ public class User {
 
     @Email
     private String email;
-    @Size(min=1)
+    @Size(min = 1)
     private String firstName;
-    @Size(min=1)
+    @Size(min = 1)
     private String lastName;
-    @Size(min=8)
+    @Size(min = 8)
     private String password;
 
     @Transient
@@ -109,8 +110,8 @@ public class User {
 
     public boolean isAdmin() {
         List<Role> roles = this.getRoles();
-        for(Role role: roles) {
-            if(role.getName().equals("ROLE_ADMIN")){
+        for (Role role : roles) {
+            if (role.getName().equals("ROLE_ADMIN")) {
                 return true;
             }
         }
@@ -122,12 +123,12 @@ public class User {
     }
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.setCreatedAt(new Date());
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         this.setUpdatedAt(new Date());
     }
 }

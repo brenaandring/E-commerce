@@ -51,11 +51,11 @@ public class UserServ {
     public Long countAdmins() {
         List<User> users = (List<User>) userRepo.findAll();
         Long count = (long) 0;
-        for(User user: users) {
+        for (User user : users) {
             List<Role> roles = user.getRoles();
-            for(Role role: roles){
-                if(role.getName().equals("ROLE_ADMIN")) {
-                    count ++;
+            for (Role role : roles) {
+                if (role.getName().equals("ROLE_ADMIN")) {
+                    count++;
                 }
             }
         }

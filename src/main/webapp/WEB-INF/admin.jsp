@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <html>
     <head>
         <title>Admin Dashboard</title>
@@ -22,28 +21,28 @@
 
         <table>
             <thead>
-                <tr>
-                    <th>Item ID</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Image</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>Item ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
             </thead>
             <tbody>
-                <c:forEach items="${item}" var="item">
-                    <tr>
-                        <td>${item.id}</td>
-                        <td><a href="/items/${item.id}">${item.title}</a></td>
-                        <td>${item.description}</td>
-                        <td>${item.price}</td>
-                        <td>${item.image} blank</td>
-                        <td><a href="/items/edit/${item.id}">Edit</a> |
-                            <a href="/items/delete/${item.id}">Delete</a>
-                        </td>
-                    </tr>
-                </c:forEach>
+            <c:forEach items="${item}" var="item">
+                <tr>
+                    <td>${item.id}</td>
+                    <td><a href="/items/${item.id}">${item.title}</a></td>
+                    <td>${item.description}</td>
+                    <td>${item.price}</td>
+                    <td>${item.image} blank</td>
+                    <td><a href="/items/edit/${item.id}">Edit</a> |
+                        <a href="/items/delete/${item.id}">Delete</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
 
@@ -76,6 +75,5 @@
             </c:forEach>
             </tbody>
         </table>
-
     </body>
 </html>

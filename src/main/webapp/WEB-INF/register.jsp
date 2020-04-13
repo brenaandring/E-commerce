@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <html>
     <head>
         <title>Please Register</title>
@@ -11,28 +10,31 @@
         <p><form:errors path="user.*"/></p>
 
         <form:form method="POST" action="/registration" modelAttribute="user">
-            <p>
-                <form:label path="email">Email:</form:label>
-                <form:input path="email" name="username"/>
-            </p>
-            <p>
-                <form:label path="firstName">First Name:</form:label>
-                <form:input path="firstName"/>
-            </p>
-            <p>
-                <form:label path="lastName">Last Name:</form:label>
-                <form:input path="lastName"/>
-            </p>
-            <p>
-                <form:label path="password">Password:</form:label>
-                <form:password path="password"/>
-            </p>
-            <p>
-                <form:label path="passwordConfirmation">Password Confirmation:</form:label>
-                <form:password path="passwordConfirmation"/>
-            </p>
-
-            <input type="submit" value="Register!"/>
+            <table>
+                <tr>
+                    <td><form:label path="email">Email:</form:label></td>
+                    <td><form:input path="email" name="username"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="firstName">First Name:</form:label></td>
+                    <td><form:input path="firstName"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="lastName">Last Name:</form:label></td>
+                    <td><form:input path="lastName"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="password">Password:</form:label></td>
+                    <td><form:password path="password"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="passwordConfirmation">Password Confirmation:</form:label></td>
+                    <td><form:password path="passwordConfirmation"/></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Register!"/></td>
+                </tr>
+            </table>
         </form:form>
     </body>
 </html>

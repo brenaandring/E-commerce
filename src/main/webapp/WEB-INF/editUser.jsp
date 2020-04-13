@@ -9,28 +9,30 @@
         <p><form:errors path="user.*"/></p>
 
         <form:form method="POST" action="/users/${user.id}" modelAttribute="user">
-            <p>
-                <form:label path="email">Email:</form:label>
-                <form:input path="email" name="username"/>
-            </p>
-            <p>
-                <form:label path="firstName">First Name:</form:label>
-                <form:input path="firstName"/>
-            </p>
-            <p>
-                <form:label path="lastName">Last Name:</form:label>
-                <form:input path="lastName"/>
-            </p>
-            <p>
-                <form:label path="password">Password:</form:label>
-                <form:password path="password"/>
-            </p>
-            <p>
-                <form:label path="passwordConfirmation">Password Confirmation:</form:label>
-                <form:password path="passwordConfirmation"/>
-            </p>
-
-            <input type="submit" value="Update!"/>
+            <table>
+                <tr>
+                    <td><form:label path="title">Title</form:label></td>
+                    <td><form:input path="title"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="description">Description</form:label></td>
+                    <td><form:input path="description"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="price">Price</form:label></td>
+                    <td><form:input type="number" path="price"/></td>
+                </tr>
+                <tr>
+                    <td><form:label path="image">Image</form:label></td>
+                    <td><form:input type="file" path="image"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="submit" value="Update"/>
+                    </td>
+                </tr>
+            </table>
         </form:form>
 
         <form:form method="POST" action="/cancel">
