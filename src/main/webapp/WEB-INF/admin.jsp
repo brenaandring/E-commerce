@@ -33,7 +33,7 @@
                         <td>${item.description}</td>
                         <td>${item.price}</td>
                         <td>${item.image} blank</td>
-                        <td><a href="">Edit</a> |
+                        <td><a href="/items/edit/${item.id}">Edit</a> |
                             <a href="/items/delete/${item.id}">Delete</a>
                         </td>
                     </tr>

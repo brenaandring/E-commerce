@@ -19,7 +19,7 @@
         <p>Image: ${item.image}</p>
 
         <sec:authorize access="hasRole('ADMIN')">
-            <p><a href="">Edit</a> |
+            <p><a href="/items/edit/${item.id}">Edit</a> |
                 <a href="/items/delete/${item.id}">Delete</a>
             </p>
         </sec:authorize>

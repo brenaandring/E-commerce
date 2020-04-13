@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -35,10 +36,8 @@ public class ItemController {
     @PostMapping("/items")
     public String create(@Valid @ModelAttribute("item") Item item, BindingResult result) {
         if (result.hasErrors()) {
-//            System.out.println("Item did not save");
             return "new.jsp";
         } else {
-//            System.out.println("Item was saved");
             itemServ.saveItem(item);
             return "redirect:/admin";
         }
@@ -51,30 +50,37 @@ public class ItemController {
         model.addAttribute("item", item);
         return "show.jsp";
     }
-//
-//    // edit an item
-//    @GetMapping("/items/{id}/edit")
-//    public String editItem(@PathVariable("id") Long id, Model model) {
-//        Item item = itemServ.findItem(id);
-//        model.addAttribute("item", item);
-//        return "edit.jsp";
-//    }
-//
-//    @PostMapping(value="/items/{id}")
-//    public String update(@Valid @ModelAttribute("item") Item item, BindingResult result) {
-//        if (result.hasErrors()) {
-//            return "edit.jsp";
-//        } else {
-//            itemServ.saveItem(item);
-//            return "redirect:/dashboard";
-//        }
-//    }
-//
+
+    // edit an item
+    @GetMapping("/items/edit/{id}")
+    public String editItem(@PathVariable("id") Long id, Model model) {
+        Item item = itemServ.findItem(id);
+        model.addAttribute("item", item);
+        return "edit.jsp";
+    }
+
+    @PostMapping("/items/{id}")
+    public String update(@Valid @ModelAttribute("item") Item item, BindingResult result) {
+        if (result.hasErrors()) {
+            return "edit.jsp";
+        } else {
+            itemServ.saveItem(item);
+            return "redirect:/admin";
+        }
+    }
+
     // admin: delete an item
     @RequestMapping("/items/delete/{id}")
     public String destroy(@PathVariable("id") Long id) {
         itemServ.deleteItem(id);
         return "redirect:/admin";
+    }
+
+    // admin: cancel button and redirect
+    @RequestMapping("/cancel")
+    public String rateHandler(final HttpServletRequest request) {
+        final String prev = request.getHeader("referer");
+        return "redirect:" + prev;
     }
 
 }
