@@ -1,6 +1,5 @@
 package com.brena.ecommerce.controllers;
 
-import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.services.ItemServ;
 import com.brena.ecommerce.services.UserServ;
@@ -13,11 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class UserController {
-
     private UserServ userServ;
     private ItemServ itemServ;
     private UserValidator userValidator;
@@ -64,9 +61,7 @@ public class UserController {
     @RequestMapping("/dashboard")
     public String dashboard(Principal principal, Model model) {
         String username = principal.getName();
-        User currentUser = userServ.findByUsername(username);
-        userServ.updateUser(currentUser);
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("user", userServ.findByUsername(username));
         return "dashboard.jsp";
     }
 
@@ -74,11 +69,9 @@ public class UserController {
     @RequestMapping("/admin")
     public String adminPage(Principal principal, Model model) {
         String username = principal.getName();
-        model.addAttribute("currentUser", userServ.findByUsername(username));
-        List<User> users = userServ.allUsers();
-        model.addAttribute("users", users);
-        List<Item> item = itemServ.allItems();
-        model.addAttribute("item", item);
+        model.addAttribute("admin", userServ.findByUsername(username));
+        model.addAttribute("users", userServ.allUsers());
+        model.addAttribute("item", itemServ.allItems());
         return "admin.jsp";
     }
 

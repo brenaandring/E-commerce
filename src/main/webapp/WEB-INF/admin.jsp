@@ -6,7 +6,7 @@
         <title>Admin Dashboard</title>
     </head>
     <body>
-        <h1>Welcome to the Admin Dashboard, <c:out value="${currentUser.firstName}"></c:out>!</h1>
+        <h1>Welcome to the Admin Dashboard, ${admin.firstName}!</h1>
 
         <form:form method="POST" id="logoutForm" action="/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

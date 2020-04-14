@@ -6,11 +6,11 @@
     </head>
 
     <body>
+        <h1>Welcome ${user.firstName}!</h1>
+
         <form id="logoutForm" method="POST" action="/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input type="submit" value="Logout!"/>
         </form>
-
-        <h1>Welcome <c:out value="${currentUser.firstName}"></c:out>!</h1>
     </body>
 </html>

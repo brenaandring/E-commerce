@@ -7,9 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 public class ItemController {
@@ -21,8 +19,7 @@ public class ItemController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Item> item = itemServ.allItems();
-        model.addAttribute("item", item);
+        model.addAttribute("item", itemServ.allItems());
         return "index.jsp";
     }
 
@@ -46,16 +43,14 @@ public class ItemController {
     // show an item
     @GetMapping("/items/{id}")
     public String showItem(@PathVariable("id") Long id, Model model) {
-        Item item = itemServ.findItem(id);
-        model.addAttribute("item", item);
+        model.addAttribute("item", itemServ.findItem(id));
         return "show.jsp";
     }
 
     // admin: edit an item
     @GetMapping("/items/edit/{id}")
     public String editItem(@PathVariable("id") Long id, Model model) {
-        Item item = itemServ.findItem(id);
-        model.addAttribute("item", item);
+        model.addAttribute("item", itemServ.findItem(id));
         return "edit.jsp";
     }
 
@@ -75,13 +70,6 @@ public class ItemController {
         itemServ.deleteItem(id);
         return "redirect:/admin";
     }
-
-    // admin: cancel button and redirect
-//    @RequestMapping(value = "/cancel", method = RequestMethod.POST)
-//    public String rateHandler(HttpServletRequest request) {
-//        String prev = request.getHeader("Referer");
-//        return "redirect:" + prev;
-//    }
 
     @PostMapping("/cancel")
     public String cancel() {
