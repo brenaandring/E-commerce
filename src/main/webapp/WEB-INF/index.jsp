@@ -28,7 +28,7 @@
                     <td><a href="/items/${item.id}">${item.title}</a></td>
                     <td>${item.description}</td>
                     <td>${item.price}</td>
-                    <td>${item.image} blank</td>
+                    <td><img src="${item.image}" alt="uploaded item image" width="200"></td>
                 </tr>
             </c:forEach>
             </tbody>

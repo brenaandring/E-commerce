@@ -4,7 +4,6 @@ import com.brena.ecommerce.models.Role;
 import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.repositories.RoleRepo;
 import com.brena.ecommerce.repositories.UserRepo;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +12,9 @@ import java.util.Optional;
 
 @Service
 public class UserServ {
-    private UserRepo userRepo;
-    private RoleRepo roleRepo;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepo userRepo;
+    private final RoleRepo roleRepo;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserServ(UserRepo userRepo, RoleRepo roleRepo, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepo = userRepo;
@@ -60,7 +59,6 @@ public class UserServ {
             }
         }
         return count;
-
     }
 
     // find user by id
