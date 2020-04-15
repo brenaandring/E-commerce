@@ -8,15 +8,15 @@
         <h1>Product Information</h1>
 
         <sec:authorize access="hasRole('ADMIN')">
-            <a href="/admin">Admin Dashboard</a> |
+            <a href="${pageContext.request.contextPath}/admin">Admin Dashboard</a> |
         </sec:authorize>
 
-        <a href="/">Home</a>
+        <a href="${pageContext.request.contextPath}/">Home</a>
 
         <p>Title: ${item.title}</p>
         <p>Description: ${item.description}</p>
         <p>Price: ${item.price}</p>
-        <p>Image: ${item.image}</p>
+        <p>Image: <img src="data:image/jpeg;base64,${itemImage}" alt="uploaded item image"></p>
 
         <sec:authorize access="hasRole('ADMIN')">
             <p><a href="/items/edit/${item.id}">Edit</a> |

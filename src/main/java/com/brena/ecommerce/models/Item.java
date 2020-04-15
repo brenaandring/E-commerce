@@ -1,5 +1,7 @@
 package com.brena.ecommerce.models;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -16,7 +18,13 @@ public class Item {
     private String description;
     @NotNull(message = "A PRICE is required")
     private Integer price;
-    private byte image;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(length = 16_000_000)
+    private byte[] image;
+    //for upload only
+    @Transient
+    private MultipartFile uploadFile;
     @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;
@@ -60,11 +68,11 @@ public class Item {
         this.price = price;
     }
 
-    public byte getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(byte image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -100,5 +108,13 @@ public class Item {
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = new Date();
+    }
+
+    public MultipartFile getUploadFile() {
+        return uploadFile;
+    }
+
+    public void setUploadFile(MultipartFile uploadFile) {
+        this.uploadFile = uploadFile;
     }
 }

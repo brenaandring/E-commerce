@@ -8,7 +8,7 @@
         <h1>Add A New Product!</h1>
         <p><form:errors path="item.*"/></p>
 
-        <form:form method="POST" action="/items" modelAttribute="item">
+        <form:form method="POST" action="/items" modelAttribute="item" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td><form:label path="title">Title</form:label></td>
@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <td><form:label path="image">Image</form:label></td>
-                    <td><form:input type="file" path="image"/></td>
+                    <td><form:input type="file" path="uploadFile"/></td>
                 </tr>
                 <tr>
                     <td>
