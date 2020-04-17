@@ -1,7 +1,6 @@
 package com.brena.ecommerce.models;
 
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Date;
@@ -29,6 +28,7 @@ public class Item {
     private Date createdAt;
     private Date updatedAt;
 
+    // model relationships
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -36,6 +36,7 @@ public class Item {
     public Item() {
     }
 
+    // getters and setters
     public Long getId() {
         return id;
     }

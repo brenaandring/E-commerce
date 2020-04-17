@@ -1,20 +1,15 @@
 package com.brena.ecommerce.models;
 
-import java.util.Date;
-import java.util.List;
-
+import java.util.*;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue
     private Long id;
-
     @Email
     private String email;
     @Size(min = 1)
@@ -23,13 +18,12 @@ public class User {
     private String lastName;
     @Size(min = 8)
     private String password;
-
     @Transient
     private String passwordConfirmation;
-
     private Date createdAt;
     private Date updatedAt;
 
+    // model relationships
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -40,6 +34,7 @@ public class User {
     public User() {
     }
 
+    // getters and setters
     public Long getId() {
         return id;
     }

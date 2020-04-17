@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.io.IOException;
 
@@ -19,6 +18,7 @@ public class ItemController {
         this.itemServ = itemServ;
     }
 
+    // index
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("item", itemServ.allItems());
@@ -26,7 +26,7 @@ public class ItemController {
     }
 
     // admin: create a new item
-    @PostMapping("/items/new")
+    @RequestMapping("/items/new")
     public String newItem(Model model) {
         model.addAttribute("item", new Item());
         return "new.jsp";
@@ -85,6 +85,7 @@ public class ItemController {
         return "redirect:/admin";
     }
 
+    // don't forget to change this before deployment
     @PostMapping("/cancel")
     public String cancel() {
         return "redirect:/admin";
