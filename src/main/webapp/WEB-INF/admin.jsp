@@ -45,7 +45,6 @@
             </c:forEach>
             </tbody>
         </table>
-
         <hr>
 
         <h1>All Users</h1>
