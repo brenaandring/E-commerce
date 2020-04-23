@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
-@RequestMapping({"/api"})
+//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+//@RequestMapping({"/api"})
 @Controller
 public class UserController {
     private final UserServ userServ;

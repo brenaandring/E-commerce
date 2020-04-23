@@ -9,8 +9,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
-@Controller
+//@RequestMapping("/api/items")
+@RestController
+//@Controller
 public class ItemController {
     private final ItemServ itemServ;
 
@@ -19,10 +22,11 @@ public class ItemController {
     }
 
     // index
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("item", itemServ.allItems());
-        return "index.jsp";
+    @GetMapping(value = { "", "/" })
+    public List<Item> allItems() {
+        return itemServ.allItems();
+//        model.addAttribute("item", itemServ.allItems());
+//        return "index.jsp";
     }
 
     // admin: create a new item
