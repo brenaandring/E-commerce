@@ -22,14 +22,14 @@ public class UserServ {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    // saves a user with only the user role
+    // save a user with user role
     public void saveWithUserRole(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roleRepo.findByName("ROLE_USER"));
         userRepo.save(user);
     }
 
-    // saves a user with only the admin role
+    // save a user with admin role
     public void saveUserWithAdminRole(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roleRepo.findByName("ROLE_ADMIN"));
@@ -37,13 +37,19 @@ public class UserServ {
     }
 
     // update a user
-    public User updateUser(User user) {
-        return userRepo.save(user);
-    }
+//    public User updateUser(User user) {
+//        return userRepo.save(user);
+//    }
 
     // find user by username
     public User findByUsername(String email) {
         return userRepo.findByEmail(email);
+    }
+
+    // find user by id
+    public User findUserById(Long id) {
+        Optional<User> user = userRepo.findById(id);
+        return user.orElse(null);
     }
 
     // admin
@@ -61,18 +67,12 @@ public class UserServ {
         return count;
     }
 
-    // find user by id
-    public User findUserById(Long id) {
-        Optional<User> user = userRepo.findById(id);
-        return user.orElse(null);
-    }
-
     // show all users
     public List<User> allUsers() {
         return userRepo.findAll();
     }
 
-    // deletes a user
+    // delete a user
     public void deleteUser(Long id) {
         userRepo.deleteById(id);
     }

@@ -15,8 +15,7 @@ import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
 
     public UserDetailsServiceImpl(UserRepo userRepo) {
         this.userRepo = userRepo;
