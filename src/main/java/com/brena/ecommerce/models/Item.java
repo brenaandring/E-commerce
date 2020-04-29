@@ -3,27 +3,42 @@ package com.brena.ecommerce.models;
 import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "items")
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column (name = "item_id")
     private Long id;
+
+    @Column (name = "title", nullable = false, unique = true)
     @NotBlank(message = "A TITLE is required")
     private String title;
+
+    @Column (name = "description")
     @NotBlank(message = "A DESCRIPTION is required")
     private String description;
-    @NotNull(message = "A PRICE is required")
-    private Integer price;
+
+    @Column(name = "price", nullable = false)
+    @DecimalMin(value = "0.00", message = "*Price has to be non negative number")
+    private BigDecimal price;
+
+    @Column(name = "quantity", nullable = false)
+    @Min(value = 0, message = "Quantity has to be non negative number")
+    private Integer quantity;
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(length = 16_000_000)
+    @Column(name = "image", length = 16_000_000)
     private byte[] image;
     //for upload only
     @Transient
     private MultipartFile uploadFile;
+
     @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;
@@ -32,6 +47,11 @@ public class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
+
 
     public Item() {
     }
@@ -61,12 +81,20 @@ public class Item {
         this.description = description;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public byte[] getImage() {

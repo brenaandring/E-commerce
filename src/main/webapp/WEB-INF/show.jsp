@@ -14,6 +14,7 @@
         <a href="${pageContext.request.contextPath}/">Home</a>
 
         <p>Title: ${item.title}</p>
+        <p>Quantity: ${item.quantity}</p>
         <p>Description: ${item.description}</p>
         <p>Price: ${item.price}</p>
         <p>Image: <img src="data:image/jpeg;base64,${itemImage}" alt="uploaded item image"></p>

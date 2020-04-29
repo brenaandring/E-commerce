@@ -8,18 +8,29 @@ import javax.validation.constraints.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long id;
-    @Email
+
+    @Column(name = "email", unique = true, nullable = false)
+    @Email(message = "Please provide a valid email")
     private String email;
+
+    @Column(name = "firstName")
     @Size(min = 1)
     private String firstName;
+
+    @Column(name = "lastName")
     @Size(min = 1)
     private String lastName;
-    @Size(min = 8)
+
+    @Column(name = "password", nullable = false)
+    @Size(min = 8, message = "Your password must have at least 8 characters")
     private String password;
+
     @Transient
     private String passwordConfirmation;
+
     private Date createdAt;
     private Date updatedAt;
 
@@ -30,6 +41,12 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Item> items;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Review> reviews;
 
     public User() {
     }
@@ -111,6 +128,22 @@ public class User {
             }
         }
         return false;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public void setRoles(List<Role> roles) {

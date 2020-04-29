@@ -7,8 +7,11 @@ import javax.persistence.*;
 @Table(name = "roles")
 public class Role {
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column (name = "role_id")
     private Long id;
+
+    @Column (name = "name")
     private String name;
 
     // model relationships

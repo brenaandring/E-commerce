@@ -14,6 +14,10 @@
                     <td><form:input path="title"/></td>
                 </tr>
                 <tr>
+                    <td><form:label path="quantity">Quantity</form:label></td>
+                    <td><form:input type="number" path="quantity"/></td>
+                </tr>
+                <tr>
                     <td><form:label path="description">Description</form:label></td>
                     <td><form:input path="description"/></td>
                 </tr>

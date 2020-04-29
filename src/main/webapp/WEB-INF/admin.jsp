@@ -24,6 +24,7 @@
             <tr>
                 <th>Item ID</th>
                 <th>Title</th>
+                <th>Quantity</th>
                 <th>Description</th>
                 <th>Price</th>
                 <th>Image</th>
@@ -35,6 +36,7 @@
                 <tr>
                     <td>${item.id}</td>
                     <td><a href="/items/${item.id}">${item.title}</a></td>
+                    <td>${item.quantity}</td>
                     <td>${item.description}</td>
                     <td>${item.price}</td>
                     <td><img src="${item.image}" alt="uploaded item image" width="200"></td>
