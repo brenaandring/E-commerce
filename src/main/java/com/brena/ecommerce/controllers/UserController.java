@@ -23,7 +23,7 @@ public class UserController {
         this.userValidator = userValidator;
     }
 
-    // user registration
+    //  user registration
     @GetMapping("/registration")
     public String register(@Valid @ModelAttribute("user") User user) {
         return "register.jsp";
@@ -43,7 +43,7 @@ public class UserController {
         return "redirect:/dashboard";
     }
 
-    // user login
+    //  admin/user login
     @RequestMapping("/login")
     public String login(@Valid @ModelAttribute("user") User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout, Model model) {
         if (error != null) {
@@ -55,7 +55,7 @@ public class UserController {
         return "login.jsp";
     }
 
-    // non-admin dashboard
+    //  user dashboard
     @GetMapping("/dashboard")
     public String dashboard(Principal principal, Model model) {
         String username = principal.getName();
@@ -63,7 +63,7 @@ public class UserController {
         return "dashboard.jsp";
     }
 
-    // admin dashboard
+    //  admin dashboard
     @GetMapping("/admin")
     public String adminPage(Principal principal, Model model) {
         String username = principal.getName();
@@ -73,7 +73,7 @@ public class UserController {
         return "admin.jsp";
     }
 
-    // admin: delete user
+    //  admin-only: delete a user
     @RequestMapping("/users/delete/{id}")
     public String destroy(@PathVariable("id") Long id) {
         userServ.deleteUser(id);

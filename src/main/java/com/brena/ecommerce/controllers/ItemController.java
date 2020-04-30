@@ -36,14 +36,15 @@ public class ItemController {
         put(1, 1);
     }};
 
-    // index
+    //  index/home page
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("item", itemServ.allItems());
+        model.addAttribute("review", reviewServ.allReviews());
         return "index.jsp";
     }
 
-    // admin: create a new item
+    //  admin-only: create a new item
     @RequestMapping("/items/new")
     public String newItem(Model model) {
         model.addAttribute("item", new Item());
@@ -62,14 +63,12 @@ public class ItemController {
                 e.printStackTrace();
             }
             item.setImage(image);
-//            User user = userServ.findByRoles("ROLE_ADMIN");
-//            item.setUser(user);
             itemServ.saveItem(item);
             return "redirect:/admin";
         }
     }
 
-    // show an item
+    //  show an item
     @GetMapping("/items/{id}")
     public String showItem(@PathVariable("id") Long id, Model model) {
         Item item = itemServ.findItem(id);
@@ -83,7 +82,7 @@ public class ItemController {
         return "show.jsp";
     }
 
-    // create an item review
+    //  create an item review
     @PostMapping("/items/{id}/review")
     public String createReview(@PathVariable("id") Long id, @Valid @ModelAttribute("review") Review review,
                                BindingResult result) {
@@ -91,15 +90,15 @@ public class ItemController {
             return "show.jsp";
         } else {
             Item item = itemServ.findItem(id);
-            User user = userServ.findUserById(id);
+//            User user = userServ.findUserById(id);
             review.setItem(item);
-            review.setUser(user);
+//            review.setUser(user);
             reviewServ.saveReview(review);
             return "redirect:/items/{id}";
         }
     }
 
-    // admin: edit an item
+    //  admin-only: edit an item
     @GetMapping("/items/edit/{id}")
     public String editItem(@PathVariable("id") Long id, Model model) {
         model.addAttribute("item", itemServ.findItem(id));
@@ -116,21 +115,21 @@ public class ItemController {
         }
     }
 
-    // admin: delete an item
+    //  admin-only: delete an item
     @RequestMapping("/items/delete/{id}")
     public String destroy(@PathVariable("id") Long id) {
         itemServ.deleteItem(id);
         return "redirect:/admin";
     }
 
-    // admin: delete a review
+    //  admin-only: delete a review
     @RequestMapping("/review/delete/{id}")
     public String destroyReview(@PathVariable("id") Long id) {
         reviewServ.deleteReview(id);
         return "redirect:/admin";
     }
 
-    // don't forget to change this before deployment
+    //  don't forget to change this before deployment
     @PostMapping("/cancel")
     public String cancel() {
         return "redirect:/admin";

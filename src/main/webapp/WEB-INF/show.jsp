@@ -10,10 +10,10 @@
         <h1>Product Information</h1>
 
         <sec:authorize access="hasRole('ADMIN')">
-            <a href="${pageContext.request.contextPath}/admin">Admin Dashboard</a> |
+            <a href="/admin">Admin Dashboard</a> |
         </sec:authorize>
 
-        <a href="${pageContext.request.contextPath}/">Home</a>
+        <a href="/">Home</a>
 
         <p>Title: ${item.title}</p>
         <p>Quantity: ${item.quantity}</p>
@@ -21,29 +21,31 @@
         <p>Price: ${item.price}</p>
         <p>Image: <img src="data:image/jpeg;base64,${itemImage}" alt="uploaded item image"></p>
 
-        <p><form:errors path="review.*"/></p>
+        <sec:authorize access="hasRole('USER')">
+            <p><form:errors path="review.*"/></p>
 
-        <form:form method="POST" action="/items/${item.id}/review" modelAttribute="review">
-            <table>
-                <tr>
-                    <td><form:label path="comment">Your Review:</form:label></td>
-                    <td><form:input path="comment"/></td>
-                </tr>
-                <tr>
-                    <td><form:label path="rating"/>Rate: </td>
-                    <td><form:select path="rating" multiple="false">
-                            <form:options items="${ratings}"/>
-                        </form:select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <input type="submit" value="Leave a Review"/>
-                    </td>
-                </tr>
-            </table>
-        </form:form>
+            <form:form method="POST" action="/items/${item.id}/review" modelAttribute="review">
+                <table>
+                    <tr>
+                        <td><form:label path="comment">Your Review:</form:label></td>
+                        <td><form:input path="comment"/></td>
+                    </tr>
+                    <tr>
+                        <td><form:label path="rating"/>Rate: </td>
+                        <td><form:select path="rating" multiple="false">
+                                <form:options items="${ratings}"/>
+                            </form:select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input type="submit" value="Leave a Review"/>
+                        </td>
+                    </tr>
+                </table>
+            </form:form>
+        </sec:authorize>
 
         <table>
             <tr>

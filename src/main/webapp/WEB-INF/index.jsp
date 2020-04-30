@@ -9,26 +9,32 @@
         <a href="/registration">Register</a> |
         <a href="/login">Login</a> |
 
+        <sec:authorize access="hasRole('USER')">
+            <a href="/dashboard">User Dashboard</a> |
+        </sec:authorize>
+
         <sec:authorize access="hasRole('ADMIN')">
             <a href="/admin">Admin Dashboard</a> |
         </sec:authorize>
 
         <table>
             <thead>
-            <tr>
-                <th>Title</th>
-                <th>Rating</th>
-                <th>Quantity</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Image</th>
-            </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Rating</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                </tr>
             </thead>
             <tbody>
             <c:forEach items="${item}" var="item">
                 <tr>
                     <td><a href="/items/${item.id}">${item.title}</a></td>
-                    <td>${item.reviews}</td>
+                    <c:forEach items="${item.reviews}" var="review">
+                        <td>${review.rating}</td>
+                    </c:forEach>
                     <td>${item.quantity}</td>
                     <td>${item.description}</td>
                     <td>${item.price}</td>
