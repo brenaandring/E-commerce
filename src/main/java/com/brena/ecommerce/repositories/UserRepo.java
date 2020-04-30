@@ -1,5 +1,6 @@
 package com.brena.ecommerce.repositories;
 
+import com.brena.ecommerce.models.Role;
 import com.brena.ecommerce.models.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,8 @@ public interface UserRepo extends CrudRepository<User, Long> {
     User findByEmail(String email);
 
     List<User> findAll();
+
+    //    List<User> findByRoles(List<Role> roles);
+
+//    User findByRoles(String roles);
 }

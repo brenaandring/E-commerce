@@ -1,6 +1,7 @@
 package com.brena.ecommerce.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -8,13 +9,14 @@ import java.util.Date;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column (name = "review_id")
+    @Column(name = "review_id")
     private Long id;
 
-    @Column (name = "comment")
+    @Column(name = "comment")
+    @NotBlank(message = "A COMMENT is required")
     private String comment;
 
-    @Column (name = "rating", columnDefinition = "int default 0")
+    @Column(name = "rating", columnDefinition = "int default 0")
     private Integer rating;
 
     @Column(updatable = false)

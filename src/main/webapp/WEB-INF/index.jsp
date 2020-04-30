@@ -17,6 +17,7 @@
             <thead>
             <tr>
                 <th>Title</th>
+                <th>Rating</th>
                 <th>Quantity</th>
                 <th>Description</th>
                 <th>Price</th>
@@ -27,6 +28,7 @@
             <c:forEach items="${item}" var="item">
                 <tr>
                     <td><a href="/items/${item.id}">${item.title}</a></td>
+                    <td>${item.reviews}</td>
                     <td>${item.quantity}</td>
                     <td>${item.description}</td>
                     <td>${item.price}</td>

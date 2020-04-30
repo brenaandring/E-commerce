@@ -22,7 +22,6 @@
         <table>
             <thead>
             <tr>
-                <th>Item ID</th>
                 <th>Title</th>
                 <th>Quantity</th>
                 <th>Description</th>
@@ -34,7 +33,6 @@
             <tbody>
             <c:forEach items="${item}" var="item">
                 <tr>
-                    <td>${item.id}</td>
                     <td><a href="/items/${item.id}">${item.title}</a></td>
                     <td>${item.quantity}</td>
                     <td>${item.description}</td>

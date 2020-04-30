@@ -1,6 +1,7 @@
 package com.brena.ecommerce.models;
 
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -12,14 +13,14 @@ import java.util.List;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column (name = "item_id")
+    @Column(name = "item_id")
     private Long id;
 
-    @Column (name = "title", nullable = false, unique = true)
+    @Column(name = "title", nullable = false, unique = true)
     @NotBlank(message = "A TITLE is required")
     private String title;
 
-    @Column (name = "description")
+    @Column(name = "description")
     @NotBlank(message = "A DESCRIPTION is required")
     private String description;
 
@@ -50,7 +51,6 @@ public class Item {
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<Review> reviews;
-
 
 
     public Item() {
@@ -127,6 +127,14 @@ public class Item {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @PrePersist

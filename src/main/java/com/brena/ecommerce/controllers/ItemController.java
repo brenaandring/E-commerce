@@ -2,6 +2,8 @@ package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.ItemServ;
+import com.brena.ecommerce.services.ReviewServ;
+import com.brena.ecommerce.services.UserServ;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,14 +11,30 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class ItemController {
     private final ItemServ itemServ;
+    private final ReviewServ reviewServ;
+    private final UserServ userServ;
 
-    public ItemController(ItemServ itemServ) {
+    public ItemController(ItemServ itemServ, ReviewServ reviewServ, UserServ userServ) {
         this.itemServ = itemServ;
+        this.reviewServ = reviewServ;
+        this.userServ = userServ;
     }
+
+    private static final Map<Integer, Integer> ratings = new LinkedHashMap<Integer, Integer>() {{
+        put(5, 5);
+        put(4, 4);
+        put(3, 3);
+        put(2, 2);
+        put(1, 1);
+    }};
 
     // index
     @GetMapping("/")
@@ -44,6 +62,8 @@ public class ItemController {
                 e.printStackTrace();
             }
             item.setImage(image);
+//            User user = userServ.findByRoles("ROLE_ADMIN");
+//            item.setUser(user);
             itemServ.saveItem(item);
             return "redirect:/admin";
         }
@@ -54,11 +74,29 @@ public class ItemController {
     public String showItem(@PathVariable("id") Long id, Model model) {
         Item item = itemServ.findItem(id);
         model.addAttribute("item", item);
+        model.addAttribute("review", new Review());
+        model.addAttribute("ratings", ratings);
         if (item.getImage() != null && item.getImage().length > 0) {
             String imageAsString = new String(Base64.encodeBase64(item.getImage()));
             model.addAttribute("itemImage", imageAsString);
         }
         return "show.jsp";
+    }
+
+    // create an item review
+    @PostMapping("/items/{id}/review")
+    public String createReview(@PathVariable("id") Long id, @Valid @ModelAttribute("review") Review review,
+                               BindingResult result) {
+        if (result.hasErrors()) {
+            return "show.jsp";
+        } else {
+            Item item = itemServ.findItem(id);
+            User user = userServ.findUserById(id);
+            review.setItem(item);
+            review.setUser(user);
+            reviewServ.saveReview(review);
+            return "redirect:/items/{id}";
+        }
     }
 
     // admin: edit an item
@@ -82,6 +120,13 @@ public class ItemController {
     @RequestMapping("/items/delete/{id}")
     public String destroy(@PathVariable("id") Long id) {
         itemServ.deleteItem(id);
+        return "redirect:/admin";
+    }
+
+    // admin: delete a review
+    @RequestMapping("/review/delete/{id}")
+    public String destroyReview(@PathVariable("id") Long id) {
+        reviewServ.deleteReview(id);
         return "redirect:/admin";
     }
 

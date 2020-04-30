@@ -36,9 +36,8 @@ public class UserServ {
         userRepo.save(user);
     }
 
-    // update a user
-//    public User updateUser(User user) {
-//        return userRepo.save(user);
+//    public User findByRoles(String roles) {
+//        return userRepo.findByRoles(roles);
 //    }
 
     // find user by username
