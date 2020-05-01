@@ -8,6 +8,8 @@
     <body>
         <a href="/registration">Register</a> |
         <a href="/login">Login</a> |
+        <a href="/about">About</a> |
+        <a href="/contact">Contact</a> |
 
         <sec:authorize access="hasRole('USER')">
             <a href="/dashboard">User Dashboard</a> |

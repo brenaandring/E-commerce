@@ -7,8 +7,7 @@ import com.brena.ecommerce.repositories.UserRepo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServ {
@@ -22,36 +21,32 @@ public class UserServ {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    // save a user with user role
+    //  save a user with user privilege
     public void saveWithUserRole(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roleRepo.findByName("ROLE_USER"));
         userRepo.save(user);
     }
 
-    // save a user with admin role
+    //  save a user with admin privilege
     public void saveUserWithAdminRole(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roleRepo.findByName("ROLE_ADMIN"));
         userRepo.save(user);
     }
 
-//    public User findByRoles(String roles) {
-//        return userRepo.findByRoles(roles);
-//    }
-
-    // find user by username
-    public User findByUsername(String email) {
+    //  find user by email
+    public User findByEmail(String email) {
         return userRepo.findByEmail(email);
     }
 
-    // find user by id
+    //  find user by id
     public User findUserById(Long id) {
         Optional<User> user = userRepo.findById(id);
         return user.orElse(null);
     }
 
-    // admin
+    //  admin
     public Long countAdmins() {
         List<User> users = (List<User>) userRepo.findAll();
         Long count = (long) 0;
@@ -66,12 +61,12 @@ public class UserServ {
         return count;
     }
 
-    // show all users
+    //  show all users
     public List<User> allUsers() {
         return userRepo.findAll();
     }
 
-    // delete a user
+    //  admin-only: delete a user
     public void deleteUser(Long id) {
         userRepo.deleteById(id);
     }

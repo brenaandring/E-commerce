@@ -5,15 +5,14 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "items")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "item_id")
+//    @Column(name = "item_id")
     private Long id;
 
     @Column(name = "title", nullable = false, unique = true)
@@ -44,7 +43,7 @@ public class Item {
     private Date createdAt;
     private Date updatedAt;
 
-    // model relationships
+    //  model relationships
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -52,11 +51,10 @@ public class Item {
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
-
     public Item() {
     }
 
-    // getters and setters
+    //  getters and setters
     public Long getId() {
         return id;
     }

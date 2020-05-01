@@ -14,14 +14,14 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    // model relationships
+    //  model relationships
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
     public Role() {
     }
 
-    // getters and setters
+    //  getters and setters
     public Long getId() {
         return id;
     }

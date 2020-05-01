@@ -9,7 +9,7 @@ import java.util.Date;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "review_id")
+//    @Column(name = "review_id")
     private Long id;
 
     @Column(name = "comment")
@@ -22,7 +22,7 @@ public class Review {
     @Column(updatable = false)
     private Date createdAt;
 
-    // model relationships
+    //  model relationships
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -31,7 +31,7 @@ public class Review {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    // getters and setters
+    //  getters and setters
     public Long getId() {
         return id;
     }

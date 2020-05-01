@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpSession;
+
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
+    public String registration(@Valid User user, BindingResult result) {
         userValidator.validate(user, result);
         if (result.hasErrors()) {
             return "register.jsp";
@@ -58,16 +58,16 @@ public class UserController {
     //  user dashboard
     @GetMapping("/dashboard")
     public String dashboard(Principal principal, Model model) {
-        String username = principal.getName();
-        model.addAttribute("user", userServ.findByUsername(username));
+        String email = principal.getName();
+        model.addAttribute("user", userServ.findByEmail(email));
         return "dashboard.jsp";
     }
 
     //  admin dashboard
     @GetMapping("/admin")
     public String adminPage(Principal principal, Model model) {
-        String username = principal.getName();
-        model.addAttribute("admin", userServ.findByUsername(username));
+        String email = principal.getName();
+        model.addAttribute("admin", userServ.findByEmail(email));
         model.addAttribute("users", userServ.allUsers());
         model.addAttribute("item", itemServ.allItems());
         return "admin.jsp";

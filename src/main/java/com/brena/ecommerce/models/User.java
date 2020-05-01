@@ -34,7 +34,7 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
 
-    // model relationships
+    //  model relationships
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -51,7 +51,7 @@ public class User {
     public User() {
     }
 
-    // getters and setters
+    //  getters and setters
     public Long getId() {
         return id;
     }

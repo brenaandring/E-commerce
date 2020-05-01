@@ -1,31 +1,25 @@
 package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.*;
-import com.brena.ecommerce.services.ItemServ;
-import com.brena.ecommerce.services.ReviewServ;
-import com.brena.ecommerce.services.UserServ;
+import com.brena.ecommerce.services.*;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class ItemController {
     private final ItemServ itemServ;
     private final ReviewServ reviewServ;
-    private final UserServ userServ;
 
-    public ItemController(ItemServ itemServ, ReviewServ reviewServ, UserServ userServ) {
+    public ItemController(ItemServ itemServ, ReviewServ reviewServ) {
         this.itemServ = itemServ;
         this.reviewServ = reviewServ;
-        this.userServ = userServ;
     }
 
     private static final Map<Integer, Integer> ratings = new LinkedHashMap<Integer, Integer>() {{
@@ -35,14 +29,6 @@ public class ItemController {
         put(2, 2);
         put(1, 1);
     }};
-
-    //  index/home page
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("item", itemServ.allItems());
-        model.addAttribute("review", reviewServ.allReviews());
-        return "index.jsp";
-    }
 
     //  admin-only: create a new item
     @RequestMapping("/items/new")
@@ -90,9 +76,7 @@ public class ItemController {
             return "show.jsp";
         } else {
             Item item = itemServ.findItem(id);
-//            User user = userServ.findUserById(id);
             review.setItem(item);
-//            review.setUser(user);
             reviewServ.saveReview(review);
             return "redirect:/items/{id}";
         }
