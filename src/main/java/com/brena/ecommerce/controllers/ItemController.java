@@ -61,10 +61,10 @@ public class ItemController {
         model.addAttribute("item", item);
         model.addAttribute("review", new Review());
         model.addAttribute("ratings", ratings);
-        if (item.getImage() != null && item.getImage().length > 0) {
-            String imageAsString = new String(Base64.encodeBase64(item.getImage()));
-            model.addAttribute("itemImage", imageAsString);
-        }
+//        if (item.getImage() != null && item.getImage().length > 0) {
+//            String imageAsString = new String(Base64.encodeBase64(item.getImage()));
+//            model.addAttribute("itemImage", imageAsString);
+//        }
         return "show.jsp";
     }
 
