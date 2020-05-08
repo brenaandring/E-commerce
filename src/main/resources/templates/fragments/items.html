@@ -1,20 +1,22 @@
-
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="en">
 
-<head>
-</head>
+    <head>
+    </head>
 
-<body>
-
-<div th:fragment="items">
-    items go here
-    <div class="panel-default well" th:each="item : ${items}">
-        <div class="panel-heading">
-            <h1 th:text="${item.title}"></h1>
+    <body>
+        <div th:fragment="items">
+            <div class="panel-default well" th:each="item : ${items}">
+                <div class="panel-heading">
+                    <h1 th:text="${item.title}"></h1>
+                    <img src="${item.image}" alt="an image of a mask">
+                </div>
+                <h3 th:text="${item.description}" class="panel-body">Description</h3>
+                <div class="row panel-footer">
+                    <div th:inline="text" class="col-md-2">Price: $[[${item.price}]]</div>
+                    <div th:inline="text" class="col-md-9">In Stock: [[${item.quantity}]]</div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-</body>
+    </body>
 </html>
