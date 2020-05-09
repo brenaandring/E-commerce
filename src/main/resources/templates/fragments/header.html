@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
     <head>
         <title>E-commerce</title>
         <!-- this is header -->
@@ -19,11 +22,14 @@
         <!-- this is header: navbar -->
         <div th:fragment="navbar">
             <nav class="navbar navbar-dark bg-dark justify-content-center">
-                <a class="navbar-brand" href="/">Home</a>
-                <a class="navbar-brand" href="/about">Our Story</a>
-                <a class="navbar-brand" href="/contact">Contact Us</a>
-                <a class="navbar-brand" href="/registration">Register</a>
-                <a class="navbar-brand" href="/login">Login</a>
+                <a class="navbar-brand" th:href="@{/}">Home</a>
+                <a class="navbar-brand" th:href="@{/about}">Our Story</a>
+                <a class="navbar-brand" th:href="@{/contact}">Contact Us</a>
+                <a class="navbar-brand" th:href="@{/registration}" sec:authorize="!isAuthenticated()">Register</a>
+                <a class="navbar-brand" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+                <a class="navbar-brand" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">Admin Dashboard</a>
+                <a class="navbar-brand" th:href="@{/dashboard}" sec:authorize="hasRole('ROLE_USER')">Dashboard</a>
+                <a class="navbar-brand" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
             </nav>
         </div>
     </body>

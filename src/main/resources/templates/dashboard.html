@@ -9,9 +9,7 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
-            <div sec:authorize="isAuthenticated()">
-                Welcome, <span sec:authentication="firstName">${user.firstName}</span>
-            </div>
+            <h5>Welcome, [[${user.firstName}]]!</h5>
         </div>
 
         <div th:replace="/fragments/footer :: footer"></div>

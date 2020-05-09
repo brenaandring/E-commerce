@@ -60,20 +60,8 @@ public class UserController {
         if (logout != null) {
             modelAndView.addObject("logoutMessage", "Logout successful!");
         }
-        modelAndView.setViewName(("/login"));
         return modelAndView;
     }
-
-//    @RequestMapping("/login")
-//    public String login(@Valid @ModelAttribute("user") User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout, Model model) {
-//        if (error != null) {
-//            model.addAttribute("errorMessage", "Invalid credentials. Please try again.");
-//        }
-//        if (logout != null) {
-//            model.addAttribute("logoutMessage", "Logout Successful!");
-//        }
-//        return "login.jsp";
-//    }
 
     //  user dashboard
     @GetMapping("/dashboard")
@@ -83,26 +71,22 @@ public class UserController {
         modelAndView.addObject("user", userServ.findByEmail(email));
         return modelAndView;
     }
-//    @GetMapping("/dashboard")
-//    public String dashboard(Principal principal, Model model) {
-//        String email = principal.getName();
-//        model.addAttribute("user", userServ.findByEmail(email));
-//        return "dashboard.jsp";
-//    }
 
     //  admin dashboard
     @GetMapping("/admin")
-    public String adminPage(Principal principal, Model model) {
+    public ModelAndView adminPage(Principal principal, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
         String email = principal.getName();
-        model.addAttribute("admin", userServ.findByEmail(email));
-        model.addAttribute("users", userServ.allUsers());
-        model.addAttribute("item", itemServ.allItems());
-        return "admin.jsp";
+        modelAndView.addObject("admin", userServ.findByEmail(email));
+        modelAndView.addObject("users", userServ.allUsers());
+        modelAndView.addObject("item", itemServ.allItems());
+        return modelAndView;
     }
 
     //  admin-only: delete a user
-    @RequestMapping("/users/delete/{id}")
-    public String destroy(@PathVariable("id") Long id) {
+    @RequestMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+//        User user = userServ.findUserById(id);
         userServ.deleteUser(id);
         return "redirect:/admin";
     }
