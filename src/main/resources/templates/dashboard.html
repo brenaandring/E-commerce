@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+    <head>
+        <div th:replace="/fragments/header :: header"></div>
+        <title>E-commerce</title>
+    </head>
+
+    <body>
+        <div th:replace="/fragments/header :: navbar"></div>
+
+        <div class="container-sm">
+            <div sec:authorize="isAuthenticated()">
+                Welcome, <span sec:authentication="firstName">${user.firstName}</span>
+            </div>
+        </div>
+
+        <div th:replace="/fragments/footer :: footer"></div>
+    </body>
+</html>

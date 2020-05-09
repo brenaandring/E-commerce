@@ -15,44 +15,29 @@ import java.util.List;
 @Controller
 public class MainController {
     private final ItemServ itemServ;
-    private final ReviewServ reviewServ;
 
-    public MainController(ItemServ itemServ, ReviewServ reviewServ) {
+    public MainController(ItemServ itemServ) {
         this.itemServ = itemServ;
-        this.reviewServ = reviewServ;
     }
 
     //  index/home page
-
-//    @RequestMapping("/")
-//    public String index() {
-//        return "index";
-//    }
     @GetMapping("/")
     public ModelAndView index() {
-//        List<Item> items = itemServ.allItems();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("items", itemServ.allItems());
-//        modelAndView.addObject("reviews", reviewServ.allReviews());
         modelAndView.setViewName("/index");
         return modelAndView;
     }
-//    @RequestMapping("/")
-//    public String index(Model model) {
-//        model.addAttribute("item", itemServ.allItems());
-//        model.addAttribute("review", reviewServ.allReviews());
-//        return "index";
-//    }
 
     //  about page
     @GetMapping("/about")
-    public String about() {
-        return "about.jsp";
+    public ModelAndView about() {
+        return new ModelAndView("/about");
     }
 
     //  contact page
     @GetMapping("/contact")
-    public String contact() {
-        return "contact.jsp";
+    public ModelAndView contact() {
+        return new ModelAndView("/contact");
     }
 }

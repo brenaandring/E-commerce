@@ -159,4 +159,6 @@ public class User {
     protected void onUpdate() {
         this.setUpdatedAt(new Date());
     }
+
+
 }

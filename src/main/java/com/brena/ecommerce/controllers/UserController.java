@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -25,43 +26,69 @@ public class UserController {
 
     //  user registration
     @GetMapping("/registration")
-    public String register(@Valid @ModelAttribute("user") User user) {
-        return "register.jsp";
+    public ModelAndView registration() {
+        ModelAndView modelAndView = new ModelAndView();
+        User user = new User();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("/registration");
+        return modelAndView;
     }
 
     @PostMapping("/registration")
-    public String registration(@Valid User user, BindingResult result) {
+    public ModelAndView createUser(@Valid User user, BindingResult result) {
         userValidator.validate(user, result);
+        ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
-            return "register.jsp";
+            modelAndView.setViewName("/registration");
         }
         if (userServ.countAdmins() < 1) {
             userServ.saveUserWithAdminRole(user);
         } else {
             userServ.saveWithUserRole(user);
         }
-        return "redirect:/dashboard";
+        modelAndView.setViewName("/login");
+        return modelAndView;
     }
 
     //  admin/user login
     @RequestMapping("/login")
-    public String login(@Valid @ModelAttribute("user") User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout, Model model) {
+    public ModelAndView login(@Valid @ModelAttribute("user") User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
         if (error != null) {
-            model.addAttribute("errorMessage", "Invalid credentials. Please try again.");
+            modelAndView.addObject("errorMessage", "Invalid credentials. Please try again.");
         }
         if (logout != null) {
-            model.addAttribute("logoutMessage", "Logout Successful!");
+            modelAndView.addObject("logoutMessage", "Logout successful!");
         }
-        return "login.jsp";
+        modelAndView.setViewName(("/login"));
+        return modelAndView;
     }
+
+//    @RequestMapping("/login")
+//    public String login(@Valid @ModelAttribute("user") User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout, Model model) {
+//        if (error != null) {
+//            model.addAttribute("errorMessage", "Invalid credentials. Please try again.");
+//        }
+//        if (logout != null) {
+//            model.addAttribute("logoutMessage", "Logout Successful!");
+//        }
+//        return "login.jsp";
+//    }
 
     //  user dashboard
     @GetMapping("/dashboard")
-    public String dashboard(Principal principal, Model model) {
+    public ModelAndView dashboard(Principal principal, Model model) {
+        ModelAndView modelAndView = new ModelAndView();
         String email = principal.getName();
-        model.addAttribute("user", userServ.findByEmail(email));
-        return "dashboard.jsp";
+        modelAndView.addObject("user", userServ.findByEmail(email));
+        return modelAndView;
     }
+//    @GetMapping("/dashboard")
+//    public String dashboard(Principal principal, Model model) {
+//        String email = principal.getName();
+//        model.addAttribute("user", userServ.findByEmail(email));
+//        return "dashboard.jsp";
+//    }
 
     //  admin dashboard
     @GetMapping("/admin")

@@ -1,20 +1,23 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="en">
-
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
+        <title>E-commerce</title>
     </head>
 
     <body>
-        <div th:fragment="items">
-            <div class="panel-default well" th:each="item : ${items}">
-                <div class="panel-heading">
-                    <h1 th:text="${item.title}"></h1>
-                    <img src="${item.image}" alt="an image of a mask">
-                </div>
-                <h3 th:text="${item.description}" class="panel-body">Description</h3>
-                <div class="row panel-footer">
-                    <div th:inline="text" class="col-md-2">Price: $[[${item.price}]]</div>
-                    <div th:inline="text" class="col-md-9">In Stock: [[${item.quantity}]]</div>
+        <div class="container-fluid" th:fragment="items">
+            <div class="row row-cols-1 row-cols-md-3 justify-content-center">
+                <div class="col mb-4" th:each="item : ${items}">
+                    <div class="card h-100">
+                        <img src="${item.image}" class="card-img-top" alt="photo of a mask">
+                        <div class="card-body text-center">
+                            <h5 th:text="${item.title}" class="card-title"></h5>
+                            <p th:text="${item.description}" class="card-text">Description: </p>
+                            <p class="card-text">Price: $[[${item.price}]]</p>
+                            <a href="#" class="btn btn-dark">View</a>
+                            <a href="#" class="btn btn-dark">Purchase</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
