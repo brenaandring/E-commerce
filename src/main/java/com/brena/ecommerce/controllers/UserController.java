@@ -84,9 +84,8 @@ public class UserController {
     }
 
     //  admin-only: delete a user
-    @RequestMapping("/delete/{id}")
+    @RequestMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
-//        User user = userServ.findUserById(id);
         userServ.deleteUser(id);
         return "redirect:/admin";
     }
