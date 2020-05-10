@@ -35,6 +35,28 @@
 
 
                 <div class="col">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${item}">
+                            <th scope="row" th:text="${item.id}"></th>
+                            <td th:text="${item.quantity}"></td>
+                            <td th:text="${item.description}"></td>
+                            <td th:text="${item.price}"></td>
+                            <td><a th:href="">Edit</a> |
+                                <a th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
