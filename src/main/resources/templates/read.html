@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
     <head>
         <div th:replace="/fragments/header :: header"></div>
         <title>E-commerce</title>
@@ -8,8 +11,58 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
 
-        <div class="container">
-            ITEM INFO section will go here
+        <div class="container-sm">
+            <!-- admin links -->
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/}">Edit</a> |
+                <a th:href="@{/items/delete/{id}(id=${item.id})}">Delete</a>
+            </div>
+
+            <!-- individual item information-->
+            <h1>Title: [[${item.title}]]</h1>
+            <h1>Quantity: [[${item.quantity}]]</h1>
+            <h1>Description: [[${item.description}]]</h1>
+            <h1>Price: $[[${item.price}]]</h1>
+            <img src="" alt="masks">
+
+            <!-- user item links -->
+            <br><a th:href="@{/}">Add to Cart</a> |
+            <a th:href="@{/}">Leave a Review</a> |
+
+            <!--review-->
+            <form action="#" th:action="@{/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="comment">Your Review:</label>
+                        <input type="text" class="form-control" id="comment" th:field="*{comment}">
+
+<!--                        <label for="rating">Rate:</label>-->
+<!--                        <select th:field="*{rating}" class="form-control" id="rating">-->
+<!--                            <option th:each="rating : ${ratings}" th:text="${rating}" th:value="${rating}"></option>-->
+<!--                        </select>-->
+
+                        <button type="submit" class="btn btn-dark">Leave A Review</button>
+                    </div>
+                </div>
+            </form>
+
+
+            <!-- all item reviews and ratings-->
+            <table class="table">
+                <thead>
+                <tr>
+<!--                    <th scope="col">Rating</th>-->
+                    <th scope="col">Review</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review : ${item.reviews}">
+<!--                    <th scope="row" th:text="${review.rating}"></th>-->
+                    <td th:text="${review.comment}"></td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
 
         <div th:replace="/fragments/footer :: footer"></div>

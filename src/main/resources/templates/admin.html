@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
     <head>
         <div th:replace="/fragments/header :: header"></div>
         <title>E-commerce</title>
@@ -11,6 +14,7 @@
         <div class="container-sm">
             <!--table of all items-->
             <h2>All Items</h2>
+            <p><a th:href="@{/items/create}">Add New Item</a></p>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -27,8 +31,9 @@
                     <td th:text="${item.quantity}"></td>
                     <td th:text="${item.description}"></td>
                     <td th:text="${item.price}"></td>
-                    <td><a th:href="@{/}">Edit</a> |
-                        <a th:href="@{/}">Delete</a>
+                    <td><a th:href="@{/items/{id}(id=${item.id})}">View</a> |
+<!--                        <a th:href="@{/items/edit/{id}(id=${item.id})}">Edit</a> |-->
+                        <a th:href="@{/items/delete/{id}(id=${item.id})}">Delete</a>
                     </td>
                 </tr>
                 </tbody>

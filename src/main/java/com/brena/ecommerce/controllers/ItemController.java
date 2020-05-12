@@ -2,14 +2,13 @@ package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.*;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.*;
 
 @Controller
@@ -31,49 +30,51 @@ public class ItemController {
     }};
 
     //  admin-only: create a new item
-    @RequestMapping("/items/new")
-    public String newItem(Model model) {
-        model.addAttribute("item", new Item());
-        return "new.jsp";
+    @GetMapping("/items/create")
+    public ModelAndView createItem() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("item", new Item());
+        modelAndView.setViewName("/create");
+        return modelAndView;
     }
-
-    @PostMapping("/items")
-    public String create(@Valid @ModelAttribute("item") Item item, /*@RequestParam MultipartFile file,*/ BindingResult result) {
+    @PostMapping("/items/create")
+    public String create(@Valid @ModelAttribute("item") Item item, BindingResult result) {
         if (result.hasErrors()) {
-            return "new.jsp";
+            return "create";
         } else {
-            byte[] image = new byte[0];
-            try {
-                image = item.getUploadFile().getBytes();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            item.setImage(image);
             itemServ.saveItem(item);
             return "redirect:/admin";
         }
     }
 
+//    @PostMapping("/items/create")
+//    public ModelAndView create(@Valid Item item, BindingResult result) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        if (result.hasErrors()) {
+//            modelAndView.setViewName("/items/create");
+//        } else {
+//            itemServ.saveItem(item);
+//        }
+//        modelAndView.setViewName("/admin");
+//        return modelAndView;
+//    }
+
     //  show an item
     @GetMapping("/items/{id}")
-    public String showItem(@PathVariable("id") Long id, Model model) {
-        Item item = itemServ.findItem(id);
-        model.addAttribute("item", item);
-        model.addAttribute("review", new Review());
-        model.addAttribute("ratings", ratings);
-//        if (item.getImage() != null && item.getImage().length > 0) {
-//            String imageAsString = new String(Base64.encodeBase64(item.getImage()));
-//            model.addAttribute("itemImage", imageAsString);
-//        }
-        return "show.jsp";
+    public ModelAndView showItem(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("item", itemServ.findItem(id));
+        modelAndView.addObject("review", new Review());
+        modelAndView.addObject("ratings", ratings);
+        modelAndView.setViewName("/read");
+        return modelAndView;
     }
 
     //  create an item review
-    @PostMapping("/items/{id}/review")
-    public String createReview(@PathVariable("id") Long id, @Valid @ModelAttribute("review") Review review,
-                               BindingResult result) {
+    @PostMapping("/items/review/{id}")
+    public String createReview(@PathVariable("id") Long id, @Valid Review review, BindingResult result) {
         if (result.hasErrors()) {
-            return "show.jsp";
+            return "read.html";
         } else {
             Item item = itemServ.findItem(id);
             review.setItem(item);
@@ -89,7 +90,7 @@ public class ItemController {
         return "edit.jsp";
     }
 
-    @PostMapping("/items/{id}")
+    @PostMapping("/items/edit/{id}")
     public String update(@Valid @ModelAttribute("item") Item item, BindingResult result) {
         if (result.hasErrors()) {
             return "edit.jsp";
