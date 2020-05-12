@@ -2,6 +2,7 @@ package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,16 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.*;
 
 @Controller
 public class ItemController {
     private final ItemServ itemServ;
     private final ReviewServ reviewServ;
+    private final UserServ userServ;
 
-    public ItemController(ItemServ itemServ, ReviewServ reviewServ) {
+    public ItemController(ItemServ itemServ, ReviewServ reviewServ, UserServ userServ) {
         this.itemServ = itemServ;
         this.reviewServ = reviewServ;
+        this.userServ = userServ;
     }
 
     private static final Map<Integer, Integer> ratings = new LinkedHashMap<Integer, Integer>() {{
@@ -32,13 +36,12 @@ public class ItemController {
     //  admin-only: create a new item
     @GetMapping("/items/create")
     public ModelAndView createItem() {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("/create");
         modelAndView.addObject("item", new Item());
-        modelAndView.setViewName("/create");
         return modelAndView;
     }
     @PostMapping("/items/create")
-    public String create(@Valid @ModelAttribute("item") Item item, BindingResult result) {
+    public String create(@Valid Item item, BindingResult result) {
         if (result.hasErrors()) {
             return "create";
         } else {
@@ -62,38 +65,31 @@ public class ItemController {
     //  show an item
     @GetMapping("/items/{id}")
     public ModelAndView showItem(@PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("/read");
         modelAndView.addObject("item", itemServ.findItem(id));
         modelAndView.addObject("review", new Review());
-        modelAndView.addObject("ratings", ratings);
-        modelAndView.setViewName("/read");
+//        modelAndView.addObject("ratings", ratings);
         return modelAndView;
-    }
-
-    //  create an item review
-    @PostMapping("/items/review/{id}")
-    public String createReview(@PathVariable("id") Long id, @Valid Review review, BindingResult result) {
-        if (result.hasErrors()) {
-            return "read.html";
-        } else {
-            Item item = itemServ.findItem(id);
-            review.setItem(item);
-            reviewServ.saveReview(review);
-            return "redirect:/items/{id}";
-        }
     }
 
     //  admin-only: edit an item
     @GetMapping("/items/edit/{id}")
-    public String editItem(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("item", itemServ.findItem(id));
-        return "edit.jsp";
+    public ModelAndView editItem(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("/update");
+        modelAndView.addObject("item", itemServ.findItem(id));
+        return modelAndView;
     }
 
+//    @GetMapping("/items/edit/{id}")
+//    public String editItem(@PathVariable("id") Long id, Model model) {
+//        model.addAttribute("item", itemServ.findItem(id));
+//        return "edit.jsp";
+//    }
+
     @PostMapping("/items/edit/{id}")
-    public String update(@Valid @ModelAttribute("item") Item item, BindingResult result) {
+    public String update(@Valid Item item, BindingResult result) {
         if (result.hasErrors()) {
-            return "edit.jsp";
+            return "update.html";
         } else {
             itemServ.saveItem(item);
             return "redirect:/admin";
@@ -107,16 +103,23 @@ public class ItemController {
         return "redirect:/admin";
     }
 
-    //  admin-only: delete a review
-    @RequestMapping("/review/delete/{id}")
-    public String destroyReview(@PathVariable("id") Long id) {
-        reviewServ.deleteReview(id);
-        return "redirect:/admin";
+    //  create an item review
+    @PostMapping("/items/review/{id}")
+    public String createReview(@PathVariable("id") Long id, @Valid Review review, BindingResult result, Model model, Principal principal) {
+        if (result.hasErrors()) {
+            return "read.html";
+        } else {
+            Item item = itemServ.findItem(id);
+            review.setItem(item);
+            reviewServ.saveReview(review);
+            return "redirect:/items/{id}";
+        }
     }
 
-    //  don't forget to change this before deployment
-    @PostMapping("/cancel")
-    public String cancel() {
+    //  admin-only: delete a review
+    @RequestMapping("/review/delete/{id}")
+    public String deleteReview(@PathVariable("id") Long id) {
+        reviewServ.deleteReview(id);
         return "redirect:/admin";
     }
 }

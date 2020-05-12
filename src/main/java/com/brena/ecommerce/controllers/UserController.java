@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -27,15 +28,14 @@ public class UserController {
     //  user registration
     @GetMapping("/registration")
     public ModelAndView registration() {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("/registration");
         User user = new User();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("/registration");
         return modelAndView;
     }
 
     @PostMapping("/registration")
-    public ModelAndView createUser(@Valid User user, BindingResult result) {
+    public ModelAndView createUser(@Valid User user, Model model, BindingResult result, HttpSession session) {
         userValidator.validate(user, result);
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
@@ -52,7 +52,7 @@ public class UserController {
 
     //  admin/user login
     @RequestMapping("/login")
-    public ModelAndView login(@Valid @ModelAttribute("user") User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout, Model model) {
+    public ModelAndView login(@Valid User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout) {
         ModelAndView modelAndView = new ModelAndView();
         if (error != null) {
             modelAndView.addObject("errorMessage", "Invalid credentials. Please try again.");
@@ -65,7 +65,7 @@ public class UserController {
 
     //  user dashboard
     @GetMapping("/dashboard")
-    public ModelAndView dashboard(Principal principal, Model model) {
+    public ModelAndView dashboard(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         String email = principal.getName();
         modelAndView.addObject("user", userServ.findByEmail(email));
@@ -74,7 +74,7 @@ public class UserController {
 
     //  admin dashboard
     @GetMapping("/admin")
-    public ModelAndView adminPage(Principal principal, Model model) {
+    public ModelAndView adminPage(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
         String email = principal.getName();
         modelAndView.addObject("admin", userServ.findByEmail(email));

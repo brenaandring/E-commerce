@@ -10,7 +10,7 @@ import java.util.Optional;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "review_id")
+    @Column(name = "review_id")
     private Long id;
 
     @Column(name = "comment")

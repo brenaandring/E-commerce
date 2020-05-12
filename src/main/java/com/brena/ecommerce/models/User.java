@@ -32,7 +32,6 @@ public class User {
     private String passwordConfirmation;
 
     private Date createdAt;
-    private Date updatedAt;
 
     //  model relationships
     @ManyToMany(fetch = FetchType.EAGER)
@@ -108,14 +107,6 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public List<Role> getRoles() {
         return roles;
     }
@@ -154,11 +145,4 @@ public class User {
     protected void onCreate() {
         this.setCreatedAt(new Date());
     }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.setUpdatedAt(new Date());
-    }
-
-
 }

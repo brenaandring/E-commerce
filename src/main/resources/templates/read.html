@@ -14,7 +14,7 @@
         <div class="container-sm">
             <!-- admin links -->
             <div sec:authorize="hasRole('ROLE_ADMIN')">
-                <a th:href="@{/}">Edit</a> |
+                <a th:href="@{/items/edit/{id}(id=${item.id})}">Edit</a> |
                 <a th:href="@{/items/delete/{id}(id=${item.id})}">Delete</a>
             </div>
 
@@ -26,39 +26,56 @@
             <img src="" alt="masks">
 
             <!-- user item links -->
-            <br><a th:href="@{/}">Add to Cart</a> |
-            <a th:href="@{/}">Leave a Review</a> |
+            <p><a href="#" class="btn btn-dark">Add to Cart</a></p>
 
             <!--review-->
-            <form action="#" th:action="@{/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="comment">Your Review:</label>
-                        <input type="text" class="form-control" id="comment" th:field="*{comment}">
+            <div sec:authorize="isAuthenticated()">
+                <form action="#" th:action="@{/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="comment">Your Review:</label>
+                            <input type="text" class="form-control" id="comment" th:field="*{comment}">
 
-<!--                        <label for="rating">Rate:</label>-->
-<!--                        <select th:field="*{rating}" class="form-control" id="rating">-->
-<!--                            <option th:each="rating : ${ratings}" th:text="${rating}" th:value="${rating}"></option>-->
-<!--                        </select>-->
+                            <label for="rating">Rate:</label>
+                            <select th:field="*{rating}" class="form-control" id="rating">
+                                <option th:value="5" th:text="5"></option>
+                                <option th:value="4" th:text="4"></option>
+                                <option th:value="3" th:text="3"></option>
+                                <option th:value="2" th:text="2"></option>
+                                <option th:value="1" th:text="1"></option>
+                                <option th:value="0" th:text="0"></option>
+                            </select>
 
-                        <button type="submit" class="btn btn-dark">Leave A Review</button>
+                            <button type="submit" class="btn btn-dark">Leave A Review</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <p>Register/Login to Leave a Review!</p>
+            </div>
 
 
             <!-- all item reviews and ratings-->
             <table class="table">
                 <thead>
                 <tr>
-<!--                    <th scope="col">Rating</th>-->
+                    <th scope="col">Rating</th>
                     <th scope="col">Review</th>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <th scope="col">Action</th>
+                    </div>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="review : ${item.reviews}">
-<!--                    <th scope="row" th:text="${review.rating}"></th>-->
+                    <th scope="row" th:text="${review.rating}"></th>
                     <td th:text="${review.comment}"></td>
+                    <td>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/review/delete/{id}(id=${review.id})}">Delete</a>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

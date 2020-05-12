@@ -12,7 +12,7 @@ import java.util.*;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "item_id")
+    @Column(name = "item_id")
     private Long id;
 
     @Column(name = "title", nullable = false, unique = true)
@@ -31,17 +31,8 @@ public class Item {
     @Min(value = 0, message = "Quantity has to be non negative number")
     private Integer quantity;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "image", length = 16_000_000)
-    private byte[] image;
-    //for upload only
-    @Transient
-    private MultipartFile uploadFile;
-
     @Column(updatable = false)
     private Date createdAt;
-    private Date updatedAt;
 
     //  model relationships
     @ManyToOne(fetch = FetchType.LAZY)
@@ -95,28 +86,12 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public User getUser() {
@@ -153,18 +128,5 @@ public class Item {
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = new Date();
-    }
-
-    public MultipartFile getUploadFile() {
-        return uploadFile;
-    }
-
-    public void setUploadFile(MultipartFile uploadFile) {
-        this.uploadFile = uploadFile;
     }
 }
