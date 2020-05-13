@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.*;
 
 @Controller
 public class ItemController {
@@ -31,6 +30,7 @@ public class ItemController {
         modelAndView.addObject("item", new Item());
         return modelAndView;
     }
+
     @PostMapping("/admin/items/create")
     public String create(@Valid Item item, BindingResult result) {
         if (result.hasErrors()) {

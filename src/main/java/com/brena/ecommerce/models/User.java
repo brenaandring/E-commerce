@@ -17,11 +17,11 @@ public class User {
     private String email;
 
     @Column(name = "firstName")
-    @Size(min = 1, max = 25, message="First name is required and must have 1 - 25 characters")
+    @Size(min = 1, max = 25, message = "First name is required and must have 1 - 25 characters")
     private String firstName;
 
     @Column(name = "lastName")
-    @Size(min = 1, max = 25, message="Last name is required and must have 1 - 25 characters")
+    @Size(min = 1, max = 25, message = "Last name is required and must have 1 - 25 characters")
     private String lastName;
 
     @Column(name = "password", nullable = false)

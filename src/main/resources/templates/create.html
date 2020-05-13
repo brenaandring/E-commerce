@@ -12,7 +12,6 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
-<!--            <p><form errors="item.*"/></p>-->
 
             <form action="#" th:action="@{/admin/items/create}" th:object="${item}" method="post">
                 <div class="form-row justify-content-center">

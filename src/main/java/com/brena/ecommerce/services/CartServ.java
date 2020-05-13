@@ -16,7 +16,7 @@ public class CartServ {
 
     private final Map<Item, Integer> items = new HashMap<>();
 
-    public CartServ ( ItemRepo itemRepo) {
+    public CartServ(ItemRepo itemRepo) {
         this.itemRepo = itemRepo;
     }
 
@@ -53,7 +53,8 @@ public class CartServ {
             if (!byId.isPresent()) {
                 throw new IllegalStateException("Item is not available");
             }
-            item = byId.get();;
+            item = byId.get();
+            ;
             if (item.getQuantity() < entry.getValue()) {
                 throw new IllegalStateException("Item is not available");
             }

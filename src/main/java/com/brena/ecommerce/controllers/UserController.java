@@ -4,12 +4,10 @@ import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.services.*;
 import com.brena.ecommerce.validator.UserValidator;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 
