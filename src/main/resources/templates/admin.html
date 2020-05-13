@@ -15,7 +15,7 @@
             <h1>Welcome, [[${admin.firstName}]]!</h1>
             <!--table of all items-->
             <h2>All Items</h2>
-            <p><a th:href="@{/items/create}">Add New Item</a></p>
+            <p><a th:href="@{/admin/items/create}" class="btn btn-dark">Add New Item</a></p>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -32,9 +32,9 @@
                     <td th:text="${item.quantity}"></td>
                     <td th:text="${item.description}"></td>
                     <td th:text="${item.price}"></td>
-                    <td><a th:href="@{/items/{id}(id=${item.id})}">View</a> |
-                        <a th:href="@{/items/edit/{id}(id=${item.id})}">Edit</a> |
-                        <a th:href="@{/items/delete/{id}(id=${item.id})}">Delete</a>
+                    <td><a th:href="@{/items/{id}(id=${item.id})}" class="btn btn-dark">View</a>
+                        <a th:href="@{/admin/items/edit/{id}(id=${item.id})}" class="btn btn-dark">Edit</a>
+                        <a th:href="@{/admin/items/delete/{id}(id=${item.id})}" class="btn btn-dark">Delete</a>
                     </td>
                 </tr>
                 </tbody>
@@ -58,7 +58,7 @@
                     <td th:text="${user.firstName}"></td>
                     <td th:text="${user.lastName}"></td>
                     <td th:text="${user.email}"></td>
-                    <td><a th:href="@{/users/delete/{id}(id=${user.id})}">Delete</a></td>
+                    <td><a th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-dark">Delete</a></td>
                 </tr>
                 </tbody>
             </table>

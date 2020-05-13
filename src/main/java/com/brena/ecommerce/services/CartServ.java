@@ -1,6 +1,5 @@
 package com.brena.ecommerce.services;
 
-import com.brena.ecommerce.exception.NotEnoughItemsInStockException;
 import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.repositories.ItemRepo;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class CartServ {
     }
 
     //  Checkout will rollback if there is not enough of some item in stock
-    public void checkout() throws NotEnoughItemsInStockException {
+    public void checkout() {
         Item item;
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
             // Refresh quantity for every product before checking
@@ -56,7 +55,7 @@ public class CartServ {
             }
             item = byId.get();;
             if (item.getQuantity() < entry.getValue()) {
-                throw new NotEnoughItemsInStockException(item);
+                throw new IllegalStateException("Item is not available");
             }
             item.setQuantity(item.getQuantity() - entry.getValue());
             itemRepo.save(item);

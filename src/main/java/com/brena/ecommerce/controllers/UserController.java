@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public ModelAndView createUser(@Valid User user, Model model, BindingResult result, HttpSession session) {
+    public ModelAndView createUser(@Valid User user, BindingResult result) {
         userValidator.validate(user, result);
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
@@ -84,7 +84,7 @@ public class UserController {
     }
 
     //  admin-only: delete a user
-    @RequestMapping("/users/delete/{id}")
+    @RequestMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userServ.deleteUser(id);
         return "redirect:/admin";
