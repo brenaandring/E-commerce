@@ -2,11 +2,9 @@ package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.Address;
 import com.brena.ecommerce.models.Item;
+import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.models.User;
-import com.brena.ecommerce.services.AddressServ;
-import com.brena.ecommerce.services.CartServ;
-import com.brena.ecommerce.services.ItemServ;
-import com.brena.ecommerce.services.UserServ;
+import com.brena.ecommerce.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CartController {
@@ -24,12 +24,14 @@ public class CartController {
     private final ItemServ itemServ;
     private final CartServ cartServ;
     private final AddressServ addressServ;
+    private final OrderServ orderServ;
 
-    public CartController(UserServ userServ, ItemServ itemServ, CartServ cartServ, AddressServ addressServ) {
+    public CartController(UserServ userServ, ItemServ itemServ, CartServ cartServ, AddressServ addressServ, OrderServ orderServ) {
         this.userServ = userServ;
         this.itemServ = itemServ;
         this.cartServ = cartServ;
         this.addressServ = addressServ;
+        this.orderServ = orderServ;
     }
 
     @GetMapping("/user/cart")
@@ -68,7 +70,7 @@ public class CartController {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (result.hasErrors()) {
-            return "address.html";
+            return "address";
         } else {
             address.setUser(user);
             addressServ.saveAddress(address);
@@ -90,11 +92,24 @@ public class CartController {
         cartServ.removeItem(item);
         return cartConfirmation();
     }
+//    @GetMapping("/user/cart/checkout")
+//    public ModelAndView checkout() {
+//
+//        cartServ.checkout();
+//        return cartSuccess();
+//    }
+//
 
     @GetMapping("/user/cart/checkout")
-    public ModelAndView checkout() {
-        cartServ.checkout();
-        return cartSuccess();
+    public String checkout(@Valid Order order, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Address address = addressServ.findByUser(user);
+        order.setUser(user);
+        order.setAddress(address);
+        orderServ.saveOrder(order);
+        cartServ.checkout(order);
+        return "redirect:/user/cart/success";
     }
 
     @GetMapping("/user/cart/success")

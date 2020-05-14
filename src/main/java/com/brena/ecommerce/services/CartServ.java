@@ -1,6 +1,7 @@
 package com.brena.ecommerce.services;
 
 import com.brena.ecommerce.models.Item;
+import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.repositories.ItemRepo;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +46,7 @@ public class CartServ {
     }
 
     //  Checkout will rollback if there is not enough of some item in stock
-    public void checkout() {
+    public void checkout(Order order) {
         Item item;
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
             // Refresh quantity for every product before checking
