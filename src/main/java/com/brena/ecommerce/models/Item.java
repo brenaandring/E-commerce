@@ -31,7 +31,7 @@ public class Item {
     @Min(value = 0, message = "Quantity has to be non negative number")
     private Integer quantity;
 
-    @Column(updatable = false)
+    @Column(name = "createdAt", updatable = false)
     private Date createdAt;
 
     //  model relationships
@@ -41,6 +41,9 @@ public class Item {
 
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<Review> reviews;
+
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     public Item() {
     }
@@ -108,6 +111,14 @@ public class Item {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

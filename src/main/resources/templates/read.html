@@ -56,7 +56,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Rating</th>
-                    <th scope="col">Review</th>
+                    <th scope="col">Comment</th>
                     <div sec:authorize="hasRole('ROLE_ADMIN')">
                         <th scope="col">Action</th>
                     </div>
@@ -66,10 +66,8 @@
                 <tr th:each="review : ${item.reviews}">
                     <th scope="row" th:text="${review.rating}"></th>
                     <td th:text="${review.comment}"></td>
-                    <td>
-                        <div sec:authorize="hasRole('ROLE_ADMIN')">
-                            <a th:href="@{/admin/review/delete/{id}(id=${review.id})}" class="btn btn-dark">Delete</a>
-                        </div>
+                    <td sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/admin/review/delete/{id}(id=${review.id})}" class="btn btn-dark">Delete</a>
                     </td>
                 </tr>
                 </tbody>

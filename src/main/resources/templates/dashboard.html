@@ -14,8 +14,7 @@
         <div class="container-sm">
             <h1>Welcome, [[${user.firstName}]]!</h1>
 
-
-            <h5>Your Reviews</h5>
+            <br><h5>Your Reviews</h5>
             <table class="table">
                 <thead>
                 <tr>
@@ -30,8 +29,8 @@
                     <th scope="row" th:text="${review.item.title}"></th>
                     <td th:text="${review.comment}"></td>
                     <td th:text="${review.rating}"></td>
-                    <td><a th:href="@{/}" class="btn btn-dark">Edit</a>
-                        <a th:href="@{/}" class="btn btn-dark">Delete</a>
+                    <td><a th:href="@{/items/{id}(id=${review.item.id})}" class="btn btn-dark">View</a>
+                        <a th:href="@{/user/review/delete/{id}(id=${review.id})}" class="btn btn-dark">Delete</a>
                     </td>
                 </tr>
                 </tbody>

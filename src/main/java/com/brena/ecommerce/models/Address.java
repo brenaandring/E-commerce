@@ -27,12 +27,19 @@ public class Address {
     @Column(name = "zip")
     private Integer zip;
 
+    @Column(name = "createdAt", updatable = false)
     private Date createdAt;
 
     //  model relationships
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
+    private List<Order> orders;
+
+    public Address() {
+    }
 
     //   getters and setters
     public Long getId() {
@@ -97,6 +104,14 @@ public class Address {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @PrePersist

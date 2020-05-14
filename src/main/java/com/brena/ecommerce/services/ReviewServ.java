@@ -1,10 +1,12 @@
 package com.brena.ecommerce.services;
 
+import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.Review;
 import com.brena.ecommerce.repositories.ReviewRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewServ {
@@ -22,6 +24,12 @@ public class ReviewServ {
     //  create a review
     public void saveReview(Review review) {
         reviewRepo.save(review);
+    }
+
+    // find a review
+    public Review findById(Long id) {
+        Optional<Review> review = reviewRepo.findById(id);
+        return review.orElse(null);
     }
 
     //  delete a review

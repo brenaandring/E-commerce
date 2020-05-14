@@ -1,24 +1,14 @@
 package com.brena.ecommerce.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.Optional;
 
 @Entity
-@Table(name = "reviews")
-public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "review_id")
+@Table(name = "orders")
+public class Order {
+    @Id@GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "order_id")
     private Long id;
-
-    @Column(name = "comment")
-    @NotBlank(message = "A COMMENT is required")
-    private String comment;
-
-    @Column(name = "rating", columnDefinition = "int default 0")
-    private Integer rating;
 
     @Column(name = "createdAt", updatable = false)
     private Date createdAt;
@@ -32,32 +22,22 @@ public class Review {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    public Review() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    public Order() {
     }
 
     //  getters and setters
+
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
     }
 
     public Date getCreatedAt() {
@@ -84,9 +64,16 @@ public class Review {
         this.item = item;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Date();
     }
-
 }

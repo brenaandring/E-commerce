@@ -23,9 +23,8 @@ public class MainController {
     //  index/home page
     @GetMapping("/")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("/index");
         modelAndView.addObject("items", itemServ.allItems());
-        modelAndView.setViewName("/index");
         return modelAndView;
     }
 

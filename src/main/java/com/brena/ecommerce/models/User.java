@@ -31,6 +31,7 @@ public class User {
     @Transient
     private String passwordConfirmation;
 
+    @Column(name = "createdAt", updatable = false)
     private Date createdAt;
 
     //  model relationships
@@ -49,6 +50,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Review> reviews;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     public User() {
     }
@@ -150,6 +154,14 @@ public class User {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @PrePersist

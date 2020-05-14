@@ -97,4 +97,20 @@ public class ItemController {
         reviewServ.deleteReview(id);
         return "redirect:/admin";
     }
+
+    //  user: delete their review
+    @RequestMapping("/user/review/delete/{id}")
+    public String destroyReview(@PathVariable("id") Long id, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Review reviewToDelete = reviewServ.findById(id);
+        if (reviewToDelete != null) {
+            if (reviewToDelete.getUser().getId().equals(user.getId())) {
+                reviewServ.deleteReview(id);
+            } else {
+                System.out.println("Somebody is doing something nasty");
+            }
+        }
+        return "redirect:/user/dashboard";
+    }
 }

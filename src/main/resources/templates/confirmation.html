@@ -12,13 +12,27 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
-            <h1>Thank you for your purchase!</h1>
+            <!-- user: shows all items in cart. User can add/remove/checkout items -->
+            <div class="panel-default well" th:each="item : ${items.entrySet()}">
+                <div class="panel-heading">
+                    <h1><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}">Title</a></h1>
+                    <h3 th:text="${item.getKey().description}">Description</h3>
+                </div>
+                <div class="row panel-body">
+                    <div th:inline="text" class="col-md-2">Price: $[[${item.getKey().price}]]</div>
+                    <div th:inline="text" class="col-md-9">Quantity: [[${item.getValue()}]]</div>
+                    <a th:href="@{/user/cart/remove/item/{id}(id=${item.getKey().id})}" class="col-md-1">
+                        <button type="button" class="btn btn-dark" th:text="Remove">Remove</button>
+                    </a>
+                </div>
+            </div>
 
-            <h3>You will get a confirmation email shortly.
-                <br>You can visit your dashboard to view your recent purchase</h3>
-
-            <h4>Mask With Love</h4>
-
+            <div class="row panel-body">
+                <h2 class="col-md-11" th:inline="text">Total: [[${total}]]</h2>
+                <a th:href="@{/user/cart/checkout}" class="col-md-1">
+                    <button type="button" class="btn btn-danger">Checkout</button>
+                </a>
+            </div>
         </div>
 
         <div th:replace="/fragments/footer :: footer"></div>

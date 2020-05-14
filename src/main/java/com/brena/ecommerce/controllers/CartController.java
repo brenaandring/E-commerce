@@ -72,21 +72,33 @@ public class CartController {
         } else {
             address.setUser(user);
             addressServ.saveAddress(address);
-            return "redirect:/user/cart/confirmation";
+            return "redirect:/user/cart/confirm";
         }
     }
 
-    @GetMapping("/user/cart/confirmation")
-    public ModelAndView confirmation() {
+    @GetMapping("/user/cart/confirm")
+    public ModelAndView cartConfirmation() {
         ModelAndView modelAndView = new ModelAndView("/confirmation");
         modelAndView.addObject("items", cartServ.getItemsInCart());
         modelAndView.addObject("total", cartServ.getTotal().toString());
         return modelAndView;
     }
 
+    @GetMapping("/user/cart/remove/item/{id}")
+    public ModelAndView removeItemFromCartConfirmation(@PathVariable("id") Long id) {
+        Item item = itemServ.findItem(id);
+        cartServ.removeItem(item);
+        return cartConfirmation();
+    }
+
     @GetMapping("/user/cart/checkout")
     public ModelAndView checkout() {
         cartServ.checkout();
-        return shoppingCart();
+        return cartSuccess();
+    }
+
+    @GetMapping("/user/cart/success")
+    public ModelAndView cartSuccess() {
+        return new ModelAndView("/success");
     }
 }
