@@ -22,7 +22,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-                redirectUrl = "/dashboard";
+                redirectUrl = "/user/dashboard";
                 break;
             } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                 redirectUrl = "/admin";

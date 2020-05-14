@@ -12,7 +12,7 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
-
+            <!-- admin: create an item -->
             <form action="#" th:action="@{/admin/items/create}" th:object="${item}" method="post">
                 <div class="form-row justify-content-center">
                     <div class="form-group col-md-3">

@@ -9,6 +9,7 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
+            <!-- admin: edit/update an item form -->
             <form action="#" th:action="@{/admin/items/edit/{id}(id=${item.id})}" th:object="${item}" method="post">
                 <div class="form-row justify-content-center">
                     <div class="form-group col-md-3">

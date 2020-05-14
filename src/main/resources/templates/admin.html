@@ -12,8 +12,10 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
+            <!-- admin: shows all items and users -->
             <h1>Welcome, [[${admin.firstName}]]!</h1>
-            <!--table of all items-->
+
+            <!-- table of all items -->
             <h2>All Items</h2>
             <p><a th:href="@{/admin/items/create}" class="btn btn-dark">Add New Item</a></p>
             <table class="table table-striped">
@@ -40,7 +42,7 @@
                 </tbody>
             </table>
 
-            <!-- table of all users-->
+            <!-- table of all users -->
             <h2>All Users</h2>
             <table class="table table-striped">
                 <thead>

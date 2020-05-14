@@ -3,13 +3,13 @@ package com.brena.ecommerce.controllers;
 import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @Controller
 public class ItemController {
@@ -75,14 +75,17 @@ public class ItemController {
         return "redirect:/admin";
     }
 
-    //  create an item review
-    @PostMapping("/items/review/{id}")
-    public String createReview(@PathVariable("id") Long id, @Valid Review review, BindingResult result, Model model, Principal principal) {
+    //  user: create an item review
+    @PostMapping("/user/items/review/{id}")
+    public String createReview(@PathVariable("id") Long id, @Valid Review review, BindingResult result, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         if (result.hasErrors()) {
             return "read.html";
         } else {
             Item item = itemServ.findItem(id);
             review.setItem(item);
+            review.setUser(user);
             reviewServ.saveReview(review);
             return "redirect:/items/{id}";
         }

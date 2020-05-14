@@ -9,7 +9,7 @@
 
     <body>
         <div class="container" th:fragment="items">
-
+            <!-- homepage/shows all items -->
             <br><div class="row row-cols-1 row-cols-md-3">
                 <div class="col mb-4" th:each="item : ${items}">
                     <div class="card h-100">
@@ -20,7 +20,7 @@
                             <p class="card-text">Price: $[[${item.price}]]</p>
                             <p class="card-text">In Stock: [[${item.quantity}]]</p>
                             <a th:href="@{/items/{id}(id=${item.id})}" class="btn btn-dark">View</a>
-                            <a th:href="@{/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn btn-dark">Add to Cart</a>
+                            <a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn btn-dark">Add to Cart</a>
                         </div>
                     </div>
                 </div>

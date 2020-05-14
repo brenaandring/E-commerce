@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -16,11 +18,15 @@ public class UserController {
     private final UserServ userServ;
     private final ItemServ itemServ;
     private final UserValidator userValidator;
+    private final ReviewServ reviewServ;
+    private final AddressServ addressServ;
 
-    public UserController(UserServ userServ, ItemServ itemServ, UserValidator userValidator) {
+    public UserController(UserServ userServ, ItemServ itemServ, UserValidator userValidator, ReviewServ reviewServ, AddressServ addressServ) {
         this.userServ = userServ;
         this.itemServ = itemServ;
         this.userValidator = userValidator;
+        this.reviewServ = reviewServ;
+        this.addressServ = addressServ;
     }
 
     //  user registration
@@ -62,11 +68,14 @@ public class UserController {
     }
 
     //  user dashboard
-    @GetMapping("/dashboard")
-    public ModelAndView dashboard(Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();
+    @GetMapping("/user/dashboard")
+    public ModelAndView dashboard(Principal principal, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("/dashboard");
         String email = principal.getName();
-        modelAndView.addObject("user", userServ.findByEmail(email));
+        User user = userServ.findByEmail(email);
+        modelAndView.addObject("user", user);
+        HttpSession session = request.getSession();
+        session.setAttribute("user", user);
         return modelAndView;
     }
 

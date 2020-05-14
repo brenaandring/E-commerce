@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <div th:replace="/fragments/header :: header"></div>
+        <title>E-commerce</title>
+    </head>
+
+    <body>
+        <div th:replace="/fragments/header :: navbar"></div>
+
+        <div class="container-sm">
+            <h1>Thank you for your purchase!</h1>
+
+            <h3>You will get a confirmation email shortly.
+                <br>You can visit your dashboard to view your recent purchase</h3>
+
+            <h4>Mask With Love</h4>
+
+        </div>
+
+        <div th:replace="/fragments/footer :: footer"></div>
+    </body>
+</html>

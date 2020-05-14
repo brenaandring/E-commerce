@@ -5,7 +5,6 @@
 
     <head>
         <title>E-commerce</title>
-        <!-- this is header -->
         <div th:fragment="header">
             <!-- Bootstrap CSS-->
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +18,7 @@
     </head>
 
     <body>
-        <!-- this is header: navbar -->
+        <!-- header: navbar -->
         <div th:fragment="navbar">
             <nav class="navbar navbar-dark bg-dark justify-content-center">
                 <a class="navbar-brand" th:href="@{/}">Home</a>
@@ -28,8 +27,8 @@
                 <a class="navbar-brand" th:href="@{/registration}" sec:authorize="!isAuthenticated()">Register</a>
                 <a class="navbar-brand" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
                 <a class="navbar-brand" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">Admin</a>
-                <a class="navbar-brand" th:href="@{/cart}" sec:authorize="hasRole('ROLE_USER')">Shopping Cart</a>
-                <a class="navbar-brand" th:href="@{/dashboard}" sec:authorize="hasRole('ROLE_USER')">Dashboard</a>
+                <a class="navbar-brand" th:href="@{/user/cart}" sec:authorize="hasRole('ROLE_USER')">Shopping Cart</a>
+                <a class="navbar-brand" th:href="@{/user/dashboard}" sec:authorize="hasRole('ROLE_USER')">Dashboard</a>
                 <a class="navbar-brand" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
             </nav>
         </div>

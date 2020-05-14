@@ -12,7 +12,30 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
-            <h5>Welcome, [[${user.firstName}]]!</h5>
+            <h1>Welcome, [[${user.firstName}]]!</h1>
+
+
+            <h5>Your Reviews</h5>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Item Title</th>
+                    <th scope="col">Your Comment</th>
+                    <th scope="col">Your Rating</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review : ${user.reviews}">
+                    <th scope="row" th:text="${review.item.title}"></th>
+                    <td th:text="${review.comment}"></td>
+                    <td th:text="${review.rating}"></td>
+                    <td><a th:href="@{/}" class="btn btn-dark">Edit</a>
+                        <a th:href="@{/}" class="btn btn-dark">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
 
         <div th:replace="/fragments/footer :: footer"></div>
