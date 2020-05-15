@@ -1,9 +1,6 @@
 package com.brena.ecommerce.controllers;
 
-import com.brena.ecommerce.models.Address;
-import com.brena.ecommerce.models.Item;
-import com.brena.ecommerce.models.Order;
-import com.brena.ecommerce.models.User;
+import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +67,7 @@ public class CartController {
     public String saveAddress(@Valid Address address, BindingResult result, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+
         if (result.hasErrors()) {
             return "address";
         } else {
@@ -104,7 +103,20 @@ public class CartController {
     public String checkout(@Valid Order order, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        Address address = addressServ.findByUser(user);
+//        Address address = addressServ.findByUser(user);
+        HttpSession session2 = request.getSession();
+        Address address = (Address) session2.getAttribute("address");
+        if (order.getOrderItems() == null) {
+            order.setOrderItems(new ArrayList<>());
+        }
+        Map<Item, Integer> itemsInCart = cartServ.getItemsInCart();
+        for (Map.Entry<Item, Integer> entry : itemsInCart.entrySet()) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setItem(entry.getKey());
+            orderItem.setCount(entry.getValue());
+            orderItem.setOrder(order);
+            order.getOrderItems().add(orderItem);
+        }
         order.setUser(user);
         order.setAddress(address);
         orderServ.saveOrder(order);

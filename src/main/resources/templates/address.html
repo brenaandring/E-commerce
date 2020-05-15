@@ -12,7 +12,8 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
-            <!-- user: add their address -->
+            <!-- user: add their shipping address -->
+            <h1>Please provide your shipping address and the name this item is for</h1>
             <form action="#" th:action="@{/user/cart/address}" th:object="${address}" method="post">
                 <div class="form-row justify-content-center">
                     <div class="form-group col-md-3">

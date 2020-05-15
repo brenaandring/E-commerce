@@ -40,13 +40,6 @@ public class Item {
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "items_orders",
-            joinColumns = @JoinColumn(name = "item_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> orders;
-
     public Item() {
     }
 
@@ -113,14 +106,6 @@ public class Item {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
     @Override

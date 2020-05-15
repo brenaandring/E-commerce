@@ -19,8 +19,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "orders")
-    private List<Item> items;
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
@@ -30,8 +30,6 @@ public class Order {
     }
 
     //  getters and setters
-
-
     public Long getId() {
         return id;
     }
@@ -56,12 +54,12 @@ public class Order {
         this.user = user;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public Address getAddress() {
