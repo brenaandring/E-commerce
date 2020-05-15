@@ -18,22 +18,17 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Order </th>
-<!--                    <th scope="col">Your Comment</th>-->
-<!--                    <th scope="col">Your Rating</th>-->
+                    <th scope="col">Item Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Item Quantity</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="order : ${user.orders}">
                     <div th:each="orderItem : ${order.orderItems}">
-                    <th scope="row" th:text="${orderItem.item.getTitle()}"></th>
-                    <th scope="row" th:text="${orderItem.item.getPrice()}"></th>
-                    <th scope="row" th:text="${orderItem.getCount()}"></th>
-<!--                    <td th:text="${review.comment}"></td>-->
-<!--                    <td th:text="${review.rating}"></td>-->
-<!--                    <td><a th:href="@{/items/{id}(id=${review.item.id})}" class="btn btn-dark">View</a>-->
-<!--                        <a th:href="@{/user/review/delete/{id}(id=${review.id})}" class="btn btn-dark">Delete</a>-->
-<!--                    </td>-->
+                        <th scope="row" th:text="${orderItem.getId()}"></th>
+<!--                        <td th:text="${orderItem.item.getPrice()}"></td>-->
+<!--                        <td th:text="${orderItem.getCount()}"></td>-->
                     </div>
                 </tr>
                 </tbody>
