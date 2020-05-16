@@ -9,8 +9,30 @@
         <div th:replace="/fragments/header :: navbar"></div>
 
         <div class="container-sm">
+
             <!-- registration form -->
-            <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+            <form action="#" th:action="@{/registration}" th:object="${user}" method="post" data-toggle="validator">
+
+                <div th:if="${#fields.hasErrors('firstName')}"
+                     th:errors="*{firstName}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('lastName')}"
+                     th:errors="*{lastName}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('email')}"
+                     th:errors="*{email}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('password')}"
+                     th:errors="*{password}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('passwordConfirmation')}"
+                     th:errors="*{passwordConfirmation}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
                 <div class="form-row justify-content-center">
                     <div class="form-group col-md-3">
                         <label for="firstName">First Name:</label>

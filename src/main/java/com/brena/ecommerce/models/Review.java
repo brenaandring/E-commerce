@@ -2,6 +2,7 @@ package com.brena.ecommerce.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Optional;
 
@@ -14,10 +15,10 @@ public class Review {
     private Long id;
 
     @Column(name = "comment")
-    @NotBlank(message = "A COMMENT is required")
+    @Size(min = 1, max = 100, message = "A COMMENT is required and it cannot contain more than 100 characters")
     private String comment;
 
-    @Column(name = "rating", columnDefinition = "int default 0")
+    @Column(name = "rating")
     private Integer rating;
 
     @Column(name = "createdAt", updatable = false)

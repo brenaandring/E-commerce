@@ -1,15 +1,22 @@
 package com.brena.ecommerce.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class Order {
-    @Id@GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
     private Long id;
+
+    @Column(name = "total", nullable = false)
+    @DecimalMin(value = "0.00", message = "*Price has to be non negative number")
+    private BigDecimal total;
 
     @Column(name = "createdAt", updatable = false)
     private Date createdAt;
@@ -68,6 +75,14 @@ public class Order {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     @PrePersist

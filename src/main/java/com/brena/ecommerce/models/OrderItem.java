@@ -12,6 +12,9 @@ public class OrderItem {
     @Column(name = "orderItem_id")
     private Long id;
 
+    @Column(name = "count")
+    private int count;
+
     @Column(name = "createdAt", updatable = false)
     private Date createdAt;
 
@@ -23,11 +26,6 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
-
-    @Column(name = "count")
-    private int count;
-
-
 
     public OrderItem() {
     }

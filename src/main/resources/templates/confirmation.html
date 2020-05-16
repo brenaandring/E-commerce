@@ -21,9 +21,9 @@
                 <div class="row panel-body">
                     <div th:inline="text" class="col-md-2">Price: $[[${item.getKey().price}]]</div>
                     <div th:inline="text" class="col-md-9">Quantity: [[${item.getValue()}]]</div>
-                    <a th:href="@{/user/cart/remove/item/{id}(id=${item.getKey().id})}" class="col-md-1">
-                        <button type="button" class="btn btn-dark" th:text="Remove">Remove</button>
-                    </a>
+                    <!--                    <a th:href="@{/user/cart/remove/item/{id}(id=${item.getKey().id})}" class="col-md-1">-->
+                    <!--                        <button type="button" class="btn btn-dark" th:text="Remove">Remove</button>-->
+                    <!--                    </a>-->
                 </div>
             </div>
 

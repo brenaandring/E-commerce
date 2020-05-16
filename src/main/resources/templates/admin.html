@@ -60,7 +60,9 @@
                     <td th:text="${user.firstName}"></td>
                     <td th:text="${user.lastName}"></td>
                     <td th:text="${user.email}"></td>
-                    <td><a th:href="@{/admin/users/delete/{id}(id=${user.id})}" class="btn btn-dark">Delete</a></td>
+                    <td><a th:href="@{/admin/user/info/{id}(id=${user.id})}" class="btn btn-dark">View</a>
+                        <a th:href="@{/admin/user/delete/{id}(id=${user.id})}" class="btn btn-dark">Delete</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

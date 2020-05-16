@@ -15,6 +15,27 @@
             <!-- user: add their shipping address -->
             <h1>Please provide your shipping address and the name this item is for</h1>
             <form action="#" th:action="@{/user/cart/address}" th:object="${address}" method="post">
+
+                <div th:if="${#fields.hasErrors('name')}"
+                     th:errors="*{name}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('street')}"
+                     th:errors="*{street}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('city')}"
+                     th:errors="*{city}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('state')}"
+                     th:errors="*{state}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('zip')}"
+                     th:errors="*{zip}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
                 <div class="form-row justify-content-center">
                     <div class="form-group col-md-3">
                         <label for="name">Name:</label>

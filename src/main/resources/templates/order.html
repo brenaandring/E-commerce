@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <div th:replace="/fragments/header :: header"></div>
+    <title>E-commerce</title>
+</head>
+
+<body>
+<div th:replace="/fragments/header :: navbar"></div>
+
+<div class="container-sm">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Item Title</th>
+            <th scope="col">Item Price</th>
+            <th scope="col">Item Quantity</th>
+            <th scope="col">Purchased On</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderItem : ${order.orderItems}">
+            <td th:text="${orderItem.item.getTitle()}"></td>
+            <td th:text="${orderItem.item.getPrice()}"></td>
+            <td th:text="${orderItem.getCount()}"></td>
+            <td th:text="${orderItem.order.getCreatedAt()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h5>Shipping Address</h5>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Street Address</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+            <th scope="col">Zip Code</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="address : ${order.address}">
+            <td th:text="${address.name}"></td>
+            <td th:text="${address.street}"></td>
+            <td th:text="${address.city}"></td>
+            <td th:text="${address.state}"></td>
+            <td th:text="${address.zip}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="/fragments/footer :: footer"></div>
+</body>
+</html>

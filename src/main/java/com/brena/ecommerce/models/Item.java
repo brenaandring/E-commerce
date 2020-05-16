@@ -14,11 +14,11 @@ public class Item {
     private Long id;
 
     @Column(name = "title", nullable = false, unique = true)
-    @NotBlank(message = "A TITLE is required")
+    @Size(min = 3, max = 50, message = "TITLE is required and it must have between 3 - 50 characters")
     private String title;
 
     @Column(name = "description")
-    @NotBlank(message = "A DESCRIPTION is required")
+    @Size(min = 3, max = 200, message = "DESCRIPTION is required and it must have between 3 - 200 characters")
     private String description;
 
     @Column(name = "price", nullable = false)

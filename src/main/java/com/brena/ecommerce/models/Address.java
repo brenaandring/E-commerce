@@ -1,6 +1,8 @@
 package com.brena.ecommerce.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -13,15 +15,19 @@ public class Address {
     private Long id;
 
     @Column(name = "name")
+    @Size(min = 1, max = 100, message = "A NAME is required and it cannot contain more than 100 characters")
     private String name;
 
     @Column(name = "street")
+    @Size(min = 5, max = 50, message = "A STREET ADDRESS is required and it must contain 5 - 50 characters")
     private String street;
 
     @Column(name = "city")
+    @Size(min = 1, max = 15, message = "A CITY is required and it cannot contain more than 15 characters")
     private String city;
 
     @Column(name = "state")
+    @Size(min = 1, max = 15, message = "A STATE is required and it cannot contain more than 15 characters")
     private String state;
 
     @Column(name = "zip")

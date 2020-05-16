@@ -47,6 +47,7 @@ public class ItemController {
         ModelAndView modelAndView = new ModelAndView("/read");
         modelAndView.addObject("item", itemServ.findItem(id));
         modelAndView.addObject("review", new Review());
+        modelAndView.addObject("reviewer", reviewServ.findById(id));
         return modelAndView;
     }
 
@@ -61,7 +62,7 @@ public class ItemController {
     @PostMapping("/admin/items/edit/{id}")
     public String update(@Valid Item item, BindingResult result) {
         if (result.hasErrors()) {
-            return "update.html";
+            return "update";
         } else {
             itemServ.saveItem(item);
             return "redirect:/admin";
@@ -81,7 +82,7 @@ public class ItemController {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (result.hasErrors()) {
-            return "read.html";
+            return "read";
         } else {
             Item item = itemServ.findItem(id);
             review.setItem(item);

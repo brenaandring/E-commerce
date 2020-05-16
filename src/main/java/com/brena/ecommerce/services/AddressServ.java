@@ -2,6 +2,7 @@ package com.brena.ecommerce.services;
 
 import com.brena.ecommerce.models.Address;
 import com.brena.ecommerce.models.Item;
+import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.repositories.AddressRepo;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,9 @@ public class AddressServ {
         addressRepo.save(address);
     }
 
-    public Address findByUser(User user) {
-        return addressRepo.findByUser(user);
+    public void deleteAddress(Long id) {
+        addressRepo.deleteById(id);
+
     }
 
     public Address findById(Long id) {

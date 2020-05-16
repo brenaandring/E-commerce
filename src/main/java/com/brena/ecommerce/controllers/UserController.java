@@ -1,9 +1,13 @@
 package com.brena.ecommerce.controllers;
 
+import com.brena.ecommerce.models.Address;
+import com.brena.ecommerce.models.Item;
+import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.services.*;
 import com.brena.ecommerce.validator.UserValidator;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,13 +24,15 @@ public class UserController {
     private final UserValidator userValidator;
     private final ReviewServ reviewServ;
     private final AddressServ addressServ;
+    private final OrderServ orderServ;
 
-    public UserController(UserServ userServ, ItemServ itemServ, UserValidator userValidator, ReviewServ reviewServ, AddressServ addressServ) {
+    public UserController(UserServ userServ, ItemServ itemServ, UserValidator userValidator, ReviewServ reviewServ, AddressServ addressServ, OrderServ orderServ) {
         this.userServ = userServ;
         this.itemServ = itemServ;
         this.userValidator = userValidator;
         this.reviewServ = reviewServ;
         this.addressServ = addressServ;
+        this.orderServ = orderServ;
     }
 
     //  user registration
@@ -44,20 +50,21 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
             modelAndView.setViewName("/registration");
-        }
-        if (userServ.countAdmins() < 1) {
-            userServ.saveUserWithAdminRole(user);
         } else {
-            userServ.saveWithUserRole(user);
+            if (userServ.countAdmins() < 1) {
+                userServ.saveUserWithAdminRole(user);
+            } else {
+                userServ.saveWithUserRole(user);
+            }
+            modelAndView.setViewName("/login");
         }
-        modelAndView.setViewName("/login");
         return modelAndView;
     }
 
     //  admin/user login
     @RequestMapping("/login")
     public ModelAndView login(@Valid User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout) {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("/login");
         if (error != null) {
             modelAndView.addObject("errorMessage", "Invalid credentials. Please try again.");
         }
@@ -90,8 +97,21 @@ public class UserController {
         return modelAndView;
     }
 
+    //  admin-only: view user info
+    @RequestMapping("/admin/user/info/{id}")
+    public String userInfo(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userServ.findUserById(id));
+        return "userInfo";
+    }
+
+    @GetMapping("/admin/user/order/delete/{id}")
+    public String deleteOrder(@PathVariable("id") Long id) {
+        orderServ.deleteOrder(id);
+        return "redirect:/admin";
+    }
+
     //  admin-only: delete a user
-    @RequestMapping("/admin/users/delete/{id}")
+    @RequestMapping("/admin/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userServ.deleteUser(id);
         return "redirect:/admin";

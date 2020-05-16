@@ -14,18 +14,19 @@ public class User {
 
     @Column(name = "email", unique = true, nullable = false)
     @Email(message = "Please provide a valid email")
+    @Size(max = 50, message = "Email address is required and it cannot have more than 50 characters")
     private String email;
 
     @Column(name = "firstName")
-    @Size(min = 1, max = 25, message = "First name is required and must have 1 - 25 characters")
+    @Size(min = 1, max = 50, message = "First name is required and cannot have more than 50 characters")
     private String firstName;
 
     @Column(name = "lastName")
-    @Size(min = 1, max = 25, message = "Last name is required and must have 1 - 25 characters")
+    @Size(min = 1, max = 50, message = "Last name is required and cannot have more than 50 characters")
     private String lastName;
 
     @Column(name = "password", nullable = false)
-    @Size(min = 8, message = "Your password must have at least 8 characters")
+    @Size(min = 8, message = "Password is required and it must be between 8 - 16 characters")
     private String password;
 
     @Transient
