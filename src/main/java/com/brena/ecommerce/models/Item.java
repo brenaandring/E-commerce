@@ -40,6 +40,9 @@ public class Item {
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    private List<Photo> photos;
+
     public Item() {
     }
 
@@ -106,6 +109,14 @@ public class Item {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 
     @Override

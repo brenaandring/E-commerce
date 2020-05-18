@@ -13,7 +13,7 @@
 
         <div class="container-sm">
             <!-- admin: create an item -->
-            <form action="#" th:action="@{/admin/items/create}" th:object="${item}" method="post">
+            <form action="#" th:action="@{/admin/items/create}" th:object="${item}" method="post" enctype="multipart/form-data">
 
                 <div th:if="${#fields.hasErrors('title')}"
                      th:errors="*{title}"
@@ -46,8 +46,7 @@
                         <label for="price">Price:</label>
                         <input type="number" class="form-control" id="price" th:field="*{price}" th:placeholder="0">
 
-                        <label for="image">Image:</label>
-                        <input type="file" class="form-control" id="image">
+                        <input type="file" class="form-control"  name="imageFile">
 
                         <button type="submit" class="btn btn-dark">Create</button>
                     </div>

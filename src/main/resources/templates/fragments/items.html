@@ -9,11 +9,14 @@
 
     <body>
         <div class="container" th:fragment="items">
+
             <!-- homepage/shows all items -->
             <br><div class="row row-cols-1 row-cols-md-3">
                 <div class="col mb-4" th:each="item : ${items}">
                     <div class="card h-100">
-                        <img src="${item.image}" class="card-img-top" alt="photo of a mask">
+                        <div th:each="photo : ${item.photos}">
+                            <img th:src="@{'/photos/' + ${photo.fileName}}" class="card-img-top" alt="Photo of a mask"/>
+                        </div>
                         <div class="card-body text-center">
                             <h5 th:text="${item.title}" class="card-title"></h5>
                             <p th:text="${item.description}" class="card-text"></p>

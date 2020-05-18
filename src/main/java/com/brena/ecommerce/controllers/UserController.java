@@ -26,7 +26,12 @@ public class UserController {
     private final AddressServ addressServ;
     private final OrderServ orderServ;
 
-    public UserController(UserServ userServ, ItemServ itemServ, UserValidator userValidator, ReviewServ reviewServ, AddressServ addressServ, OrderServ orderServ) {
+    public UserController(UserServ userServ,
+                          ItemServ itemServ,
+                          UserValidator userValidator,
+                          ReviewServ reviewServ,
+                          AddressServ addressServ,
+                          OrderServ orderServ) {
         this.userServ = userServ;
         this.itemServ = itemServ;
         this.userValidator = userValidator;
@@ -63,7 +68,9 @@ public class UserController {
 
     //  admin/user login
     @RequestMapping("/login")
-    public ModelAndView login(@Valid User user, @RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout) {
+    public ModelAndView login(@Valid User user,
+                              @RequestParam(value = "error", required = false) String error,
+                              @RequestParam(value = "logout", required = false) String logout) {
         ModelAndView modelAndView = new ModelAndView("/login");
         if (error != null) {
             modelAndView.addObject("errorMessage", "Invalid credentials. Please try again.");
@@ -76,7 +83,8 @@ public class UserController {
 
     //  user dashboard
     @GetMapping("/user/dashboard")
-    public ModelAndView dashboard(Principal principal, HttpServletRequest request) {
+    public ModelAndView dashboard(Principal principal,
+                                  HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/dashboard");
         String email = principal.getName();
         User user = userServ.findByEmail(email);
@@ -99,7 +107,8 @@ public class UserController {
 
     //  admin-only: view user info
     @RequestMapping("/admin/user/info/{id}")
-    public String userInfo(@PathVariable("id") Long id, Model model) {
+    public String userInfo(@PathVariable("id") Long id,
+                           Model model) {
         model.addAttribute("user", userServ.findUserById(id));
         return "userInfo";
     }

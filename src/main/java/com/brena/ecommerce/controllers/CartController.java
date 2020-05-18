@@ -26,7 +26,12 @@ public class CartController {
     private final OrderServ orderServ;
     private final OrderItemServ orderItemServ;
 
-    public CartController(UserServ userServ, ItemServ itemServ, CartServ cartServ, AddressServ addressServ, OrderServ orderServ, OrderItemServ orderItemServ) {
+    public CartController(UserServ userServ,
+                          ItemServ itemServ,
+                          CartServ cartServ,
+                          AddressServ addressServ,
+                          OrderServ orderServ,
+                          OrderItemServ orderItemServ) {
         this.userServ = userServ;
         this.itemServ = itemServ;
         this.cartServ = cartServ;
@@ -67,10 +72,11 @@ public class CartController {
     }
 
     @PostMapping("/user/cart/address")
-    public String saveAddress(@Valid Address address, BindingResult result, HttpServletRequest request) {
+    public String saveAddress(@Valid Address address,
+                              BindingResult result,
+                              HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-
         if (result.hasErrors()) {
             return "address";
         } else {
@@ -88,28 +94,10 @@ public class CartController {
         return modelAndView;
     }
 
-//    @GetMapping("/user/cart/remove/item/{id}")
-//    public ModelAndView removeItemFromCartConfirmation(@PathVariable("id") Long id) {
-//        Item item = itemServ.findItem(id);
-//        cartServ.removeItem(item);
-//        return cartConfirmation();
-//    }
-
-//    @GetMapping("/user/cart/checkout")
-//    public ModelAndView checkout() {
-//
-//        cartServ.checkout();
-//        return cartSuccess();
-//    }
-//
-
     @GetMapping("/user/cart/checkout")
     public String checkout(@Valid Order order, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-//        Address address = addressServ.findByUser(user);
-//        HttpSession session2 = request.getSession();
-//        Address address = (Address) session2.getAttribute("address");
         if (order.getOrderItems() == null) {
             order.setOrderItems(new ArrayList<>());
         }
@@ -122,7 +110,6 @@ public class CartController {
             order.getOrderItems().add(orderItem);
         }
         order.setUser(user);
-//        order.setAddress(address);
         BigDecimal total = cartServ.getTotal();
         order.setTotal(total);
         orderServ.saveOrder(order);
@@ -136,7 +123,9 @@ public class CartController {
     }
 
     @GetMapping("/user/order/{id}")
-    public String userOrder(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+    public String userOrder(@PathVariable("id") Long id,
+                            Model model,
+                            HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         Order order = orderServ.findById(id);
@@ -144,6 +133,7 @@ public class CartController {
             model.addAttribute("order", orderServ.findById(id));
             model.addAttribute("orderItem", orderItemServ.findById(id));
             model.addAttribute("address", addressServ.findById(id));
+            model.addAttribute("item", itemServ.findItem(id));
             return "order";
         } else {
             System.out.println("Somebody is trying to access this user's order");
@@ -159,5 +149,4 @@ public class CartController {
         model.addAttribute("address", addressServ.findById(id));
         return "userOrder";
     }
-
 }
