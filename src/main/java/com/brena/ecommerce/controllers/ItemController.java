@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -122,7 +123,7 @@ public class ItemController {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (result.hasErrors()) {
-            return "read";
+            return "redirect:/items/{id}";
         } else {
             Item item = itemServ.findItem(id);
             review.setItem(item);

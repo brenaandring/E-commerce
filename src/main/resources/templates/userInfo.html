@@ -1,63 +1,63 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
-<head>
-    <div th:replace="/fragments/header :: header"></div>
-    <title>E-commerce</title>
-</head>
+    <head>
+        <div th:replace="/fragments/header :: header"></div>
+        <title>E-commerce</title>
+    </head>
 
-<body>
-<div th:replace="/fragments/header :: navbar"></div>
+    <body>
+        <div th:replace="/fragments/header :: navbar"></div>
 
-<div class="container-sm">
-    <h3>First Name: [[${user.firstName}]]</h3>
-    <h3>Last Name: [[${user.lastName}]]</h3>
-    <h3>Email: [[${user.email}]]</h3>
+        <div class="container-sm">
+            <h3>First Name: [[${user.firstName}]]</h3>
+            <h3>Last Name: [[${user.lastName}]]</h3>
+            <h3>Email: [[${user.email}]]</h3>
 
-    <br><h5>Order History</h5>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Order Id</th>
-            <th scope="col">Price</th>
-            <th scope="col">Date Ordered</th>
-            <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order : ${user.orders}">
-            <th scope="row" th:text="${order.id}"></th>
-            <td th:text="${order.total}"></td>
-            <td th:text="${order.createdAt}"></td>
-            <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}" class="btn btn-dark">View</a>
-                <a th:href="@{/admin/user/order/delete/{id}(id=${order.id})}" class="btn btn-dark">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            <br><h5>Order History</h5>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Date Ordered</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${user.orders}">
+                    <th scope="row" th:text="${order.id}"></th>
+                    <td th:text="${order.total}"></td>
+                    <td th:text="${order.createdAt}"></td>
+                    <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}" class="btn btn-dark">View</a>
+                        <a th:href="@{/admin/user/order/delete/{id}(id=${order.id})}" class="btn btn-dark">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-    <br><h5>Reviews</h5>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Item Title</th>
-            <th scope="col">Comment</th>
-            <th scope="col">Rating</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="review : ${user.reviews}">
-            <th scope="row" th:text="${review.item.title}"></th>
-            <td th:text="${review.comment}"></td>
-            <td th:text="${review.rating}"></td>
-            <td><a th:href="@{/items/{id}(id=${review.item.id})}" class="btn btn-dark">View</a>
-                <a th:href="@{/admin/review/delete/{id}(id=${review.id})}" class="btn btn-dark">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+            <br><h5>Reviews</h5>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Item Title</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review : ${user.reviews}">
+                    <th scope="row" th:text="${review.item.title}"></th>
+                    <td th:text="${review.comment}"></td>
+                    <td th:text="${review.rating}"></td>
+                    <td><a th:href="@{/items/{id}(id=${review.item.id})}" class="btn btn-dark">View</a>
+                        <a th:href="@{/admin/review/delete/{id}(id=${review.id})}" class="btn btn-dark">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-<div th:replace="/fragments/footer :: footer"></div>
-</body>
+        <div th:replace="/fragments/footer :: footer"></div>
+    </body>
 </html>

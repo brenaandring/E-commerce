@@ -53,15 +53,21 @@ public class UserController {
     public ModelAndView createUser(@Valid User user, BindingResult result) {
         userValidator.validate(user, result);
         ModelAndView modelAndView = new ModelAndView();
-        if (result.hasErrors()) {
-            modelAndView.setViewName("/registration");
+        User userFound = userServ.findByEmail(user.getEmail());
+        if (userFound != null) {
+            modelAndView.addObject("errorMessage", "There is already a user with the email provided, please use a different email address");
+            modelAndView.setViewName("registration");
         } else {
-            if (userServ.countAdmins() < 1) {
-                userServ.saveUserWithAdminRole(user);
+            if (result.hasErrors()) {
+                modelAndView.setViewName("registration");
             } else {
-                userServ.saveWithUserRole(user);
+                if (userServ.countAdmins() < 1) {
+                    userServ.saveUserWithAdminRole(user);
+                } else {
+                    userServ.saveWithUserRole(user);
+                }
+                modelAndView.setViewName("/login");
             }
-            modelAndView.setViewName("/login");
         }
         return modelAndView;
     }

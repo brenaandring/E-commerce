@@ -10,6 +10,9 @@
 
         <div class="container-sm">
 
+            <p th:if="${errorMessage}" class="validation-message alert alert-danger" role="alert"
+               th:text="${errorMessage}"></p>
+
             <!-- registration form -->
             <form action="#" th:action="@{/registration}" th:object="${user}" method="post" data-toggle="validator">
 

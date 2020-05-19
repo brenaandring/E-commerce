@@ -17,11 +17,11 @@ public class User {
     @Size(max = 50, message = "Email address is required and it cannot have more than 50 characters")
     private String email;
 
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     @Size(min = 1, max = 50, message = "First name is required and cannot have more than 50 characters")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "last_name")
     @Size(min = 1, max = 50, message = "Last name is required and cannot have more than 50 characters")
     private String lastName;
 
@@ -32,7 +32,7 @@ public class User {
     @Transient
     private String passwordConfirmation;
 
-    @Column(name = "createdAt", updatable = false)
+    @Column(name = "createdAt")
     private Date createdAt;
 
     //  model relationships
