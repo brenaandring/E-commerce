@@ -11,9 +11,6 @@ public class Photo {
     @Column(name = "photo_id")
     private Long id;
 
-    @Column(name = "path")
-    private String path;
-
     @Column(name = "fileName")
     private String fileName;
 
@@ -35,14 +32,6 @@ public class Photo {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getFileName() {

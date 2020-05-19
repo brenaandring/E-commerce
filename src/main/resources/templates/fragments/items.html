@@ -15,7 +15,7 @@
                 <div class="col mb-4" th:each="item : ${items}">
                     <div class="card h-100">
                         <div th:each="photo : ${item.photos}">
-                            <img th:src="@{'/photos/' + ${photo.fileName}}" class="card-img-top" alt="Photo of a mask"/>
+                            <img th:src="@{'/images/' + ${photo.fileName}}" class="card-img-top" alt="Photo of a mask"/>
                         </div>
                         <div class="card-body text-center">
                             <h5 th:text="${item.title}" class="card-title"></h5>

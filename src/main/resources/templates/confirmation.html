@@ -13,25 +13,65 @@
 
         <div class="container-sm">
             <!-- user: shows all items in cart. User can add/remove/checkout items -->
+            <h1>Please provide your shipping address and the name this item is for</h1>
+            <form action="#" th:action="@{/user/cart/checkout}" th:object="${address}" method="post">
+
+                <div th:if="${#fields.hasErrors('name')}"
+                     th:errors="*{name}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('street')}"
+                     th:errors="*{street}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('city')}"
+                     th:errors="*{city}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('state')}"
+                     th:errors="*{state}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div th:if="${#fields.hasErrors('zip')}"
+                     th:errors="*{zip}"
+                     class="validation-message alert alert-danger" role="alert"></div>
+
+                <div class="form-row justify-content-center">
+                    <div class="form-group col-md-3">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" th:field="*{name}">
+
+                        <label for="street">Street Address:</label>
+                        <input type="text" class="form-control" id="street" th:field="*{street}">
+
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city" th:field="*{city}">
+
+                        <label for="state">State:</label>
+                        <input type="text" class="form-control" id="state" th:field="*{state}">
+
+                        <label for="zip">Zip Code:</label>
+                        <input type="number" class="form-control" id="zip" th:field="*{zip}">
+
+                        <button type="submit" class="btn btn-danger">Checkout</button>
+                    </div>
+                </div>
+            </form>
+
             <div class="panel-default well" th:each="item : ${items.entrySet()}">
                 <div class="panel-heading">
-                    <h1><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}">Title</a></h1>
+                    <h1><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}">Title</a>
+                    </h1>
                     <h3 th:text="${item.getKey().description}">Description</h3>
                 </div>
                 <div class="row panel-body">
                     <div th:inline="text" class="col-md-2">Price: $[[${item.getKey().price}]]</div>
                     <div th:inline="text" class="col-md-9">Quantity: [[${item.getValue()}]]</div>
-                    <!--                    <a th:href="@{/user/cart/remove/item/{id}(id=${item.getKey().id})}" class="col-md-1">-->
-                    <!--                        <button type="button" class="btn btn-dark" th:text="Remove">Remove</button>-->
-                    <!--                    </a>-->
                 </div>
             </div>
 
             <div class="row panel-body">
                 <h2 class="col-md-11" th:inline="text">Total: [[${total}]]</h2>
-                <a th:href="@{/user/cart/checkout}" class="col-md-1">
-                    <button type="button" class="btn btn-danger">Checkout</button>
-                </a>
             </div>
         </div>
 

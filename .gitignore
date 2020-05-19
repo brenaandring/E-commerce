@@ -4,6 +4,7 @@ target/
 .mvn
 !**/src/main/**
 !**/src/test/**
+images
 
 ### IntelliJ IDEA ###
 .idea

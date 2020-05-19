@@ -5,9 +5,7 @@ import com.brena.ecommerce.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,38 +62,22 @@ public class CartController {
         return shoppingCart();
     }
 
-    @GetMapping("/user/cart/address")
-    public ModelAndView createAddress() {
-        ModelAndView modelAndView = new ModelAndView("/address");
-        modelAndView.addObject("address", new Address());
-        return modelAndView;
-    }
-
-    @PostMapping("/user/cart/address")
-    public String saveAddress(@Valid Address address,
-                              BindingResult result,
-                              HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if (result.hasErrors()) {
-            return "address";
+    @GetMapping("/user/cart/confirm")
+    public ModelAndView cartConfirmation(Model model) {
+        if (cartServ.getItemsInCart().isEmpty()) {
+            model.addAttribute("errorMessage", "Your cart is empty! Please add an item before proceeding.");
+            return shoppingCart();
         } else {
-            address.setUser(user);
-            addressServ.saveAddress(address);
-            return "redirect:/user/cart/confirm";
+            ModelAndView modelAndView = new ModelAndView("/confirmation");
+            modelAndView.addObject("items", cartServ.getItemsInCart());
+            modelAndView.addObject("address", new Address());
+            modelAndView.addObject("total", cartServ.getTotal().toString());
+            return modelAndView;
         }
     }
 
-    @GetMapping("/user/cart/confirm")
-    public ModelAndView cartConfirmation() {
-        ModelAndView modelAndView = new ModelAndView("/confirmation");
-        modelAndView.addObject("items", cartServ.getItemsInCart());
-        modelAndView.addObject("total", cartServ.getTotal().toString());
-        return modelAndView;
-    }
-
-    @GetMapping("/user/cart/checkout")
-    public String checkout(@Valid Order order, HttpServletRequest request) {
+    @RequestMapping("/user/cart/checkout")
+    public String checkout(@Valid Order order, @Valid Address address, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (order.getOrderItems() == null) {
@@ -109,6 +91,9 @@ public class CartController {
             orderItem.setOrder(order);
             order.getOrderItems().add(orderItem);
         }
+        address.setUser(user);
+        order.setAddress(address);
+        addressServ.saveAddress(address);
         order.setUser(user);
         BigDecimal total = cartServ.getTotal();
         order.setTotal(total);

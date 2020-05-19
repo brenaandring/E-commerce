@@ -1,15 +1,18 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <head>
-        <div th:replace="/fragments/header :: header"></div>
-        <title>E-commerce</title>
-    </head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <body>
-        <div th:replace="/fragments/header :: navbar"></div>
+<head>
+    <div th:replace="fragments/header :: header"></div>
+    <title>E-commerce</title>
+</head>
 
-        <div th:replace="/fragments/items :: items"></div>
+<body>
+<div th:replace="fragments/header :: navbar"></div>
 
-        <div th:replace="/fragments/footer :: footer"></div>
+<div th:replace="fragments/items :: items"></div>
+
+<div th:replace="fragments/footer :: footer"></div>
     </body>
 </html>

@@ -2,9 +2,13 @@ package com.brena.ecommerce.services;
 
 import com.brena.ecommerce.models.Photo;
 import com.brena.ecommerce.repositories.PhotoRepo;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,12 +33,9 @@ public class PhotoServ {
         photoRepo.save(photo);
     }
 
-    public void savePhotoImage(MultipartFile imageFile, Photo photo) throws Exception {
-        Path currentPath = Paths.get(".");
-        Path absolutePath = currentPath.toAbsolutePath();
-        photo.setPath(absolutePath + "/src/main/resources/static/photos/");
-        byte[] bytes =  imageFile.getBytes();
-        Path path = Paths.get(photo.getPath() + imageFile.getOriginalFilename());
+    public void savePhotoImage(MultipartFile imageFile, String filename) throws Exception {
+        byte[] bytes = imageFile.getBytes();
+        Path path = Paths.get(".", "images", filename);
         Files.write(path, bytes);
     }
 
@@ -49,4 +50,19 @@ public class PhotoServ {
         photoRepo.deleteById(id);
     }
 
+    public Resource loadAsResource(String filename) {
+        try {
+            Path rootLocation = Paths.get(".", "images");
+            Path file = rootLocation.resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new IllegalStateException("Could not read file: " + filename);
+
+            }
+        } catch (MalformedURLException e) {
+            throw new IllegalStateException("Could not read file: " + filename, e);
+        }
+    }
 }

@@ -2,6 +2,9 @@ package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.*;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
+import java.util.UUID;
 
 @Controller
 public class ItemController {
@@ -46,17 +51,25 @@ public class ItemController {
         } else {
             itemServ.saveItem(item);
             Photo newPhoto = new Photo();
-            newPhoto.setFileName(imageFile.getOriginalFilename());
+            String generatedFilename = UUID.randomUUID().toString() + getFileExtension(imageFile.getOriginalFilename());
+            newPhoto.setFileName(generatedFilename);
             newPhoto.setItem(item);
             try {
-                photoServ.savePhotoImage(imageFile, newPhoto);
+                photoServ.savePhotoImage(imageFile, generatedFilename);
                 photoServ.savePhoto(newPhoto);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
             return "redirect:/admin";
         }
+    }
 
+    @GetMapping("/images/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+        Resource file = photoServ.loadAsResource(filename);
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
     //  show an item
@@ -80,11 +93,22 @@ public class ItemController {
 
     @PostMapping("/admin/items/edit/{id}")
     public String update(@Valid Item item,
-                         BindingResult result) {
+                         BindingResult result,
+                         @RequestParam("imageFile") MultipartFile imageFile) {
         if (result.hasErrors()) {
             return "update";
         } else {
             itemServ.saveItem(item);
+            Photo newPhoto = new Photo();
+            String generatedFilename = UUID.randomUUID().toString() + getFileExtension(imageFile.getOriginalFilename());
+            newPhoto.setFileName(generatedFilename);
+            newPhoto.setItem(item);
+            try {
+                photoServ.savePhotoImage(imageFile, generatedFilename);
+                photoServ.savePhoto(newPhoto);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             return "redirect:/admin";
         }
     }
@@ -145,4 +169,12 @@ public class ItemController {
         return "redirect:/admin";
     }
 
+
+    private String getFileExtension(String filename) {
+        int lastIndexOf = filename.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return filename.substring(lastIndexOf);
+    }
 }
