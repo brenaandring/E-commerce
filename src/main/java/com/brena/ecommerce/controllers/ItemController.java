@@ -119,18 +119,18 @@ public class ItemController {
     public String createReview(@PathVariable("id") Long id,
                                @Valid Review review,
                                BindingResult result,
-                               HttpServletRequest request) {
+                               HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (result.hasErrors()) {
-            return "redirect:/items/{id}";
+            model.addAttribute("reviewErrorMessage", "A comment is required with your review");
         } else {
             Item item = itemServ.findItem(id);
             review.setItem(item);
             review.setUser(user);
             reviewServ.saveReview(review);
-            return "redirect:/items/{id}";
         }
+        return "redirect:/items/{id}";
     }
 
     //  user: delete their review

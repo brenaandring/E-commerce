@@ -20,17 +20,47 @@
     <body>
         <!-- header: navbar -->
         <div th:fragment="navbar">
-            <nav class="navbar navbar-dark bg-dark justify-content-center">
-                <a class="navbar-brand" th:href="@{/}">Home</a>
-                <a class="navbar-brand" th:href="@{/about}">Our Story</a>
-                <a class="navbar-brand" th:href="@{/contact}">Contact Us</a>
-                <a class="navbar-brand" th:href="@{/registration}" sec:authorize="!isAuthenticated()">Register</a>
-                <a class="navbar-brand" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
-                <a class="navbar-brand" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">Admin</a>
-                <a class="navbar-brand" th:href="@{/user/cart}" sec:authorize="hasRole('ROLE_USER')">Shopping Cart</a>
-                <a class="navbar-brand" th:href="@{/user/dashboard}" sec:authorize="hasRole('ROLE_USER')">Dashboard</a>
-                <a class="navbar-brand" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
-            </nav>
+            <div class="container-fluid">
+                <div class="d-flex justify-content-around">
+                    <a class="navbar-brand" th:href="@{/}">
+                        <img th:src="@{/img/logo.png}" class="img-fluid ml-3" alt="page logo">
+                    </a>
+                    <div class="align-self-center">
+                        <nav class="navbar navbar-expand-md navbar-light">
+                            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <ul class="navbar-nav font-weight-light text-uppercase text-secondary">
+                                    <li class="nav-item ml-auto">
+                                        <a class="nav-link" th:href="@{/}">Home</a>
+                                    </li>
+                                    <li class="nav-item ml-auto">
+                                        <a class="nav-link" th:href="@{/items}">Masks</a>
+                                    </li>
+                                    <li class="nav-item ml-auto">
+                                        <a class="nav-link" th:href="@{/registration}" sec:authorize="!isAuthenticated()">Register</a>
+                                    </li>
+                                    <li class="nav-item ml-auto">
+                                        <a class="nav-link" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+                                    </li>
+                                    <li class="nav-item ml-auto">
+                                        <a class="nav-link" th:href="@{/admin}" sec:authorize="hasRole('ROLE_ADMIN')">Admin</a>
+                                    </li>
+                                    <li class="nav-item ml-auto">
+                                        <a class="nav-link" th:href="@{/user/cart}" sec:authorize="hasRole('ROLE_USER')">Cart</a>
+                                    </li>
+                                    <li class="nav-item ml-auto">
+                                        <a class="nav-link" th:href="@{/user/dashboard}" sec:authorize="hasRole('ROLE_USER')">Dashboard</a>
+                                    <li class="nav-item ml-auto">
+                                        <a class="nav-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

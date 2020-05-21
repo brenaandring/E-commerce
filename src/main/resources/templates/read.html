@@ -36,6 +36,9 @@
             <!-- user: add item to cart button -->
             <br><a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn btn-dark">Add to Cart</a>
 
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+
+
             <!-- user: leave a review -->
             <form action="#" th:action="@{/user/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
                 <div class="form-row">
