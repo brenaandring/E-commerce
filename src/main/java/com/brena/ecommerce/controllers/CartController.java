@@ -114,7 +114,7 @@ public class CartController {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         Order order = orderServ.findById(id);
-        if (order.getUser().getId().equals(user.getId())) {
+        if (order != null && order.getUser().getId().equals(user.getId())) {
             model.addAttribute("order", orderServ.findById(id));
             model.addAttribute("orderItem", orderItemServ.findById(id));
             model.addAttribute("address", addressServ.findById(id));

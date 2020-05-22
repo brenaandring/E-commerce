@@ -11,20 +11,23 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
 
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-3">
+        <div class="container-fluid">
+            <img th:src="@{/img/mask_photo3.jpg}" class="img-fluid light" alt="photo of masks">
+
+            <div class="row mx-3 row-cols-1 row-cols-md-3">
                 <div class="col mb-4" th:each="item : ${items}">
-                    <div class="card h-100">
+                    <div class="card border-light h-100">
                         <div th:each="photo : ${item.photos}">
-                            <img th:src="@{'/images/' + ${photo.fileName}}" class="card-img-top" alt="Photo of a mask"/>
+                            <a th:href="@{/items/{id}(id=${item.id})}">
+                                <img th:src="@{'/images/' + ${photo.fileName}}" class="card-img-top" alt="Photo of a mask"/>
+                            </a>
                         </div>
-                        <div class="card-body text-center">
+                        <div class="card-body bg-light text-secondary text-center font-weight-light text-uppercase">
                             <h5 th:text="${item.title}" class="card-title"></h5>
-                            <p th:text="${item.description}" class="card-text"></p>
                             <p class="card-text">Price: $[[${item.price}]]</p>
                             <p class="card-text">In Stock: [[${item.quantity}]]</p>
-                            <a th:href="@{/items/{id}(id=${item.id})}" class="btn btn-dark">View</a>
-                            <a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn btn-dark">Add to Cart</a>
+                            <a th:href="@{/items/{id}(id=${item.id})}" class="btn text-light my-1 box1">View</a>
+                            <a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn my-1 text-light box1">Add to Cart</a>
                         </div>
                     </div>
                 </div>

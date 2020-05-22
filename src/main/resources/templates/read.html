@@ -11,81 +11,89 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
 
-        <div class="container-sm">
-            <!-- admin: edit and delete buttons -->
-            <div sec:authorize="hasRole('ROLE_ADMIN')">
-                <a th:href="@{/admin/items/edit/{id}(id=${item.id})}" class="btn btn-dark">Edit</a>
-                <a th:href="@{/admin/items/delete/{id}(id=${item.id})}" class="btn btn-dark">Delete Item</a>
-            </div>
+        <div class="container-fluid">
+            <img th:src="@{/img/mask_photo4.jpg}" class="img-fluid mb-2" alt="photo of masks">
 
-            <div th:each="photo : ${item.photos}">
-                <img th:src="@{'/images/' + ${photo.fileName}}" alt="Photo of a mask"/>
+            <div class="row m-1">
+                <div class="col-md m-1 text-center bg-light">
+                    <div th:each="photo : ${item.photos}">
+                        <img th:src="@{'/images/' + ${photo.fileName}}" width="700" class="img-fluid p-2" alt="Photo of a mask"/>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/admin/photo/delete/{id}(id=${photo.id})}" class="btn text-uppercase box1 font-weight-light text-light">Remove Photo</a>
+                        </div>
+                    </div>
 
-                <!-- admin: delete photo -->
-                <div sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a th:href="@{/admin/photo/delete/{id}(id=${photo.id})}" class="btn btn-dark">Remove Photo</a>
-                </div>
-            </div>
-
-            <!-- item information -->
-            <h1>Title: [[${item.title}]]</h1>
-            <h1>In Stock: [[${item.quantity}]]</h1>
-            <h1>Description: [[${item.description}]]</h1>
-            <h1>Price: $[[${item.price}]]</h1>
-
-            <!-- user: add item to cart button -->
-            <br><a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn btn-dark">Add to Cart</a>
-
-            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
-
-
-            <!-- user: leave a review -->
-            <form action="#" th:action="@{/user/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="comment">Your Review:</label>
-                        <input type="text" class="form-control" id="comment" th:field="*{comment}">
-
-                        <label for="rating">Rate:</label>
-                        <select th:field="*{rating}" class="form-control" id="rating">
-                            <option th:value="5" th:text="5"></option>
-                            <option th:value="4" th:text="4"></option>
-                            <option th:value="3" th:text="3"></option>
-                            <option th:value="2" th:text="2"></option>
-                            <option th:value="1" th:text="1"></option>
-                            <option th:value="0" th:text="0"></option>
-                        </select>
-
-                        <br><button type="submit" class="btn btn-dark">Leave A Review</button>
+                    <!-- admin: delete photo -->
+                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="my-1">
+                        <a th:href="@{/admin/items/edit/{id}(id=${item.id})}" class="btn text-uppercase box1 font-weight-light text-light">Edit</a>
+                        <a th:href="@{/admin/items/delete/{id}(id=${item.id})}" class="btn text-uppercase box1 font-weight-light text-light">Delete Item</a>
                     </div>
                 </div>
-            </form>
+
+                <!-- user: add item to cart button -->
+                <div class="col-md box1 m-1 text-white text-uppercase text-center">
+                    <h1 class="display-3">[[${item.title}]]</h1>
+                    <h1 class="font-weight-light">[[${item.description}]]</h1>
+                    <h1 class="font-weight-light">In Stock: [[${item.quantity}]]</h1>
+                    <h1 class="font-weight-light">Price: $[[${item.price}]]</h1>
+                    <a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn mb-2 btn-light font-weight-light text-uppercase text-secondary">Add to Cart</a>
+                </div>
+            </div>
+
+            <div class="row m-1 justify-content-center">
+                <!-- user: leave a review -->
+                <div class="col-md-6 p-1 m-1 text-center border border-light">
+                    <form action="#" th:action="@{/user/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
+                        <div class="controls">
+                            <div class="row">
+                                <div class="col-md">
+                                    <div class="form-group text-secondary text-uppercase">
+                                        <label>Your Review:</label>
+                                        <textarea name="comment" class="form-control" rows="4" th:field="*{comment}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center align-items-center">
+                                <div class="col text-center">
+                                    <div class="form-group text-secondary text-uppercase">
+                                        <label for="rating">Rate:</label>
+                                        <select th:field="*{rating}" class="form-control" id="rating">
+                                            <option th:value="5" th:text="5" class="text-center"></option>
+                                            <option th:value="4" th:text="4"></option>
+                                            <option th:value="3" th:text="3"></option>
+                                            <option th:value="2" th:text="2"></option>
+                                            <option th:value="1" th:text="1"></option>
+                                            <option th:value="0" th:text="0"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <input type="submit" class="btn box1 font-weight-light text-uppercase text-light m-1" value="Leave a Review">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- all item reviews and ratings-->
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Rating</th>
-                    <th scope="col">Comment</th>
-                    <th scope="col">Reviewer</th>
-                    <div sec:authorize="hasRole('ROLE_ADMIN')">
-                        <th scope="col">Action</th>
+            <div class="row m-1 mt-2 justify-content-center" th:each="review : ${item.reviews}">
+                <div class="col-md-6 m-2">
+                    <div class="card border border-light">
+                        <div class="card-header font-weight-light text-secondary" th:text="${review.rating}"></div>
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p class="font-weight-light text-secondary" th:text="${review.comment}"></p>
+                                <footer class="blockquote-footer font-weight-light" th:text="${review.user.getFirstName()}"></footer>
+                            </blockquote>
+                        </div>
                     </div>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="review : ${item.reviews}">
-                    <th scope="row" th:text="${review.rating}"></th>
-                    <td th:text="${review.comment}"></td>
-                    <td th:text="${review.user.getFirstName()}"></td>
+                </div>
 
-                    <!-- admin: delete review -->
-                    <td sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a th:href="@{/admin/review/delete/{id}(id=${review.id})}" class="btn btn-dark">Delete</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                <div sec:authorize="hasRole('ROLE_ADMIN')" class="mt-3">
+                    <a th:href="@{/admin/review/delete/{id}(id=${review.id})}" class="btn text-uppercase box1 font-weight-light text-light">Delete</a>
+                </div>
+            </div>
         </div>
 
         <div th:replace="/fragments/footer :: footer"></div>
