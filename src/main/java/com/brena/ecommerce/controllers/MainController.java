@@ -17,13 +17,12 @@ public class MainController {
     //  index/home page
     @GetMapping("/")
     public ModelAndView index() {
-        return new ModelAndView("/index");
+        return new ModelAndView("index");
     }
 
     //  mask page
     @GetMapping("/items")
-    public ModelAndView items() {
-        ModelAndView modelAndView = new ModelAndView("items");
+    public ModelAndView items(ModelAndView modelAndView) {
         modelAndView.addObject("items", itemServ.allItems());
         return modelAndView;
     }

@@ -40,7 +40,7 @@ public class CartController {
 
     @GetMapping("/user/cart")
     public ModelAndView shoppingCart() {
-        ModelAndView modelAndView = new ModelAndView("/cart");
+        ModelAndView modelAndView = new ModelAndView("cart");
         modelAndView.addObject("items", cartServ.getItemsInCart());
         modelAndView.addObject("total", cartServ.getTotal().toString());
         return modelAndView;
@@ -63,12 +63,12 @@ public class CartController {
     }
 
     @GetMapping("/user/cart/confirm")
-    public ModelAndView cartConfirmation(Model model) {
+    public ModelAndView cartConfirmation(ModelAndView modelAndView) {
         if (cartServ.getItemsInCart().isEmpty()) {
-            model.addAttribute("errorMessage", "Your cart is empty! Please add an item before proceeding.");
+            modelAndView.addObject("errorMessage", "Your cart is empty! Please add an item before proceeding.");
             return shoppingCart();
         } else {
-            ModelAndView modelAndView = new ModelAndView("/confirmation");
+            modelAndView.setViewName("confirmation");
             modelAndView.addObject("items", cartServ.getItemsInCart());
             modelAndView.addObject("address", new Address());
             modelAndView.addObject("total", cartServ.getTotal().toString());
@@ -104,7 +104,7 @@ public class CartController {
 
     @GetMapping("/user/cart/success")
     public ModelAndView cartSuccess() {
-        return new ModelAndView("/success");
+        return new ModelAndView("success");
     }
 
     @GetMapping("/user/order/{id}")
@@ -127,11 +127,13 @@ public class CartController {
     }
 
     @GetMapping("/admin/user/order/{id}")
-    public String userOrderInfo(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userServ.findUserById(id));
-        model.addAttribute("order", orderServ.findById(id));
-        model.addAttribute("orderItem", orderItemServ.findById(id));
-        model.addAttribute("address", addressServ.findById(id));
-        return "userOrder";
+    public ModelAndView userOrderInfo(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("userOrder");
+        modelAndView.addObject("user", userServ.findUserById(id));
+        modelAndView.addObject("order", orderServ.findById(id));
+        modelAndView.addObject("orderItem", orderItemServ.findById(id));
+        modelAndView.addObject("address", addressServ.findById(id));
+        return modelAndView;
     }
 }
+

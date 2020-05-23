@@ -37,18 +37,18 @@ public class ItemController {
 
     //  admin-only: create a new item
     @GetMapping("/admin/items/create")
-    public ModelAndView createItem() {
-        ModelAndView modelAndView = new ModelAndView("/create");
+    public ModelAndView createItem(ModelAndView modelAndView) {
+        modelAndView.setViewName("create");
         modelAndView.addObject("item", new Item());
         return modelAndView;
     }
 
     @PostMapping("/admin/items/create")
-    public String create(@Valid Item item,
+    public ModelAndView create(@Valid Item item,
                          BindingResult result,
-                         @RequestParam("imageFile") MultipartFile imageFile) {
+                         @RequestParam("imageFile") MultipartFile imageFile, ModelAndView modelAndView) {
         if (result.hasErrors()) {
-            return "create";
+            modelAndView.setViewName("create");
         } else {
             itemServ.saveItem(item);
             Photo newPhoto = new Photo();
@@ -61,8 +61,9 @@ public class ItemController {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            return "redirect:/admin";
+            return new ModelAndView("redirect:/admin");
         }
+        return modelAndView;
     }
 
     @GetMapping("/images/{filename:.+}")
@@ -75,8 +76,8 @@ public class ItemController {
 
     //  show an item
     @GetMapping("/items/{id}")
-    public ModelAndView showItem(@PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView("/read");
+    public ModelAndView showItem(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("read");
         modelAndView.addObject("item", itemServ.findItem(id));
         modelAndView.addObject("review", new Review());
         modelAndView.addObject("photo", photoServ.findById(id));
@@ -86,18 +87,18 @@ public class ItemController {
 
     //  admin-only: edit an item
     @GetMapping("/admin/items/edit/{id}")
-    public ModelAndView editItem(@PathVariable("id") Long id) {
-        ModelAndView modelAndView = new ModelAndView("/update");
+    public ModelAndView editItem(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("update");
         modelAndView.addObject("item", itemServ.findItem(id));
         return modelAndView;
     }
 
     @PostMapping("/admin/items/edit/{id}")
-    public String update(@Valid Item item,
+    public ModelAndView update(@Valid Item item,
                          BindingResult result,
-                         @RequestParam("imageFile") MultipartFile imageFile) {
+                         @RequestParam("imageFile") MultipartFile imageFile, ModelAndView modelAndView) {
         if (result.hasErrors()) {
-            return "update";
+            modelAndView.setViewName("update");
         } else {
             itemServ.saveItem(item);
             Photo newPhoto = new Photo();
@@ -110,27 +111,28 @@ public class ItemController {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            return "redirect:/admin";
+            return new ModelAndView("redirect:/admin");
         }
+        return modelAndView;
     }
 
     //  user: create an item review
     @PostMapping("/user/items/review/{id}")
-    public String createReview(@PathVariable("id") Long id,
+    public ModelAndView createReview(@PathVariable("id") Long id,
                                @Valid Review review,
                                BindingResult result,
-                               HttpServletRequest request, Model model) {
+                               HttpServletRequest request, Model model, ModelAndView modelAndView) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (result.hasErrors()) {
-            model.addAttribute("reviewErrorMessage", "A comment is required with your review");
+            modelAndView.addObject("reviewErrorMessage", "A comment is required with your review");
         } else {
             Item item = itemServ.findItem(id);
             review.setItem(item);
             review.setUser(user);
             reviewServ.saveReview(review);
         }
-        return "redirect:/items/{id}";
+        return new ModelAndView("redirect:/items/{id}");
     }
 
     //  user: delete their review

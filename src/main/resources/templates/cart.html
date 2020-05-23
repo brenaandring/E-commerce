@@ -11,34 +11,44 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
 
-        <div class="container-sm">
-            <!-- user: shows all items in cart. User can add/remove/checkout items -->
-            <p th:if="${errorMessage}" class="validation-message alert alert-danger" role="alert"
-               th:text="${errorMessage}"></p>
+        <div class="container-fluid">
+            <div class="row m-1 justify-content-center text-center">
+                <div class="col-md-10">
 
-            <div class="panel-default well" th:each="item : ${items.entrySet()}">
-                <div class="panel-heading">
-                    <h1><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}">Title</a>
-                    </h1>
-                    <h3 th:text="${item.getKey().description}">Description</h3>
-                </div>
-                <div class="row panel-body">
-                    <div th:inline="text" class="col-md-2">Price: $[[${item.getKey().price}]]</div>
-                    <div th:inline="text" class="col-md-9">Quantity: [[${item.getValue()}]]</div>
-                    <a th:href="@{/user/cart/remove/{id}(id=${item.getKey().id})}" class="col-md-1">
-                        <button type="button" class="btn btn-dark" th:text="Remove">Remove</button>
-                    </a>
+                    <p th:if="${errorMessage}" class="validation-message alert alert-danger" role="alert"
+                       th:text="${errorMessage}"></p>
+
+                    <h1 class="display-4 font-weight-light text-secondary m-2">Cart Summary</h1>
+
+                    <table class="table">
+                        <thead class="box1 text-light text-uppercase">
+                        <tr>
+                            <th class="align-middle" scope="col">Item</th>
+                            <th class="align-middle" scope="col">Price</th>
+                            <th class="align-middle" scope="col">Quantity</th>
+                            <th class="align-middle" scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-secondary border border-light">
+                        <tr th:each="item : ${items.entrySet()}">
+                            <td><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}" class="font-weight-bold text-uppercase text-secondary"></a></td>
+
+                            <td th:text="${item.getKey().price}"></td>
+                            <td th:text="${item.getValue()}"></td>
+                            <td><a th:href="@{/user/cart/remove/{id}(id=${item.getKey().id})}" class="btn text-uppercase text-light box1">Remove</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="row panel-body">
-                <h2 class="col-md-11" th:inline="text">Total: [[${total}]]</h2>
-                <a th:href="@{/items}" class="col-md-1">
-                    <button type="button" class="btn btn-primary">Continue Shopping</button>
-                </a>
-                <a th:href="@{/user/cart/confirm}" class="col-md-1">
-                    <button type="button" class="btn btn-danger">Proceed To Shipping/Confirmation</button>
-                </a>
+            <div class="row m-1 justify-content-center text-center">
+                <div class="col-md-10">
+                    <h1 class="display-4 font-weight-light text-secondary m-2">Total: [[${total}]]</h1>
+
+                    <a th:href="@{/items}" class="btn text-uppercase text-light box1 my-1">Continue Shopping</a>
+                    <a th:href="@{/user/cart/confirm}" class="btn text-uppercase text-light box1 my-1">Proceed to Checkout</a>
+                </div>
             </div>
         </div>
 

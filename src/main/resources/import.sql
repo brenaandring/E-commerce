@@ -7,7 +7,7 @@ INSERT INTO users (user_id, email, first_name, last_name, password) VALUES ('2',
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
 INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);
 
-INSERT INTO items (item_id, description, price, quantity, title) VALUES ('1', 'face mask', '10', '5', 'AQUAMARINE');
+INSERT INTO items (item_id, description, price, quantity, title) VALUES ('1', 'face mask', '10', '5', 'AQUA');
 INSERT INTO items (item_id, description, price, quantity, title) VALUES ('2', 'face mask', '10', '5', 'RAINBOW');
 INSERT INTO items (item_id, description, price, quantity, title) VALUES ('3', 'face mask', '10', '5', 'DESERT');
 INSERT INTO items (item_id, description, price, quantity, title) VALUES ('4', 'face mask', '10', '5', 'SUMMER FESTIVAL');

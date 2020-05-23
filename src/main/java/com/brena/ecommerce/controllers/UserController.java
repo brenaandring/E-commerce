@@ -42,10 +42,8 @@ public class UserController {
 
     //  user registration
     @GetMapping("/registration")
-    public ModelAndView registration() {
-        ModelAndView modelAndView = new ModelAndView("/registration");
-        User user = new User();
-        modelAndView.addObject("user", user);
+    public ModelAndView registration(ModelAndView modelAndView) {
+        modelAndView.addObject("user", new User());
         return modelAndView;
     }
 
@@ -74,10 +72,9 @@ public class UserController {
 
     //  admin/user login
     @RequestMapping("/login")
-    public ModelAndView login(@Valid User user,
+    public ModelAndView login(@Valid User user, ModelAndView modelAndView,
                               @RequestParam(value = "error", required = false) String error,
                               @RequestParam(value = "logout", required = false) String logout) {
-        ModelAndView modelAndView = new ModelAndView("/login");
         if (error != null) {
             modelAndView.addObject("errorMessage", "Invalid credentials. Please try again.");
         }
@@ -90,8 +87,8 @@ public class UserController {
     //  user dashboard
     @GetMapping("/user/dashboard")
     public ModelAndView dashboard(Principal principal,
-                                  HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("/dashboard");
+                                  HttpServletRequest request, ModelAndView modelAndView) {
+        modelAndView.setViewName("dashboard");
         String email = principal.getName();
         User user = userServ.findByEmail(email);
         modelAndView.addObject("user", user);
@@ -102,8 +99,7 @@ public class UserController {
 
     //  admin dashboard
     @GetMapping("/admin")
-    public ModelAndView adminPage(Principal principal) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView adminPage(Principal principal, ModelAndView modelAndView) {
         String email = principal.getName();
         modelAndView.addObject("admin", userServ.findByEmail(email));
         modelAndView.addObject("users", userServ.allUsers());
@@ -112,14 +108,14 @@ public class UserController {
     }
 
     //  admin-only: view user info
-    @RequestMapping("/admin/user/info/{id}")
-    public String userInfo(@PathVariable("id") Long id,
-                           Model model) {
-        model.addAttribute("user", userServ.findUserById(id));
-        return "userInfo";
+    @GetMapping("/admin/user/info/{id}")
+    public ModelAndView userInfo(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("userInfo");
+        modelAndView.addObject("user", userServ.findUserById(id));
+        return modelAndView;
     }
 
-    @GetMapping("/admin/user/order/delete/{id}")
+    @RequestMapping("/admin/user/order/delete/{id}")
     public String deleteOrder(@PathVariable("id") Long id) {
         orderServ.deleteOrder(id);
         return "redirect:/admin";

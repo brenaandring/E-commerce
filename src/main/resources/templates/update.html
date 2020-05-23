@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
     <head>
         <div th:replace="/fragments/header :: header"></div>
         <title>E-commerce</title>
@@ -7,49 +10,50 @@
 
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
+        <div class="container-fluid">
+            <img th:src="@{/img/edit.png}" class="img-fluid" alt="add">
 
-        <div class="container-sm">
-            <!-- admin: edit/update an item form -->
-            <form action="#" th:action="@{/admin/items/edit/{id}(id=${item.id})}" enctype="multipart/form-data"
-                  th:object="${item}" method="post">
+            <div class="row m-1 justify-content-center text-center">
+                <div class="col-md-5">
+                    <form action="#" th:action="@{/admin/items/edit/{id}(id=${item.id})}" th:object="${item}" method="post" enctype="multipart/form-data">
 
-                <div th:if="${#fields.hasErrors('title')}"
-                     th:errors="*{title}"
-                     class="validation-message alert alert-danger" role="alert"></div>
+                        <div th:if="${#fields.hasErrors('title')}"
+                             th:errors="*{title}"
+                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
-                <div th:if="${#fields.hasErrors('quantity')}"
-                     th:errors="*{quantity}"
-                     class="validation-message alert alert-danger" role="alert"></div>
+                        <div th:if="${#fields.hasErrors('quantity')}"
+                             th:errors="*{quantity}"
+                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
-                <div th:if="${#fields.hasErrors('description')}"
-                     th:errors="*{description}"
-                     class="validation-message alert alert-danger" role="alert"></div>
+                        <div th:if="${#fields.hasErrors('description')}"
+                             th:errors="*{description}"
+                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
-                <div th:if="${#fields.hasErrors('price')}"
-                     th:errors="*{price}"
-                     class="validation-message alert alert-danger" role="alert"></div>
+                        <div th:if="${#fields.hasErrors('price')}"
+                             th:errors="*{price}"
+                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
-                <div class="form-row justify-content-center">
-                    <div class="form-group col-md-3">
-                        <label for="title">Title:</label>
-                        <input type="text" class="form-control" id="title" th:field="*{title}">
+                        <div class="form-row justify-content-center text-center">
+                            <div class="form-group">
+                                <input type="text" class="form-control my-3 text-secondary text-uppercase" th:field="*{title}" th:placeholder="Title">
 
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" class="form-control" id="quantity" th:field="*{quantity}"
-                               th:placeholder="0">
+                                <input type="number" class="form-control my-3 text-secondary text-uppercase" th:field="*{quantity}" th:placeholder="0">
 
-                        <label for="description">Description:</label>
-                        <input type="text" class="form-control" id="description" th:field="*{description}">
+                                <input type="text" class="form-control my-3 text-secondary text-uppercase" th:field="*{description}" th:placeholder="Description">
 
-                        <label for="price">Price:</label>
-                        <input type="number" class="form-control" id="price" th:field="*{price}" th:placeholder="0">
+                                <input type="number" class="form-control my-3 text-secondary text-uppercase" th:field="*{price}" th:placeholder="0">
 
-                        <input type="file" class="form-control" name="imageFile">
+                                <input type="file" class="form-control my-3 text-secondary text-uppercase"  name="imageFile">
 
-                        <button type="submit" class="btn btn-dark">Update</button>
-                    </div>
+                                <button type="submit" class="btn box1 font-weight-light text-uppercase text-light">Edit an Item</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <a th:href="@{/admin}" class="btn box1 font-weight-light text-uppercase text-light">Cancel</a>
+
                 </div>
-            </form>
+            </div>
         </div>
 
         <div th:replace="/fragments/footer :: footer"></div>

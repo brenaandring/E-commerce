@@ -11,67 +11,75 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
 
-        <div class="container-sm">
-            <!-- user: shows all items in cart. User can add/remove/checkout items -->
-            <h1>Please provide your shipping address and the name this item is for</h1>
-            <form action="#" th:action="@{/user/cart/checkout}" th:object="${address}" method="post">
+        <div class="container-fluid">
+            <img th:src="@{/img/mask_photo8.jpg}" class="img-fluid" alt="photo of a woman in a mask">
 
-                <div th:if="${#fields.hasErrors('name')}"
-                     th:errors="*{name}"
-                     class="validation-message alert alert-danger" role="alert"></div>
+            <div class="row m-1">
+                <div class="col-md m-1 text-center">
+                    <h1 class="display-4 font-weight-light text-secondary m-2">Cart Summary</h1>
 
-                <div th:if="${#fields.hasErrors('street')}"
-                     th:errors="*{street}"
-                     class="validation-message alert alert-danger" role="alert"></div>
+                    <table class="table">
+                        <thead class="box1 text-light text-uppercase">
+                        <tr>
+                            <th class="align-middle" scope="col">Item</th>
+                            <th class="align-middle" scope="col">Price</th>
+                            <th class="align-middle" scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-secondary border border-light">
+                        <tr th:each="item : ${items.entrySet()}">
+                            <td><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}" class="font-weight-bold text-uppercase text-secondary"></a></td>
+                            <td th:text="${item.getKey().price}"></td>
+                            <td th:text="${item.getValue()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <div th:if="${#fields.hasErrors('city')}"
-                     th:errors="*{city}"
-                     class="validation-message alert alert-danger" role="alert"></div>
-
-                <div th:if="${#fields.hasErrors('state')}"
-                     th:errors="*{state}"
-                     class="validation-message alert alert-danger" role="alert"></div>
-
-                <div th:if="${#fields.hasErrors('zip')}"
-                     th:errors="*{zip}"
-                     class="validation-message alert alert-danger" role="alert"></div>
-
-                <div class="form-row justify-content-center">
-                    <div class="form-group col-md-3">
-                        <label for="name">Name:</label>
-                        <input type="text" class="form-control" id="name" th:field="*{name}">
-
-                        <label for="street">Street Address:</label>
-                        <input type="text" class="form-control" id="street" th:field="*{street}">
-
-                        <label for="city">City:</label>
-                        <input type="text" class="form-control" id="city" th:field="*{city}">
-
-                        <label for="state">State:</label>
-                        <input type="text" class="form-control" id="state" th:field="*{state}">
-
-                        <label for="zip">Zip Code:</label>
-                        <input type="number" class="form-control" id="zip" th:field="*{zip}">
-
-                        <button type="submit" class="btn btn-danger">Checkout</button>
-                    </div>
+                    <h1 class="display-4 font-weight-light text-secondary m-2">Total: [[${total}]]</h1>
                 </div>
-            </form>
 
-            <div class="panel-default well" th:each="item : ${items.entrySet()}">
-                <div class="panel-heading">
-                    <h1><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}">Title</a>
-                    </h1>
-                    <h3 th:text="${item.getKey().description}">Description</h3>
-                </div>
-                <div class="row panel-body">
-                    <div th:inline="text" class="col-md-2">Price: $[[${item.getKey().price}]]</div>
-                    <div th:inline="text" class="col-md-9">Quantity: [[${item.getValue()}]]</div>
-                </div>
-            </div>
+                <div class="box1 col-md m-1">
+                    <h3 class="text-secondary font-weight-light text-center m-2">Please provide your shipping address and the name this item is for</h3>
 
-            <div class="row panel-body">
-                <h2 class="col-md-11" th:inline="text">Total: [[${total}]]</h2>
+                    <form action="#" th:action="@{/user/cart/checkout}" th:object="${address}" method="post">
+
+                        <div th:if="${#fields.hasErrors('name')}"
+                             th:errors="*{name}"
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+
+                        <div th:if="${#fields.hasErrors('street')}"
+                             th:errors="*{street}"
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+
+                        <div th:if="${#fields.hasErrors('city')}"
+                             th:errors="*{city}"
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+
+                        <div th:if="${#fields.hasErrors('state')}"
+                             th:errors="*{state}"
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+
+                        <div th:if="${#fields.hasErrors('zip')}"
+                             th:errors="*{zip}"
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+
+                        <div class="form-row justify-content-center text-center ">
+                            <div class="form-group col-md-7">
+                                <input type="text" class="form-control mb-3 text-secondary text-uppercase" th:field="*{name}" th:placeholder="Name">
+
+                                <input type="text" class="form-control mb-3 text-secondary text-uppercase" th:field="*{street}" th:placeholder="Street">
+
+                                <input type="text" class="form-control mb-3 text-secondary text-uppercase" th:field="*{city}" th:placeholder="City">
+
+                                <input type="text" class="form-control mb-3 text-secondary text-uppercase" th:field="*{state}" th:placeholder="State">
+
+                                <input type="number" class="form-control mb-3 text-secondary text-uppercase" th:field="*{zip}" th:placeholder="00000">
+
+                                <button type="submit" class="btn btn-light font-weight-light text-uppercase text-secondary m-1">Place Order</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 

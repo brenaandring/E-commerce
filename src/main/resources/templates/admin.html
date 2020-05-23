@@ -11,61 +11,68 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
 
-        <div class="container-sm">
-            <!-- admin: shows all items and users -->
-            <h1>Welcome, [[${admin.firstName}]]!</h1>
+        <div class="container-fluid">
+            <img th:src="@{/img/admin.png}" class="img-fluid" alt="admin">
 
-            <!-- table of all items -->
-            <h2>All Items</h2>
-            <p><a th:href="@{/admin/items/create}" class="btn btn-dark">Add New Item</a></p>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="item : ${item}">
-                    <th scope="row" th:text="${item.title}"></th>
-                    <td th:text="${item.quantity}"></td>
-                    <td th:text="${item.description}"></td>
-                    <td th:text="${item.price}"></td>
-                    <td><a th:href="@{/items/{id}(id=${item.id})}" class="btn btn-dark">View</a>
-                        <a th:href="@{/admin/items/edit/{id}(id=${item.id})}" class="btn btn-dark">Edit</a>
-                        <a th:href="@{/admin/items/delete/{id}(id=${item.id})}" class="btn btn-dark">Delete</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row m-1 justify-content-center text-center">
+                <div class="col-md-10">
+                    <h1 class="display-4 font-weight-light text-secondary mb-3">Hello, [[${admin.firstName}]]!</h1>
 
-            <!-- table of all users -->
-            <h2>All Users</h2>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">User ID</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email Address</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="user : ${users}">
-                    <th scope="row" th:text="${user.id}"></th>
-                    <td th:text="${user.firstName}"></td>
-                    <td th:text="${user.lastName}"></td>
-                    <td th:text="${user.email}"></td>
-                    <td><a th:href="@{/admin/user/info/{id}(id=${user.id})}" class="btn btn-dark">View</a>
-                        <a th:href="@{/admin/user/delete/{id}(id=${user.id})}" class="btn btn-dark">Delete</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                    <h1 class="display-4 font-weight-light text-secondary m-2">Items</h1>
+
+                    <a th:href="@{/admin/items/create}" class="btn text-uppercase text-light box1 m-1">Add New Item</a>
+
+                    <table class="table table-responsive-sm">
+                        <thead class="box1 text-light text-uppercase">
+                        <tr>
+                            <th class="align-middle" scope="col">Title</th>
+                            <th class="align-middle" scope="col">Quantity</th>
+                            <th class="align-middle" scope="col">Price</th>
+                            <th class="align-middle" scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-secondary border border-light">
+                        <tr th:each="item : ${item}">
+                            <td><a th:href="@{/items/{id}(id=${item.id})}" th:text="${item.title}" class="font-weight-bold text-uppercase text-secondary"></a></td>
+                            <td th:text="${item.quantity}"></td>
+                            <td th:text="${item.price}"></td>
+                            <td>
+                                <a th:href="@{/admin/items/edit/{id}(id=${item.id})}" class="btn text-uppercase text-light my-1 box1">Edit</a>
+                                <a th:href="@{/admin/items/delete/{id}(id=${item.id})}" class="btn text-uppercase text-light box1">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row m-1 justify-content-center text-center">
+                <div class="col-md-10">
+                    <h1 class="display-4 font-weight-light text-secondary m-2">Users</h1>
+                    <table class="table table-responsive-sm">
+                        <thead class="box1 text-light text-uppercase">
+                        <tr>
+                            <th class="align-middle" scope="col">User ID</th>
+                            <th class="align-middle" scope="col">First Name</th>
+                            <th class="align-middle" scope="col">Last Name</th>
+                            <th class="align-middle" scope="col">Email Address</th>
+                            <th class="align-middle" scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-secondary border border-light">
+                        <tr th:each="user : ${users}">
+                            <th scope="row" th:text="${user.id}"></th>
+                            <td th:text="${user.firstName}"></td>
+                            <td th:text="${user.lastName}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td><a th:href="@{/admin/user/info/{id}(id=${user.id})}" class="btn my-1 text-uppercase text-light box1">View</a>
+                                <a th:href="@{/admin/user/delete/{id}(id=${user.id})}" class="btn my-1 text-uppercase text-light box1">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div th:replace="/fragments/footer :: footer"></div>

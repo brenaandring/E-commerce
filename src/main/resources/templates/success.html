@@ -11,13 +11,20 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
 
-        <div class="container-sm">
-            <h1>Thank you for your purchase!</h1>
+        <div class="container-fluid">
+            <div class="row m-1 align-items-center">
+                <div class="bg-light col-md m-1 text-center">
+                    <img th:src="@{/img/mask_photo9.png}" th:width="700" class="img-fluid p-2" alt="photo of text">
+                </div>
 
-            <h3>You will get an email shortly.
-                <br>You can visit your dashboard to view your recent purchase</h3>
-
-            <h4>Mask With Love</h4>
+                <div class="col-md m-1 border border-light text-center">
+                    <h3 class="text-secondary font-weight-light text-center m-2">
+                        Thank you for your order!
+                        <br>Visit your dashboard to view your recent orders.
+                        <br>- Mask With Love
+                    </h3>
+                </div>
+            </div>
         </div>
 
         <div th:replace="/fragments/footer :: footer"></div>
