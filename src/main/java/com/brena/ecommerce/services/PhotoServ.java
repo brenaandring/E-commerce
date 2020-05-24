@@ -3,7 +3,6 @@ package com.brena.ecommerce.services;
 import com.brena.ecommerce.models.Photo;
 import com.brena.ecommerce.repositories.PhotoRepo;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

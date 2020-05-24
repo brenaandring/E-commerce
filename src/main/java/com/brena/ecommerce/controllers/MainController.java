@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-//@RestController
 @Controller
 public class MainController {
     private final ItemServ itemServ;
@@ -20,7 +19,7 @@ public class MainController {
         return new ModelAndView("index");
     }
 
-    //  mask page
+    //  shows all available items
     @GetMapping("/items")
     public ModelAndView items(ModelAndView modelAndView) {
         modelAndView.addObject("items", itemServ.allItems());

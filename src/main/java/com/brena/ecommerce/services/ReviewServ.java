@@ -1,6 +1,5 @@
 package com.brena.ecommerce.services;
 
-import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.Review;
 import com.brena.ecommerce.repositories.ReviewRepo;
 import org.springframework.stereotype.Service;

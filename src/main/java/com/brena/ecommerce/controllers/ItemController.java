@@ -172,7 +172,6 @@ public class ItemController {
         return "redirect:/admin";
     }
 
-
     private String getFileExtension(String filename) {
         int lastIndexOf = filename.lastIndexOf(".");
         if (lastIndexOf == -1) {

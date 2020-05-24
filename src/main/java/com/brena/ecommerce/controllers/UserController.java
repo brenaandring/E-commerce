@@ -1,13 +1,9 @@
 package com.brena.ecommerce.controllers;
 
-import com.brena.ecommerce.models.Address;
-import com.brena.ecommerce.models.Item;
-import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.services.*;
 import com.brena.ecommerce.validator.UserValidator;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,21 +18,15 @@ public class UserController {
     private final UserServ userServ;
     private final ItemServ itemServ;
     private final UserValidator userValidator;
-    private final ReviewServ reviewServ;
-    private final AddressServ addressServ;
     private final OrderServ orderServ;
 
     public UserController(UserServ userServ,
                           ItemServ itemServ,
                           UserValidator userValidator,
-                          ReviewServ reviewServ,
-                          AddressServ addressServ,
                           OrderServ orderServ) {
         this.userServ = userServ;
         this.itemServ = itemServ;
         this.userValidator = userValidator;
-        this.reviewServ = reviewServ;
-        this.addressServ = addressServ;
         this.orderServ = orderServ;
     }
 

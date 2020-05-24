@@ -1,9 +1,7 @@
 package com.brena.ecommerce.services;
 
-import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.OrderItem;
 import com.brena.ecommerce.repositories.OrderItemRepo;
-import com.brena.ecommerce.repositories.OrderRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
