@@ -22,16 +22,13 @@ import java.util.UUID;
 public class ItemController {
     private final ItemServ itemServ;
     private final ReviewServ reviewServ;
-    private final UserServ userServ;
     private final PhotoServ photoServ;
 
     public ItemController(ItemServ itemServ,
                           ReviewServ reviewServ,
-                          UserServ userServ,
                           PhotoServ photoServ) {
         this.itemServ = itemServ;
         this.reviewServ = reviewServ;
-        this.userServ = userServ;
         this.photoServ = photoServ;
     }
 
