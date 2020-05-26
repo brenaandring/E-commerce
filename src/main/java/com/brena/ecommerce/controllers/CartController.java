@@ -4,6 +4,7 @@ import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -81,7 +82,7 @@ public class CartController {
 
     //  user: checkout and saves information
     @RequestMapping("/user/cart/checkout")
-    public String checkout(@Valid Order order, @Valid Address address, HttpServletRequest request) {
+    public String checkout(@Valid Order order, @Valid Address address, BindingResult result, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (order.getOrderItems() == null) {
@@ -95,15 +96,19 @@ public class CartController {
             orderItem.setOrder(order);
             order.getOrderItems().add(orderItem);
         }
-        address.setUser(user);
-        order.setAddress(address);
-        addressServ.saveAddress(address);
-        order.setUser(user);
-        BigDecimal total = cartServ.getTotal();
-        order.setTotal(total);
-        orderServ.saveOrder(order);
-        cartServ.checkout(order);
-        return "redirect:/user/cart/success";
+        if (result.hasErrors()) {
+            return "redirect:/user/cart/confirm";
+        } else {
+            address.setUser(user);
+            order.setAddress(address);
+            addressServ.saveAddress(address);
+            order.setUser(user);
+            BigDecimal total = cartServ.getTotal();
+            order.setTotal(total);
+            orderServ.saveOrder(order);
+            cartServ.checkout(order);
+            return "redirect:/user/cart/success";
+        }
     }
 
     //  user: shows them the success page
