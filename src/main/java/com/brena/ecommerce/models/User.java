@@ -30,6 +30,7 @@ public class User {
     private String password;
 
     @Transient
+    @Size(min = 8, message = "Password did not match")
     private String passwordConfirmation;
 
     @Column(name = "createdAt")

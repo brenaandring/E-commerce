@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -67,24 +69,33 @@ public class CartController {
 
     //  user: shows them their cart confirmation
     @GetMapping("/user/cart/confirm")
-    public ModelAndView cartConfirmation(ModelAndView modelAndView) {
+    public RedirectView confirm(RedirectAttributes redirectAttributes) {
+        RedirectView redirectView = new RedirectView("/user/cart");
+        RedirectView redirectView2 = new RedirectView("/user/cart/confirmation");
         if (cartServ.getItemsInCart().isEmpty()) {
-            modelAndView.addObject("errorMessage", "Your cart is empty! Please add an item before proceeding.");
-            return shoppingCart();
+            redirectAttributes.addFlashAttribute("errorMessage", "Your cart is empty! Please add an item before proceeding.");
+            return redirectView;
         } else {
-            modelAndView.setViewName("confirmation");
-            modelAndView.addObject("items", cartServ.getItemsInCart());
-            modelAndView.addObject("address", new Address());
-            modelAndView.addObject("total", cartServ.getTotal().toString());
-            return modelAndView;
+            return redirectView2;
         }
+    }
+
+    @GetMapping("/user/cart/confirmation")
+    public ModelAndView cartConfirmation(ModelAndView modelAndView) {
+        modelAndView.setViewName("confirmation");
+        modelAndView.addObject("items", cartServ.getItemsInCart());
+        modelAndView.addObject("address", new Address());
+        modelAndView.addObject("total", cartServ.getTotal().toString());
+        return modelAndView;
     }
 
     //  user: checkout and saves information
     @RequestMapping("/user/cart/checkout")
-    public String checkout(@Valid Order order, @Valid Address address, BindingResult result, HttpServletRequest request) {
+    public RedirectView checkout(@Valid Order order, RedirectAttributes redirectAttributes, @Valid Address address, BindingResult result, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        RedirectView redirectView = new RedirectView("/user/cart/confirmation");
+        RedirectView redirectView2 = new RedirectView("/user/cart/success");
         if (order.getOrderItems() == null) {
             order.setOrderItems(new ArrayList<>());
         }
@@ -97,7 +108,8 @@ public class CartController {
             order.getOrderItems().add(orderItem);
         }
         if (result.hasErrors()) {
-            return "redirect:/user/cart/confirm";
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid address. Please try again!");
+            return redirectView;
         } else {
             address.setUser(user);
             order.setAddress(address);
@@ -107,7 +119,7 @@ public class CartController {
             order.setTotal(total);
             orderServ.saveOrder(order);
             cartServ.checkout(order);
-            return "redirect:/user/cart/success";
+            return redirectView2;
         }
     }
 

@@ -43,6 +43,10 @@
             <div class="row m-1 justify-content-center">
                 <!-- user: leave a review -->
                 <div class="col-md-6 p-1 m-1 text-center border border-light">
+
+                    <p th:if="${errorMessage}" class="validation-message alert box1 text-center text-secondary text-uppercase" role="alert"
+                       th:text="${errorMessage}"></p>
+
                     <form action="#" th:action="@{/user/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
                         <div class="controls">
                             <div class="row">

@@ -6,16 +6,16 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 import java.util.UUID;
 
 @Controller
@@ -115,21 +115,22 @@ public class ItemController {
 
     //  user: create an item review
     @PostMapping("/user/items/review/{id}")
-    public ModelAndView createReview(@PathVariable("id") Long id,
-                               @Valid Review review,
-                               BindingResult result,
-                               HttpServletRequest request, Model model, ModelAndView modelAndView) {
+    public RedirectView createReview(@PathVariable("id") Long id,
+                                     @Valid Review review,
+                                     BindingResult result,
+                                     HttpServletRequest request, RedirectAttributes redirectAttributes) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        RedirectView redirectView = new RedirectView("/items/{id}");
         if (result.hasErrors()) {
-            modelAndView.addObject("reviewErrorMessage", "A comment is required with your review");
+            redirectAttributes.addFlashAttribute("errorMessage", "Please write a review.");
         } else {
             Item item = itemServ.findItem(id);
             review.setItem(item);
             review.setUser(user);
             reviewServ.saveReview(review);
         }
-        return new ModelAndView("redirect:/items/{id}");
+        return redirectView;
     }
 
     //  user: delete their review
