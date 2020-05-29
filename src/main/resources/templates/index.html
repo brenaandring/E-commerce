@@ -54,14 +54,17 @@
                 <div class="box1 col-md m-1">
                     <img th:src="@{/img/mask_photo2.jpg}" class="img-fluid m-1" alt="photo of a woman in a mask">
 
+                    <p th:if="${errorMessage}" class="validation-message alert alert-light text-center text-uppercase" role="alert"
+                       th:text="${errorMessage}"></p>
+
                     <h1 class="display-4 text-white text-uppercase text-center">Contact Us</h1>
 
-                    <form action="#" th:action="@{/contact}" method="post">
+                    <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
                         <div class="controls">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group text-secondary">
-                                        <input type="text" name="subject" class="form-control text-secondary font-weight-light" required="required" placeholder="Subject" data-error="Subject is required.">
+                                        <input type="text" name="subject" class="form-control text-secondary font-weight-light" placeholder="Subject">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -69,13 +72,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group text-secondary">
-                                        <input type="text" name="userName" class="form-control text-secondary font-weight-light" required="required" placeholder="Name" data-error="Firstname is required.">
+                                        <input type="text" name="name" class="form-control text-secondary font-weight-light" placeholder="Name">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group text-secondary">
-                                        <input type="email" name="userEmail" class="form-control text-secondary font-weight-light" required="required" placeholder="Email" data-error="Valid email is required.">
+                                        <input type="email" name="email" class="form-control text-secondary font-weight-light" placeholder="Email">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -83,7 +86,7 @@
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <div class="form-group">
-                                        <textarea name="message" class="form-control text-secondary font-weight-light" rows="4" required="required" placeholder="Your message" data-error="Please leave us a message."></textarea>
+                                        <textarea name="message" class="form-control text-secondary font-weight-light" rows="4" placeholder="Your message"></textarea>
                                         <div class="help-block with-errors"></div>
                                     </div>
                                     <input type="submit" class="btn btn-submit btn-light font-weight-light text-uppercase text-secondary m-1" value="send message">
