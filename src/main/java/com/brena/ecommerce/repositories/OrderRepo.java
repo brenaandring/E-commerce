@@ -15,4 +15,6 @@ public interface OrderRepo extends CrudRepository<Order, Long> {
     Order findByUser(User user);
 
     Optional<Order> findById(Long id);
+
+    List<Order> findByStatus(String status);
 }

@@ -16,7 +16,18 @@ public class OrderServ {
         this.orderRepo = orderRepo;
     }
 
-    public void saveOrder(Order order) {
+    public void saveNewOrder(Order order) {
+        order.setStatus("New");
+        orderRepo.save(order);
+    }
+
+    public void saveShippedOrder(Order order) {
+        order.setStatus("Shipped");
+        orderRepo.save(order);
+    }
+
+    public void saveCancelledOrder(Order order) {
+        order.setStatus("Cancelled");
         orderRepo.save(order);
     }
 

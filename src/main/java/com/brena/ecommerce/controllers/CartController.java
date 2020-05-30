@@ -117,7 +117,7 @@ public class CartController {
             order.setUser(user);
             BigDecimal total = cartServ.getTotal();
             order.setTotal(total);
-            orderServ.saveOrder(order);
+            orderServ.saveNewOrder(order);
             cartServ.checkout(order);
             return redirectView2;
         }

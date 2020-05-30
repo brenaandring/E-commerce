@@ -16,9 +16,8 @@
 
             <div class="row m-1 justify-content-center text-center">
                 <div class="col-md-10">
-                    <a th:href="@{/admin/user/info/{id}(id=${user.id})}"  class="text-secondary">
-                        <h1 class="display-4 mb-4">[[${order.user.firstName}]] [[${order.user.lastName}]]</h1>
-                    </a>
+                    <h1 class="display-4 font-weight-light text-secondary">[[${order.user.firstName}]] [[${order.user.lastName}]]</h1>
+                    <h1 class="display-4 font-weight-light text-secondary mb-4">[[${order.user.email}]]</h1>
 
                     <table class="table table-responsive-sm">
                         <thead class="box1 text-light text-uppercase">

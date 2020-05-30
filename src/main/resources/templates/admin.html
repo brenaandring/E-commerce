@@ -18,6 +18,30 @@
                 <div class="col-md-10">
                     <h1 class="display-4 font-weight-light text-secondary mb-3">Hello, [[${admin.firstName}]]!</h1>
 
+                    <h1 class="display-4 font-weight-light text-secondary m-2">New Orders</h1>
+
+                    <table class="table table-responsive-sm">
+                        <thead class="box1 text-light text-uppercase">
+                        <tr>
+                            <th class="align-middle" scope="col">Order Id</th>
+                            <th class="align-middle" scope="col">Created At</th>
+                            <th class="align-middle" scope="col">Total</th>
+                            <th class="align-middle" scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-secondary border border-light">
+                        <tr th:each="order : ${orders}">
+                            <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}"  class="font-weight-bold text-uppercase text-secondary" th:text="${order.id}"></a></td>
+                            <td th:text="${order.createdAt}"></td>
+                            <td th:text="${order.total}"></td>
+                            <td>
+                                <a th:href="@{/}" class="btn text-uppercase text-light my-1 box1">Completed</a>
+                                <a th:href="@{/admin/user/order/delete/{id}(id=${order.id})}" class="btn text-uppercase text-light box1">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
                     <h1 class="display-4 font-weight-light text-secondary m-2">Items</h1>
 
                     <a th:href="@{/admin/items/create}" class="btn text-uppercase text-light box1 m-1">Add New Item</a>
@@ -32,7 +56,7 @@
                         </tr>
                         </thead>
                         <tbody class="text-secondary border border-light">
-                        <tr th:each="item : ${item}">
+                        <tr th:each="item : ${items}">
                             <td><a th:href="@{/items/{id}(id=${item.id})}" th:text="${item.title}" class="font-weight-bold text-uppercase text-secondary"></a></td>
                             <td th:text="${item.quantity}"></td>
                             <td th:text="${item.price}"></td>
@@ -43,11 +67,7 @@
                         </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
 
-            <div class="row m-1 justify-content-center text-center">
-                <div class="col-md-10">
                     <h1 class="display-4 font-weight-light text-secondary m-2">Users</h1>
                     <table class="table table-responsive-sm">
                         <thead class="box1 text-light text-uppercase">

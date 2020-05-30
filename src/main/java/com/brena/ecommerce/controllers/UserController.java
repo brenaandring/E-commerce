@@ -90,10 +90,12 @@ public class UserController {
     //  admin dashboard
     @GetMapping("/admin")
     public ModelAndView adminPage(Principal principal, ModelAndView modelAndView) {
+        modelAndView.setViewName("admin");
         String email = principal.getName();
         modelAndView.addObject("admin", userServ.findByEmail(email));
         modelAndView.addObject("users", userServ.allUsers());
-        modelAndView.addObject("item", itemServ.allItems());
+        modelAndView.addObject("items", itemServ.allItems());
+        modelAndView.addObject("orders", orderServ.allOrders());
         return modelAndView;
     }
 

@@ -7,22 +7,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
-import java.util.Properties;
 
 @Controller
 public class MainController {
@@ -37,30 +29,33 @@ public class MainController {
 
     //  index/home page
     @GetMapping("/")
-    public ModelAndView index() {
+    public ModelAndView index(ModelAndView modelAndView) {
+        modelAndView.setViewName("index");
         Contact contact = new Contact();
-        return new ModelAndView("index");
+        return modelAndView;
     }
 
     @PostMapping("/contact")
-    public ModelAndView contactForm(@RequestParam("name") String name,
-                                    @RequestParam("email") String email,
-                                    @RequestParam("message") String message,
-                                    @RequestParam("subject") String subject, ModelAndView modelAndView, @Valid Contact contact, BindingResult result) {
+    public RedirectView contactForm(@RequestParam("email") String email,
+                                    @RequestParam("subject") String subject,
+                                    @Valid Contact contact, BindingResult result,
+                                    RedirectAttributes redirectAttributes) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        RedirectView redirectView = new RedirectView("/");
         String content = "Name: " + contact.getName() + " ";
             content += "Email: " + contact.getEmail() + " ";
             content += "Message: " + contact.getMessage();
         if (result.hasErrors()) {
-            modelAndView.addObject("errorMessage", "Invalid submission, please try again");
+            redirectAttributes.addFlashAttribute("message", "Invalid submission, please try again");
         } else {
             simpleMailMessage.setTo("maskwithlove19@gmail.com");
             simpleMailMessage.setText(content);
             simpleMailMessage.setReplyTo(email);
             simpleMailMessage.setSubject(subject);
             javaMailSender.send(simpleMailMessage);
+            redirectAttributes.addFlashAttribute("message", "Message sent. Thank you!");
         }
-        return index();
+        return redirectView;
     }
 
     //  shows all available items

@@ -18,6 +18,9 @@ public class Order {
     @DecimalMin(value = "0.00", message = "*Price has to be non negative number")
     private BigDecimal total;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "createdAt", updatable = false)
     private Date createdAt;
 
@@ -43,6 +46,14 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getCreatedAt() {
