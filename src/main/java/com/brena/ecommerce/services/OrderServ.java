@@ -21,14 +21,22 @@ public class OrderServ {
         orderRepo.save(order);
     }
 
-    public void saveShippedOrder(Order order) {
-        order.setStatus("Shipped");
-        orderRepo.save(order);
+    public void saveShippedOrder(Long id) {
+        Optional<Order> orderOp = orderRepo.findById(id);
+        if (orderOp.isPresent()) {
+            Order order = orderOp.get();
+            order.setStatus("Shipped");
+            orderRepo.save(order);
+        }
     }
 
-    public void saveCancelledOrder(Order order) {
-        order.setStatus("Cancelled");
-        orderRepo.save(order);
+    public void saveCancelledOrder(Long id) {
+        Optional<Order> orderOp = orderRepo.findById(id);
+        if (orderOp.isPresent()) {
+            Order order = orderOp.get();
+            order.setStatus("Cancelled");
+            orderRepo.save(order);
+        }
     }
 
     public Order findByUser(User user) {
@@ -36,7 +44,12 @@ public class OrderServ {
     }
 
     public List<Order> allOrders() {
+
         return orderRepo.findAll();
+    }
+
+    public List<Order> findByStatus(String status) {
+        return orderRepo.findByStatus(status);
     }
 
     public Order findById(Long id) {

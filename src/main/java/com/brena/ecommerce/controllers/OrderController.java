@@ -64,9 +64,15 @@ public class OrderController {
         return modelAndView;
     }
 
-    @RequestMapping("/admin/user/order/delete/{id}")
-    public String deleteOrder(@PathVariable("id") Long id) {
-        orderServ.deleteOrder(id);
+    @RequestMapping("/admin/user/order/shipped/{id}")
+    public String shippedOrder(@PathVariable("id") Long id) {
+        orderServ.saveShippedOrder(id);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping("/admin/user/order/cancel/{id}")
+    public String cancelOrder(@PathVariable("id") Long id) {
+        orderServ.saveCancelledOrder(id);
         return "redirect:/admin";
     }
 }

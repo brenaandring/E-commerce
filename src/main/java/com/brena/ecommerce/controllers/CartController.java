@@ -3,7 +3,6 @@ package com.brena.ecommerce.controllers;
 import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.services.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
