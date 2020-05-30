@@ -107,12 +107,6 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping("/admin/user/order/delete/{id}")
-    public String deleteOrder(@PathVariable("id") Long id) {
-        orderServ.deleteOrder(id);
-        return "redirect:/admin";
-    }
-
     //  admin-only: delete a user
     @RequestMapping("/admin/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
