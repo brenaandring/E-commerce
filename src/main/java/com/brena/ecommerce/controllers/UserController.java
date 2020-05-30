@@ -1,5 +1,6 @@
 package com.brena.ecommerce.controllers;
 
+import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.services.*;
 import com.brena.ecommerce.component.UserValidator;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.*;
+
+import static com.brena.ecommerce.services.OrderServ.*;
 
 @Controller
 public class UserController {
@@ -29,6 +33,12 @@ public class UserController {
         this.userValidator = userValidator;
         this.orderServ = orderServ;
     }
+
+    private static Map<String, Integer> statusLabels = new LinkedHashMap<String, Integer>() {{
+        put(STATUS_NEW, 0);
+        put(STATUS_SHIPPED, 1);
+        put(STATUS_CANCELLED, 2);
+    }};
 
     //  user registration
     @GetMapping("/registration")
@@ -89,13 +99,23 @@ public class UserController {
 
     //  admin dashboard
     @GetMapping("/admin")
-    public ModelAndView adminPage(Principal principal, ModelAndView modelAndView) {
+    public ModelAndView adminPage(Principal principal,
+                                  ModelAndView modelAndView,
+                                  @RequestParam(value = "status", required = false, defaultValue = "asc")
+                                          Optional<String> statusParam) {
         modelAndView.setViewName("admin");
         String email = principal.getName();
         modelAndView.addObject("admin", userServ.findByEmail(email));
         modelAndView.addObject("users", userServ.allUsers());
         modelAndView.addObject("items", itemServ.allItems());
-        modelAndView.addObject("orders", orderServ.allOrders());
+        List<Order> orders = orderServ.allOrders();
+        Comparator<Order> status = Comparator.comparing(order -> order == null ? 0 :
+                statusLabels.getOrDefault(order.getStatus(), 0));
+        if (statusParam.isPresent() && "desc".equals(statusParam.get())) {
+            status = status.reversed();
+        }
+        orders.sort(status);
+        modelAndView.addObject("orders", orders);
         return modelAndView;
     }
 

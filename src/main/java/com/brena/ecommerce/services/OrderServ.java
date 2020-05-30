@@ -10,6 +10,11 @@ import java.util.Optional;
 
 @Service
 public class OrderServ {
+
+    public static final String STATUS_NEW = "New";
+    public static final String STATUS_SHIPPED = "Shipped";
+    public static final String STATUS_CANCELLED = "Cancelled";
+
     private final OrderRepo orderRepo;
 
     public OrderServ(OrderRepo orderRepo) {
@@ -17,7 +22,7 @@ public class OrderServ {
     }
 
     public void saveNewOrder(Order order) {
-        order.setStatus("New");
+        order.setStatus(STATUS_NEW);
         orderRepo.save(order);
     }
 
@@ -25,7 +30,7 @@ public class OrderServ {
         Optional<Order> orderOp = orderRepo.findById(id);
         if (orderOp.isPresent()) {
             Order order = orderOp.get();
-            order.setStatus("Shipped");
+            order.setStatus(STATUS_SHIPPED);
             orderRepo.save(order);
         }
     }
@@ -34,7 +39,7 @@ public class OrderServ {
         Optional<Order> orderOp = orderRepo.findById(id);
         if (orderOp.isPresent()) {
             Order order = orderOp.get();
-            order.setStatus("Cancelled");
+            order.setStatus(STATUS_CANCELLED);
             orderRepo.save(order);
         }
     }
@@ -44,7 +49,6 @@ public class OrderServ {
     }
 
     public List<Order> allOrders() {
-
         return orderRepo.findAll();
     }
 

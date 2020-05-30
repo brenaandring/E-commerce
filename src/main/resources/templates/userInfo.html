@@ -22,7 +22,7 @@
                         <thead class="box1 text-light text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Order Id</th>
-                            <th class="align-middle" scope="col">Dated Ordered</th>
+                            <th class="align-middle" scope="col">Date Purchased</th>
                             <th class="align-middle" scope="col">Status</th>
                             <th class="align-middle" scope="col">Action</th>
                         </tr>
@@ -31,7 +31,9 @@
                         <tr th:each="order : ${user.orders}">
                             <th scope="row" th:text="${order.id}"></th>
                             <td th:text="${order.createdAt}"></td>
-                            <td th:text="${order.status}"></td>
+                            <td><div th:text="${order.status}"></div>
+                                <div th:text="${order.updatedAt}"></div>
+                            </td>
                             <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}" class="btn text-uppercase text-light my-1 box1">View</a>
                             </td>
                         </tr>

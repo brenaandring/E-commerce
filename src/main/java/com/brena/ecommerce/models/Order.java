@@ -22,7 +22,10 @@ public class Order {
     private String status;
 
     @Column(name = "createdAt", updatable = false)
-    private Date createdAt;
+    private Date createdAt = new Date();
+
+    @Column(name = "updatedAt")
+    private Date updatedAt = new Date();
 
     //  model relationships
     @ManyToOne(fetch = FetchType.LAZY)
@@ -64,6 +67,14 @@ public class Order {
         this.createdAt = createdAt;
     }
 
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public User getUser() {
         return user;
     }
@@ -97,7 +108,12 @@ public class Order {
     }
 
     @PrePersist
-    protected void onCreate() {
+    protected void onCreate(){
         this.createdAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate(){
+        this.updatedAt = new Date();
     }
 }
