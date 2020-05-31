@@ -1,16 +1,13 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <div th:replace="/fragments/header :: header"></div>
-        <title>E-commerce</title>
+        <title>Mask With Love</title>
     </head>
 
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
-
         <div class="container-fluid">
             <img th:src="@{/img/mask_photo.jpg}" class="img-fluid" alt="photo of a woman in a mask">
 
@@ -24,23 +21,25 @@
             </div>
         </div>
 
+        <!-- about section -->
         <div class="container-xl">
             <div class="row m-2 p-3 text-secondary">
                 <div class="col text-center">
-                    <h1 class="display-4">My mother has always loved to sew.</h1>
+                    <img th:src="@{/img/parents.jpg}" th:width="700" class="img-fluid p-2" alt="photo of two people">
+                    <h1 class="display-4">My mom has always loved to sew.</h1>
                 </div>
                 <p class="lead">Growing up, she would sew us clothing like sweaters, socks, hats, and pajama bottoms.
                     As a teenager, I never wanted to wear anything she made, because I wanted to wear something I could purchase,
                     something that the cool kids at school were wearing. However, as I have grown into adulthood, I've come to appreciate
-                    the gift my mother has. My mother is the type of individual who can follow any sewing pattern and present you with
+                    the gift my mom has. My mom is the type of individual who can follow any sewing pattern and present you with
                     a beautifully and sturdy made item. She also has the gift to look past patterns and sew pieces from memory, from intuition.
                 </p>
-                <p class="lead">My mother is the kind of human who uses her skills to help other people. She would
+                <p class="lead">My mom is the kind of human who uses her skills to help other people. She would
                     rather make you a gift than buy one. She cherishes homemade ones the most. Recently as the world
-                    found itself unwell and people social-distancing, my mother decided to protect people by making face
+                    found itself unwell and people social-distancing, my mom decided to protect people by making face
                     masks. Utilizing the fabrics in her sewing room, she has made masks for the family and friends.
-                    As a way to raise awareness about my mother's masks that she made with love, I create this website
-                    so people can have one.
+                    As a way to raise awareness about my mom's masks that she made with love, I create this website
+                    so people could have one.
                 </p>
             </div>
         </div>
@@ -54,17 +53,19 @@
                 <div class="box1 col-md m-1">
                     <img th:src="@{/img/mask_photo2.jpg}" class="img-fluid m-1" alt="photo of a woman in a mask">
 
-                    <p th:if="${message}" class="validation-message alert alert-light text-center text-uppercase" role="alert"
-                       th:text="${message}"></p>
+                    <p th:if="${message}" class="validation-message alert alert-light text-center text-uppercase"
+                       role="alert" th:text="${message}"></p>
 
                     <h1 class="display-4 text-white text-uppercase text-center">Contact Us</h1>
 
+                    <!-- contact form -->
                     <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
                         <div class="controls">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group text-secondary">
-                                        <input type="text" name="subject" class="form-control text-secondary font-weight-light" placeholder="Subject">
+                                        <input type="text" name="subject" class="form-control text-secondary
+                                        font-weight-light" placeholder="Subject">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -72,13 +73,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group text-secondary">
-                                        <input type="text" name="name" class="form-control text-secondary font-weight-light" placeholder="Name">
+                                        <input type="text" name="name" class="form-control text-secondary
+                                        font-weight-light" placeholder="Name">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group text-secondary">
-                                        <input type="email" name="email" class="form-control text-secondary font-weight-light" placeholder="Email">
+                                        <input type="email" name="email" class="form-control text-secondary
+                                        font-weight-light" placeholder="Email">
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
@@ -86,10 +89,12 @@
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <div class="form-group">
-                                        <textarea name="message" class="form-control text-secondary font-weight-light" rows="4" placeholder="Your message"></textarea>
+                                        <textarea name="message" class="form-control text-secondary font-weight-light"
+                                                  rows="4" placeholder="Your message"></textarea>
                                         <div class="help-block with-errors"></div>
                                     </div>
-                                    <input type="submit" class="btn btn-submit btn-light font-weight-light text-uppercase text-secondary m-1" value="send message">
+                                    <input type="submit" class="btn btn-submit btn-light font-weight-light text-
+                                    uppercase text-secondary m-1" value="Send Message">
                                 </div>
                             </div>
                         </div>
@@ -97,7 +102,6 @@
                 </div>
             </div>
         </div>
-
         <div th:replace="/fragments/footer :: footer"></div>
     </body>
 </html>

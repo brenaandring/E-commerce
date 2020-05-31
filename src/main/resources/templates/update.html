@@ -1,11 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <div th:replace="/fragments/header :: header"></div>
-        <title>E-commerce</title>
+        <title>Mask With Love</title>
     </head>
 
     <body>
@@ -15,8 +13,12 @@
 
             <div class="row m-1 justify-content-center text-center">
                 <div class="col-md-5">
-                    <form action="#" th:action="@{/admin/items/edit/{id}(id=${item.id})}" th:object="${item}" method="post" enctype="multipart/form-data">
 
+                    <!-- update item form -->
+                    <form action="#" th:action="@{/admin/items/edit/{id}(id=${item.id})}" th:object="${item}"
+                          method="post" enctype="multipart/form-data">
+
+                        <!-- form error messages -->
                         <div th:if="${#fields.hasErrors('title')}"
                              th:errors="*{title}"
                              class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
@@ -35,27 +37,29 @@
 
                         <div class="form-row justify-content-center text-center">
                             <div class="form-group">
-                                <input type="text" class="form-control my-3 text-secondary" th:field="*{title}" th:placeholder="Title">
+                                <input type="text" class="form-control my-3 text-secondary" th:field="*{title}"
+                                       th:placeholder="Title">
 
-                                <input type="number" class="form-control my-3 text-secondary" th:field="*{quantity}" th:placeholder="0">
+                                <input type="number" class="form-control my-3 text-secondary" th:field="*{quantity}"
+                                       th:placeholder="0">
 
-                                <input type="text" class="form-control my-3 text-secondary" th:field="*{description}" th:placeholder="Description">
+                                <input type="text" class="form-control my-3 text-secondary" th:field="*{description}"
+                                       th:placeholder="Description">
 
-                                <input type="number" class="form-control my-3 text-secondary" th:field="*{price}" th:placeholder="0">
+                                <input type="number" class="form-control my-3 text-secondary" th:field="*{price}"
+                                       th:placeholder="0">
 
                                 <input type="file" class="form-control my-3"  name="imageFile">
 
-                                <button type="submit" class="btn box1 font-weight-light text-uppercase text-light">Edit an Item</button>
+                                <button type="submit" class="btn box1 font-weight-light text-uppercase
+                                text-light">Edit an Item</button>
                             </div>
                         </div>
                     </form>
-
                     <a th:href="@{/admin}" class="btn box1 font-weight-light text-uppercase text-light">Cancel</a>
-
                 </div>
             </div>
         </div>
-
         <div th:replace="/fragments/footer :: footer"></div>
     </body>
 </html>

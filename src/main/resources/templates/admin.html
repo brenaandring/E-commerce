@@ -1,16 +1,13 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <div th:replace="/fragments/header :: header"></div>
-        <title>E-commerce</title>
+        <title>Mask With Love</title>
     </head>
 
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
-
         <div class="container-fluid">
             <img th:src="@{/img/admin.png}" class="img-fluid" alt="admin">
 
@@ -18,6 +15,7 @@
                 <div class="col-md-10">
                     <h1 class="display-4 font-weight-light text-secondary mb-3">Hello, [[${admin.firstName}]]!</h1>
 
+                    <!-- orders list -->
                     <h1 class="display-4 font-weight-light text-secondary m-2">Orders</h1>
 
                     <table class="table table-responsive-sm">
@@ -31,21 +29,24 @@
                         </thead>
                         <tbody class="text-secondary border border-light">
                         <tr th:each="order : ${orders}">
-                            <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}"  class="font-weight-bold text-uppercase text-secondary" th:text="${order.id}"></a></td>
+                            <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}"  class="font-weight-bold
+                            text-uppercase text-secondary" th:text="${order.id}"></a></td>
                             <td th:text="${#dates.format(order.createdAt, 'MM-dd-yyyy')}"></td>
                             <td><div th:text="${order.status}"></div>
                                 <div th:text="${#dates.format(order.updatedAt, 'MM-dd-yyyy')}"></div>
                             </td>
                             <td>
-                                <a th:href="@{/admin/user/order/shipped/{id}(id=${order.id})}" class="btn text-uppercase text-light my-1 box1">Shipped</a>
-                                <a th:href="@{/admin/user/order/cancel/{id}(id=${order.id})}" class="btn text-uppercase text-light box1">Cancelled</a>
+                                <a th:href="@{/admin/user/order/shipped/{id}(id=${order.id})}"
+                                   class="btn text-uppercase text-light my-1 box1">Shipped</a>
+                                <a th:href="@{/admin/user/order/cancel/{id}(id=${order.id})}"
+                                   class="btn text-uppercase text-light box1">Cancelled</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
 
+                    <!-- items list -->
                     <h1 class="display-4 font-weight-light text-secondary m-2">Items</h1>
-
                     <a th:href="@{/admin/items/create}" class="btn text-uppercase text-light box1 m-1">Add New Item</a>
 
                     <table class="table table-responsive-sm">
@@ -59,18 +60,24 @@
                         </thead>
                         <tbody class="text-secondary border border-light">
                         <tr th:each="item : ${items}">
-                            <td><a th:href="@{/items/{id}(id=${item.id})}" th:text="${item.title}" class="font-weight-bold text-uppercase text-secondary"></a></td>
+                            <td><a th:href="@{/items/{id}(id=${item.id})}" th:text="${item.title}"
+                                   class="font-weight-bold text-uppercase text-secondary"></a>
+                            </td>
                             <td th:text="${item.quantity}"></td>
                             <td th:text="${item.price}"></td>
                             <td>
-                                <a th:href="@{/admin/items/edit/{id}(id=${item.id})}" class="btn text-uppercase text-light my-1 box1">Edit</a>
-                                <a th:href="@{/admin/items/delete/{id}(id=${item.id})}" class="btn text-uppercase text-light box1">Delete</a>
+                                <a th:href="@{/admin/items/edit/{id}(id=${item.id})}"
+                                   class="btn text-uppercase text-light my-1 box1">Edit</a>
+                                <a th:href="@{/admin/items/delete/{id}(id=${item.id})}"
+                                   class="btn text-uppercase text-light box1">Delete</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
 
+                    <!-- users list -->
                     <h1 class="display-4 font-weight-light text-secondary m-2">Users</h1>
+
                     <table class="table table-responsive-sm">
                         <thead class="box1 text-light text-uppercase">
                         <tr>
@@ -87,8 +94,10 @@
                             <td th:text="${user.firstName}"></td>
                             <td th:text="${user.lastName}"></td>
                             <td th:text="${user.email}"></td>
-                            <td><a th:href="@{/admin/user/info/{id}(id=${user.id})}" class="btn my-1 text-uppercase text-light box1">View</a>
-                                <a th:href="@{/admin/user/delete/{id}(id=${user.id})}" class="btn my-1 text-uppercase text-light box1">Delete</a>
+                            <td><a th:href="@{/admin/user/info/{id}(id=${user.id})}"
+                                   class="btn my-1 text-uppercase text-light box1">View</a>
+                                <a th:href="@{/admin/user/delete/{id}(id=${user.id})}"
+                                   class="btn my-1 text-uppercase text-light box1">Delete</a>
                             </td>
                         </tr>
                         </tbody>
@@ -96,7 +105,6 @@
                 </div>
             </div>
         </div>
-
         <div th:replace="/fragments/footer :: footer"></div>
     </body>
 </html>

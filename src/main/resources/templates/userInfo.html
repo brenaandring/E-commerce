@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
     <head>
         <div th:replace="/fragments/header :: header"></div>
-        <title>E-commerce</title>
+        <title>Mask With Love</title>
     </head>
 
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
-
         <div class="container-fluid">
             <img th:src="@{/img/user_info.png}" class="img-fluid" alt="user info">
 
@@ -15,9 +15,9 @@
                 <div class="col-md-10">
                     <h1 class="display-4 font-weight-light text-secondary m-1">[[${user.firstName}]] [[${user.lastName}]]</h1>
                     <h1 class="display-4 font-weight-light text-secondary mb-3">[[${user.email}]]</h1>
-
                     <h1 class="display-4 font-weight-light text-secondary m-2">Order History</h1>
 
+                    <!-- admin: user's order history -->
                     <table class="table table-responsive-sm">
                         <thead class="box1 text-light text-uppercase">
                         <tr>
@@ -34,12 +34,14 @@
                             <td><div th:text="${order.status}"></div>
                                 <div th:text="${#dates.format(order.updatedAt, 'MM-dd-yyyy')}"></div>
                             </td>
-                            <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}" class="btn text-uppercase text-light my-1 box1">View</a>
+                            <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}"
+                                   class="btn text-uppercase text-light my-1 box1">View</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
 
+                    <!-- admin: user's reviews -->
                     <h1 class="display-4 font-weight-light text-secondary m-2">Reviews</h1>
 
                     <table class="table table-responsive-sm">
@@ -56,8 +58,10 @@
                             <th scope="row" th:text="${review.item.title}"></th>
                             <td th:text="${review.comment}"></td>
                             <td th:text="${review.rating}"></td>
-                            <td><a th:href="@{/items/{id}(id=${review.item.id})}" class="btn text-uppercase text-light my-1 box1">View</a>
-                                <a th:href="@{/admin/review/delete/{id}(id=${review.id})}" class="btn text-uppercase text-light my-1 box1">Delete</a>
+                            <td><a th:href="@{/items/{id}(id=${review.item.id})}"
+                                   class="btn text-uppercase text-light my-1 box1">View</a>
+                                <a th:href="@{/admin/review/delete/{id}(id=${review.id})}"
+                                   class="btn text-uppercase text-light my-1 box1">Delete</a>
                             </td>
                         </tr>
                         </tbody>
@@ -65,7 +69,6 @@
                 </div>
             </div>
         </div>
-
         <div th:replace="/fragments/footer :: footer"></div>
     </body>
 </html>

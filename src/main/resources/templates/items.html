@@ -1,19 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <div th:replace="/fragments/header :: header"></div>
-        <title>E-commerce</title>
+        <title>Mask With Love</title>
     </head>
 
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
-
         <div class="container-fluid">
             <img th:src="@{/img/mask_photo3.jpg}" class="img-fluid light" alt="photo of masks">
 
+            <!-- available items -->
             <div class="row mx-3 row-cols-1 row-cols-md-3">
                 <div class="col mb-4" th:each="item : ${items}">
                     <div class="card border-light h-100">
@@ -27,13 +25,13 @@
                             <p class="card-text">Price: $[[${item.price}]]</p>
                             <p class="card-text">In Stock: [[${item.quantity}]]</p>
                             <a th:href="@{/items/{id}(id=${item.id})}" class="btn text-light my-1 box1">View</a>
-                            <a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn my-1 text-light box1">Add to Cart</a>
+                            <a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0"
+                               class="btn my-1 text-light box1">Add to Cart</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div th:replace="/fragments/footer :: footer"></div>
     </body>
 </html>
