@@ -31,9 +31,10 @@
                         <tbody class="text-secondary border border-light">
                         <tr th:each="order : ${user.orders}">
                             <th scope="row" th:text="${order.id}"></th>
-                            <td th:text="${order.createdAt}"></td>
+<!--                            <td th:text="${}"></td>-->
+                            <td th:text="${#dates.format(order.createdAt, 'MM-dd-yyyy')}"></td>
                             <td><div th:text="${order.status}"></div>
-                                <div th:text="${order.updatedAt}"></div>
+                                <div th:text="${#dates.format(order.updatedAt, 'MM-dd-yyyy')}"></div>
                             </td>
                             <td><a th:href="@{/user/order/{id}(id=${order.id})}" class="btn text-uppercase text-light box1">View</a></td>
                         </tr>

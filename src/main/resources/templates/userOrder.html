@@ -39,7 +39,7 @@
                             <td th:text="${orderItem.item.getTitle()}"></td>
                             <td th:text="${orderItem.item.getPrice()}"></td>
                             <td th:text="${orderItem.getCount()}"></td>
-                            <td th:text="${orderItem.order.getCreatedAt()}"></td>
+                            <td th:text="${#dates.format(orderItem.order.getCreatedAt(), 'MM-dd-yyyy')}"></td>
                         </tr>
                         </tbody>
                     </table>

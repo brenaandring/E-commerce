@@ -19,11 +19,6 @@ public class AddressServ {
         addressRepo.save(address);
     }
 
-    public void deleteAddress(Long id) {
-        addressRepo.deleteById(id);
-
-    }
-
     public Address findById(Long id) {
         Optional<Address> address = addressRepo.findById(id);
         return address.orElse(null);

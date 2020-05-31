@@ -22,23 +22,28 @@
                         <!--form error messages-->
                         <div th:if="${#fields.hasErrors('firstName')}"
                              th:errors="*{firstName}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert">
+                        </div>
 
                         <div th:if="${#fields.hasErrors('lastName')}"
                              th:errors="*{lastName}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert">
+                        </div>
 
                         <div th:if="${#fields.hasErrors('email')}"
                              th:errors="*{email}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert">
+                        </div>
 
                         <div th:if="${#fields.hasErrors('password')}"
                              th:errors="*{password}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert">
+                        </div>
 
                         <div th:if="${#fields.hasErrors('passwordConfirmation')}"
                              th:errors="*{passwordConfirmation}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert">
+                        </div>
 
                         <div class="form-row justify-content-center text-center ">
                             <div class="form-group col-md-7">

@@ -84,7 +84,9 @@ public class CartController {
 
     //  user: checkout and saves information
     @RequestMapping("/user/cart/checkout")
-    public RedirectView checkout(@Valid Order order, RedirectAttributes redirectAttributes, @Valid Address address, BindingResult result, HttpServletRequest request) {
+    public RedirectView checkout(@Valid Order order, RedirectAttributes redirectAttributes,
+                                 @Valid Address address,
+                                 BindingResult result, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         RedirectView redirectView = new RedirectView("/user/cart/confirmation");

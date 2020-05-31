@@ -44,24 +44,12 @@ public class OrderServ {
         }
     }
 
-    public Order findByUser(User user) {
-        return orderRepo.findByUser(user);
-    }
-
     public List<Order> allOrders() {
         return orderRepo.findAll();
-    }
-
-    public List<Order> findByStatus(String status) {
-        return orderRepo.findByStatus(status);
     }
 
     public Order findById(Long id) {
         Optional<Order> order = orderRepo.findById(id);
         return order.orElse(null);
-    }
-
-    public void deleteOrder(Long id) {
-        orderRepo.deleteById(id);
     }
 }

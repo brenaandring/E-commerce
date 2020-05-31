@@ -15,23 +15,15 @@ public class ReviewServ {
         this.reviewRepo = reviewRepo;
     }
 
-    //  retrieve all reviews
-    public List<Review> allReviews() {
-        return reviewRepo.findAll();
-    }
-
-    //  create a review
     public void saveReview(Review review) {
         reviewRepo.save(review);
     }
 
-    // find a review
     public Review findById(Long id) {
         Optional<Review> review = reviewRepo.findById(id);
         return review.orElse(null);
     }
 
-    //  delete a review
     public void deleteReview(Long id) {
         reviewRepo.deleteById(id);
     }

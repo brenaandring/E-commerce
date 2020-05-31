@@ -1,6 +1,5 @@
 package com.brena.ecommerce.repositories;
 
-import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.Photo;
 import org.springframework.data.repository.CrudRepository;
 

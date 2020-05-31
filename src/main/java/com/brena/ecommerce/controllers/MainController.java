@@ -31,7 +31,6 @@ public class MainController {
     @GetMapping("/")
     public ModelAndView index(ModelAndView modelAndView) {
         modelAndView.setViewName("index");
-        Contact contact = new Contact();
         return modelAndView;
     }
 
@@ -61,6 +60,7 @@ public class MainController {
     //  shows all available items
     @GetMapping("/items")
     public ModelAndView items(ModelAndView modelAndView) {
+        modelAndView.setViewName("items");
         modelAndView.addObject("items", itemServ.allItems());
         return modelAndView;
     }

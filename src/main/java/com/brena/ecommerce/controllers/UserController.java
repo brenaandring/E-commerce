@@ -34,7 +34,7 @@ public class UserController {
         this.orderServ = orderServ;
     }
 
-    private static Map<String, Integer> statusLabels = new LinkedHashMap<String, Integer>() {{
+    private static final Map<String, Integer> statusLabels = new LinkedHashMap<String, Integer>() {{
         put(STATUS_NEW, 0);
         put(STATUS_SHIPPED, 1);
         put(STATUS_CANCELLED, 2);
@@ -43,6 +43,7 @@ public class UserController {
     //  user registration
     @GetMapping("/registration")
     public ModelAndView registration(ModelAndView modelAndView) {
+        modelAndView.setViewName("registration");
         modelAndView.addObject("user", new User());
         return modelAndView;
     }
@@ -53,7 +54,8 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         User userFound = userServ.findByEmail(user.getEmail());
         if (userFound != null) {
-            modelAndView.addObject("errorMessage", "There is already a user with the email provided, please use a different email address");
+            modelAndView.addObject("errorMessage", "There is already a user with the " +
+                    "email provided, please use a different email address");
             modelAndView.setViewName("registration");
         } else {
             if (result.hasErrors()) {
@@ -72,9 +74,10 @@ public class UserController {
 
     //  admin/user login
     @RequestMapping("/login")
-    public ModelAndView login(@Valid User user, ModelAndView modelAndView,
+    public ModelAndView login(ModelAndView modelAndView,
                               @RequestParam(value = "error", required = false) String error,
                               @RequestParam(value = "logout", required = false) String logout) {
+        modelAndView.setViewName("login");
         if (error != null) {
             modelAndView.addObject("errorMessage", "Invalid credentials. Please try again.");
         }
@@ -102,7 +105,7 @@ public class UserController {
     public ModelAndView adminPage(Principal principal,
                                   ModelAndView modelAndView,
                                   @RequestParam(value = "status", required = false, defaultValue = "asc")
-                                          Optional<String> statusParam) {
+                                              Optional<String> statusParam) {
         modelAndView.setViewName("admin");
         String email = principal.getName();
         modelAndView.addObject("admin", userServ.findByEmail(email));

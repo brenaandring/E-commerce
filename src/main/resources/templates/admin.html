@@ -32,9 +32,9 @@
                         <tbody class="text-secondary border border-light">
                         <tr th:each="order : ${orders}">
                             <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}"  class="font-weight-bold text-uppercase text-secondary" th:text="${order.id}"></a></td>
-                            <td th:text="${order.createdAt}"></td>
+                            <td th:text="${#dates.format(order.createdAt, 'MM-dd-yyyy')}"></td>
                             <td><div th:text="${order.status}"></div>
-                                <div th:text="${order.updatedAt}"></div>
+                                <div th:text="${#dates.format(order.updatedAt, 'MM-dd-yyyy')}"></div>
                             </td>
                             <td>
                                 <a th:href="@{/admin/user/order/shipped/{id}(id=${order.id})}" class="btn text-uppercase text-light my-1 box1">Shipped</a>

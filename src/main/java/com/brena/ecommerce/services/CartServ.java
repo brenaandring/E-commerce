@@ -21,8 +21,6 @@ public class CartServ {
         this.itemRepo = itemRepo;
     }
 
-    //  if product is in the map just increment quantity by 1.
-    //  if product is not in the map with, add it with quantity 1
     public void addItem(Item item) {
         if (items.containsKey(item)) {
             items.replace(item, items.get(item) + 1);
@@ -31,8 +29,6 @@ public class CartServ {
         }
     }
 
-    //  if product is in the map with quantity > 1, just decrement quantity by 1.
-    //  if product is in the map with quantity 1, remove it from map
     public void removeItem(Item item) {
         if (items.get(item) > 1) {
             items.replace(item, items.get(item) - 1);
@@ -45,11 +41,9 @@ public class CartServ {
         return Collections.unmodifiableMap(items);
     }
 
-    //  Checkout will rollback if there is not enough of some item in stock
     public void checkout(Order order) {
         Item item;
         for (Map.Entry<Item, Integer> entry : items.entrySet()) {
-            // Refresh quantity for every product before checking
             Optional<Item> byId = itemRepo.findById(entry.getKey().getId());
             if (!byId.isPresent()) {
                 throw new IllegalStateException("Item is not available");

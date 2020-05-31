@@ -12,26 +12,26 @@ import java.util.*;
 @Service
 public class UserServ {
     private final UserRepo userRepo;
-    private final RoleRepo roleRepo;
+    private final RoleServ roleServ;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServ(UserRepo userRepo, RoleRepo roleRepo, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServ(UserRepo userRepo, RoleServ roleServ, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepo = userRepo;
-        this.roleRepo = roleRepo;
+        this.roleServ = roleServ;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     //  save a user with user privilege
     public void saveWithUserRole(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(roleRepo.findByName("ROLE_USER"));
+        user.setRoles(roleServ.findByName("ROLE_USER"));
         userRepo.save(user);
     }
 
     //  save a user with admin privilege
     public void saveUserWithAdminRole(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(roleRepo.findByName("ROLE_ADMIN"));
+        user.setRoles(roleServ.findByName("ROLE_ADMIN"));
         userRepo.save(user);
     }
 

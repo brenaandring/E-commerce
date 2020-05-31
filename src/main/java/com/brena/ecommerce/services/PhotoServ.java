@@ -22,12 +22,10 @@ public class PhotoServ {
         this.photoRepo = photoRepo;
     }
 
-    //  find all photos
     public List<Photo> findAll() {
         return photoRepo.findAll();
     }
 
-    //  create photo
     public void savePhoto(Photo photo) {
         photoRepo.save(photo);
     }
@@ -44,7 +42,6 @@ public class PhotoServ {
         return photo.orElse(null);
     }
 
-    //  delete photo
     public void deletePhoto(Long id) {
         photoRepo.deleteById(id);
     }

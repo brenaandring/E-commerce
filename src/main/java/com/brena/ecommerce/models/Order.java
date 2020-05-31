@@ -22,10 +22,10 @@ public class Order {
     private String status;
 
     @Column(name = "createdAt", updatable = false)
-    private Date createdAt = new Date();
+    private Date createdAt;
 
     @Column(name = "updatedAt")
-    private Date updatedAt = new Date();
+    private Date updatedAt;
 
     //  model relationships
     @ManyToOne(fetch = FetchType.LAZY)
