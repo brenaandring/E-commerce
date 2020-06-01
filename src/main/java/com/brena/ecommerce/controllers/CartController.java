@@ -62,35 +62,28 @@ public class CartController {
 
     //  user: shows them their cart confirmation
     @GetMapping("/user/cart/confirm")
-    public RedirectView confirm(RedirectAttributes redirectAttributes) {
+    public Object confirm(RedirectAttributes redirectAttributes, ModelAndView modelAndView) {
         RedirectView redirectView = new RedirectView("/user/cart");
-        RedirectView redirectView2 = new RedirectView("/user/cart/confirmation");
         if (cartServ.getItemsInCart().isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Your cart is empty! Please add an item before proceeding.");
             return redirectView;
         } else {
-            return redirectView2;
+            modelAndView.setViewName("confirmation");
+            modelAndView.addObject("items", cartServ.getItemsInCart());
+            modelAndView.addObject("address", new Address());
+            modelAndView.addObject("total", cartServ.getTotal().toString());
+            return modelAndView;
         }
-    }
-
-    @GetMapping("/user/cart/confirmation")
-    public ModelAndView cartConfirmation(ModelAndView modelAndView) {
-        modelAndView.setViewName("confirmation");
-        modelAndView.addObject("items", cartServ.getItemsInCart());
-        modelAndView.addObject("address", new Address());
-        modelAndView.addObject("total", cartServ.getTotal().toString());
-        return modelAndView;
     }
 
     //  user: checkout and saves information
     @RequestMapping("/user/cart/checkout")
-    public RedirectView checkout(@Valid Order order, RedirectAttributes redirectAttributes,
+    public Object checkout(@Valid Order order, RedirectAttributes redirectAttributes,
                                  @Valid Address address,
                                  BindingResult result, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        RedirectView redirectView = new RedirectView("/user/cart/confirmation");
-        RedirectView redirectView2 = new RedirectView("/user/cart/success");
+        RedirectView redirectView = new RedirectView("/user/cart/confirm");
         if (order.getOrderItems() == null) {
             order.setOrderItems(new ArrayList<>());
         }
@@ -114,7 +107,7 @@ public class CartController {
             order.setTotal(total);
             orderServ.saveNewOrder(order);
             cartServ.checkout(order);
-            return redirectView2;
+            return cartSuccess();
         }
     }
 

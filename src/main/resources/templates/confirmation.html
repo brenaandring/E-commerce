@@ -2,8 +2,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
     <head>
-        <div th:replace="/fragments/header :: header"></div>
         <title>Mask With Love</title>
+        <div th:replace="/fragments/header :: header"></div>
+
+        <!-- Square JS -->
+        <script type="text/javascript" src="https://js.squareupsandbox.com/v2/paymentform"></script>
     </head>
 
     <body>
@@ -38,10 +41,9 @@
                     <h1 class="display-4 font-weight-light text-secondary m-2">Total: [[${total}]]</h1>
                 </div>
 
-                <!-- address form -->
+                <!-- address/payment form -->
                 <div class="box1 col-md m-1">
-                    <h3 class="text-secondary font-weight-light text-center m-2">Please provide your shipping
-                        address and the name this item is for</h3>
+                    <h3 class="text-secondary font-weight-light text-center m-2">Address</h3>
 
                     <!-- address error message -->
                     <p th:if="${errorMessage}" class="validation-message alert alert-light text-center
@@ -64,14 +66,106 @@
                                        th:placeholder="State">
 
                                 <input type="number" class="form-control mb-3 text-secondary" th:field="*{zip}"
-                                       th:placeholder="00000">
+                                       th:placeholder="Zip">
+
+                                <h3 class="text-secondary font-weight-light text-center mt-3">Payment</h3>
+
+                                <!-- payment error message -->
+                                <p th:if="${paymentErrorMessage}" class="validation-message alert alert-light text-center
+                                   text-secondary text-uppercase" role="alert" th:text="${paymentErrorMessage}"></p>
+
+                                <!-- Square payment form with Bootstrap -->
+                                <div id="form-container">
+                                    <div class="form-control mb-3 text-secondary" id="sq-card-number"></div>
+                                    <div class="third form-control mb-3 text-secondary" id="sq-expiration-date"></div>
+                                    <div class="third form-control mb-3 text-secondary" id="sq-cvv"></div>
+                                    <div class="third form-control mb-3 text-secondary" id="sq-postal-code"></div>
+<!--                                    <button id="sq-creditcard" class="btn box1 font-weight-light text-uppercase-->
+<!--                                text-secondary m-1">Pay $[[${total}]]</button>-->
+                                </div>
 
                                 <button type="submit" class="btn btn-light font-weight-light text-uppercase
                                 text-secondary m-1">Place Order</button>
+
+                                <div class="small text-muted mt-2">
+                                    <span class="font-weight-bold">All sales are final. We do not offer refunds.</span>
+                                    <br>Pay securely with <a class="text-secondary font-weight-bold" target="_blank" th:href="@{/}">Square</a>.
+                                    By clicking the button above, you agree to our <a class="text-secondary font-weight-bold" target="_blank" href="https://squareup.com/us/en/legal/general/ua">Terms of Service</a>
+                                    and <a class="text-secondary font-weight-bold" target="_blank" href="https://squareup.com/us/en/legal/general/privacy">Privacy</a> policies.
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
+
+                <!-- Square js -->
+                <script type="text/javascript">
+                    // Create and initialize a payment form object
+                    const paymentForm = new SqPaymentForm({
+                        // Initialize the payment form elements
+
+                        //TODO: Replace with your sandbox application ID
+                        applicationId: "sandbox-sq0idb-zgCfDsE9CFHRnH6DDmUGVA",
+                        inputClass: 'sq-input',
+                        autoBuild: false,
+                        // Customize the CSS for SqPaymentForm iframe elements
+                        inputStyles: [{
+                            fontSize: '17px',
+                            // lineHeight: '24px',
+                            // padding: '16px',
+                            placeholderColor: '#6C757C',
+                            // backgroundColor: 'white',
+                        }],
+                        // Initialize the credit card placeholders
+                        cardNumber: {
+                            elementId: 'sq-card-number',
+                            placeholder: 'Card Number'
+                        },
+                        cvv: {
+                            elementId: 'sq-cvv',
+                            placeholder: 'CVV'
+                        },
+                        expirationDate: {
+                            elementId: 'sq-expiration-date',
+                            placeholder: 'MM/YY'
+                        },
+                        postalCode: {
+                            elementId: 'sq-postal-code',
+                            placeholder: 'Zip'
+                        },
+                        // SqPaymentForm callback functions
+                        callbacks: {
+                            /*
+                            * callback function: cardNonceResponseReceived
+                            * Triggered when: SqPaymentForm completes a card nonce request
+                            */
+                            cardNonceResponseReceived: function (errors, nonce, cardData) {
+                                if (errors) {
+                                    // Log errors from nonce generation to the browser developer console.
+                                    console.error('Encountered errors:');
+                                    errors.forEach(function (error) {
+                                        console.error('  ' + error.message);
+                                    });
+                                    alert('Encountered errors, check browser developer console for more details');
+                                    return;
+                                }
+                                alert(`The generated nonce is:\n${nonce}`);
+                                //TODO: Replace alert with code in step 2.1
+                            }
+                        }
+                    });
+                    //TODO: paste code from step 1.1.4
+                    //TODO: paste code from step 1.1.5
+                    paymentForm.build();
+
+                    // onGetCardNonce is triggered when the "Pay $1.00" button is clicked
+                    function onGetCardNonce(event) {
+                        // Don't submit the form until SqPaymentForm returns with a nonce
+                        event.preventDefault();
+                        // Request a nonce from the SqPaymentForm object
+                        paymentForm.requestCardNonce();
+                    }
+                </script>
             </div>
         </div>
         <div th:replace="/fragments/footer :: footer"></div>
