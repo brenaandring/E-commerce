@@ -2,6 +2,7 @@ package com.brena.ecommerce.services;
 
 import com.brena.ecommerce.models.Address;
 
+import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.repositories.AddressRepo;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,8 @@ public class AddressServ {
         this.addressRepo = addressRepo;
     }
 
-    public void saveAddress(Address address) {
+    public void saveAddress(Address address, User user) {
+        address.setUser(user);
         addressRepo.save(address);
     }
 

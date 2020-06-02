@@ -3,7 +3,7 @@ package com.brena.ecommerce.controllers;
 import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.services.*;
-import com.brena.ecommerce.component.UserValidator;
+import com.brena.ecommerce.validator.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;

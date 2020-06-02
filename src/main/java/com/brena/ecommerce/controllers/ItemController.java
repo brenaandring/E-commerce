@@ -125,10 +125,7 @@ public class ItemController {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Please write a review.");
         } else {
-            Item item = itemServ.findItem(id);
-            review.setItem(item);
-            review.setUser(user);
-            reviewServ.saveReview(review);
+            reviewServ.saveReview(review, id, user);
         }
         return redirectView;
     }

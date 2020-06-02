@@ -1,7 +1,16 @@
 package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.*;
+import com.brena.ecommerce.models.Address;
+import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.services.*;
+
+import com.squareup.square.Environment;
+import com.squareup.square.api.PaymentsApi;
+import com.squareup.square.models.*;
+import com.squareup.square.SquareClient;
+import com.squareup.square.exceptions.ApiException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +21,11 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class CartController {
@@ -23,14 +34,43 @@ public class CartController {
     private final AddressServ addressServ;
     private final OrderServ orderServ;
 
+    //  sandbox fake credentials. Change to production environments when deployed
+    private static final String SQUARE_ACCESS_TOKEN_ENV_VAR = "EAAAEAKAEE1Pk_9XHhI666sDkgbv_ZS7AXqPf-KyCJO6YNDZY9Ta2zTwsvkamoWZ";
+    private static final String SQUARE_APP_ID_ENV_VAR = "sandbox-sq0idb-zgCfDsE9CFHRnH6DDmUGVA";
+    private static final String SQUARE_LOCATION_ID_ENV_VAR = "S2XEKDH2Z15TA";
+    private static final String SQUARE_ENV_ENV_VAR = "sandbox";
+
+    private final SquareClient squareClient;
+    private final String squareLocationId;
+    private final String squareAppId;
+    private final String squareEnvironment;
+
     public CartController(ItemServ itemServ,
                           CartServ cartServ,
                           AddressServ addressServ,
-                          OrderServ orderServ) {
+                          OrderServ orderServ) throws ApiException {
         this.itemServ = itemServ;
         this.cartServ = cartServ;
         this.addressServ = addressServ;
         this.orderServ = orderServ;
+        squareEnvironment = mustLoadEnvironmentVariable(SQUARE_ENV_ENV_VAR);
+        squareAppId = mustLoadEnvironmentVariable(SQUARE_APP_ID_ENV_VAR);
+        squareLocationId = mustLoadEnvironmentVariable(SQUARE_LOCATION_ID_ENV_VAR);
+
+        squareClient = new SquareClient.Builder()
+                .environment(Environment.fromString(squareEnvironment))
+                .accessToken(mustLoadEnvironmentVariable(SQUARE_ACCESS_TOKEN_ENV_VAR)).build();
+    }
+
+    private String mustLoadEnvironmentVariable(String name) {
+        if (true) {
+            return name;
+        }
+        String value = System.getenv(name);
+        if (value == null || value.length() == 0) {
+            throw new IllegalStateException(String.format("The %s environment variable must be set", name));
+        }
+        return value;
     }
 
     //  user: view their cart
@@ -72,6 +112,8 @@ public class CartController {
             modelAndView.addObject("items", cartServ.getItemsInCart());
             modelAndView.addObject("address", new Address());
             modelAndView.addObject("total", cartServ.getTotal().toString());
+            modelAndView.addObject("locationId", squareLocationId);
+            modelAndView.addObject("appId", squareAppId);
             return modelAndView;
         }
     }
@@ -79,35 +121,44 @@ public class CartController {
     //  user: checkout and saves information
     @RequestMapping("/user/cart/checkout")
     public Object checkout(@Valid Order order, RedirectAttributes redirectAttributes,
-                                 @Valid Address address,
-                                 BindingResult result, HttpServletRequest request) {
+                           @Valid Address address,
+                           BindingResult result, HttpServletRequest request,
+                           @ModelAttribute NonceForm form, Map<String, Object> model) throws ApiException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         RedirectView redirectView = new RedirectView("/user/cart/confirm");
         if (order.getOrderItems() == null) {
             order.setOrderItems(new ArrayList<>());
         }
-        Map<Item, Integer> itemsInCart = cartServ.getItemsInCart();
-        for (Map.Entry<Item, Integer> entry : itemsInCart.entrySet()) {
-            OrderItem orderItem = new OrderItem();
-            orderItem.setItem(entry.getKey());
-            orderItem.setCount(entry.getValue());
-            orderItem.setOrder(order);
-            order.getOrderItems().add(orderItem);
-        }
+        orderServ.confirmItems(order);
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid address. Please try again!");
             return redirectView;
         } else {
-            address.setUser(user);
-            order.setAddress(address);
-            addressServ.saveAddress(address);
-            order.setUser(user);
+            addressServ.saveAddress(address, user);
             BigDecimal total = cartServ.getTotal();
-            order.setTotal(total);
-            orderServ.saveNewOrder(order);
-            cartServ.checkout(order);
-            return cartSuccess();
+            Money bodyAmountMoney = new Money.Builder()
+                    .amount(total.longValue() * 100)
+                    .currency("USD")
+                    .build();
+            CreatePaymentRequest createPaymentRequest = new CreatePaymentRequest.Builder(
+                    form.getNonce(),
+                    UUID.randomUUID().toString(),
+                    bodyAmountMoney)
+                    .autocomplete(true)
+                    .note("Mask With Love")
+                    .build();
+            PaymentsApi paymentsApi = squareClient.getPaymentsApi();
+            try{
+                CreatePaymentResponse response = paymentsApi.createPayment(createPaymentRequest);
+                model.put("payment", response.getPayment());
+                orderServ.saveNewOrder(order, address, user, total);
+                cartServ.checkout(order);
+                return cartSuccess();
+            } catch (ApiException except) {
+                model.put("error", except.getErrors().get(0));
+                return "error";
+            }
         }
     }
 

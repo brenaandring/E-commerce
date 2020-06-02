@@ -1,4 +1,4 @@
-package com.brena.ecommerce.component;
+package com.brena.ecommerce.validator;
 
 import com.brena.ecommerce.models.User;
 import org.springframework.stereotype.Component;

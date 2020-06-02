@@ -1,11 +1,12 @@
 package com.brena.ecommerce.services;
 
-import com.brena.ecommerce.models.Order;
-import com.brena.ecommerce.models.User;
+import com.brena.ecommerce.models.*;
 import com.brena.ecommerce.repositories.OrderRepo;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -16,12 +17,17 @@ public class OrderServ {
     public static final String STATUS_CANCELLED = "Cancelled";
 
     private final OrderRepo orderRepo;
+    private final CartServ cartServ;
 
-    public OrderServ(OrderRepo orderRepo) {
+    public OrderServ(OrderRepo orderRepo, CartServ cartServ) {
         this.orderRepo = orderRepo;
+        this.cartServ = cartServ;
     }
 
-    public void saveNewOrder(Order order) {
+    public void saveNewOrder(Order order, Address address, User user, BigDecimal total) {
+        order.setUser(user);
+        order.setAddress(address);
+        order.setTotal(total);
         order.setStatus(STATUS_NEW);
         orderRepo.save(order);
     }
@@ -41,6 +47,17 @@ public class OrderServ {
             Order order = orderOp.get();
             order.setStatus(STATUS_CANCELLED);
             orderRepo.save(order);
+        }
+    }
+
+    public void confirmItems(Order order) {
+        Map<Item, Integer> itemsInCart = cartServ.getItemsInCart();
+        for (Map.Entry<Item, Integer> entry : itemsInCart.entrySet()) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setItem(entry.getKey());
+            orderItem.setCount(entry.getValue());
+            orderItem.setOrder(order);
+            order.getOrderItems().add(orderItem);
         }
     }
 
