@@ -98,15 +98,18 @@ public class ItemController {
             modelAndView.setViewName("update");
         } else {
             itemServ.saveItem(item);
-            Photo newPhoto = new Photo();
-            String generatedFilename = UUID.randomUUID().toString() + getFileExtension(imageFile.getOriginalFilename());
-            newPhoto.setFileName(generatedFilename);
-            newPhoto.setItem(item);
-            try {
-                photoServ.savePhotoImage(imageFile, generatedFilename);
-                photoServ.savePhoto(newPhoto);
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            Photo photo = photoServ.findByItem(item);
+            if (photo == null) {
+                Photo newPhoto = new Photo();
+                String generatedFilename = UUID.randomUUID().toString() + getFileExtension(imageFile.getOriginalFilename());
+                newPhoto.setFileName(generatedFilename);
+                newPhoto.setItem(item);
+                try {
+                    photoServ.savePhotoImage(imageFile, generatedFilename);
+                    photoServ.savePhoto(newPhoto);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
             return new ModelAndView("redirect:/admin");
         }

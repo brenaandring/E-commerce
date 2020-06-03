@@ -24,9 +24,9 @@
                             <h5 th:text="${item.title}" class="card-title"></h5>
                             <p class="card-text">Price: $[[${item.price}]]</p>
                             <p class="card-text">In Stock: [[${item.quantity}]]</p>
-                            <a th:href="@{/items/{id}(id=${item.id})}" class="btn text-light my-1 box1">View</a>
+                            <a th:href="@{/items/{id}(id=${item.id})}" class="btn text-secondary font-weight-light my-1 box1">View</a>
                             <a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0"
-                               class="btn my-1 text-light box1">Add to Cart</a>
+                               class="btn my-1 font-weight-light text-secondary box1">Add to Cart</a>
                         </div>
                     </div>
                 </div>

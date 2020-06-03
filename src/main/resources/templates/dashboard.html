@@ -18,7 +18,7 @@
 
                     <!-- user's order history -->
                     <table class="table table-responsive-sm">
-                        <thead class="box1 text-light text-uppercase">
+                        <thead class="box1 text-secondary text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Order Id</th>
                             <th class="align-middle" scope="col">Date Purchased</th>
@@ -34,7 +34,7 @@
                                 <div th:text="${#dates.format(order.updatedAt, 'MM-dd-yyyy')}"></div>
                             </td>
                             <td><a th:href="@{/user/order/{id}(id=${order.id})}" class="btn text-uppercase
-                                text-light box1">View</a>
+                                text-secondary box1">View</a>
                             </td>
                         </tr>
                         </tbody>
@@ -44,7 +44,7 @@
                     <h1 class="display-4 font-weight-light text-secondary m-2">Reviews</h1>
 
                     <table class="table table-responsive-sm">
-                        <thead class="box1 text-light text-uppercase">
+                        <thead class="box1 text-secondary text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Item Title</th>
                             <th class="align-middle" scope="col">Your Comment</th>
@@ -58,9 +58,9 @@
                             <td th:text="${review.comment}"></td>
                             <td th:text="${review.rating}"></td>
                             <td><a th:href="@{/items/{id}(id=${review.item.id})}"
-                                   class="btn my-1 text-uppercase text-light box1">View</a>
+                                   class="btn my-1 text-uppercase text-secondary box1">View</a>
                                 <a th:href="@{/user/review/delete/{id}(id=${review.id})}"
-                                   class="btn my-1 text-uppercase text-light box1">Delete</a>
+                                   class="btn my-1 text-uppercase text-secondary box1">Delete</a>
                             </td>
                         </tr>
                         </tbody>

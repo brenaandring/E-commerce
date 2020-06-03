@@ -20,7 +20,7 @@
 
                     <!-- items in user's cart -->
                     <table class="table">
-                        <thead class="box1 text-light text-uppercase">
+                        <thead class="box1 text-secondary text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Item</th>
                             <th class="align-middle" scope="col">Price</th>
@@ -36,7 +36,7 @@
                             <td th:text="${item.getKey().price}"></td>
                             <td th:text="${item.getValue()}"></td>
                             <td><a th:href="@{/user/cart/remove/{id}(id=${item.getKey().id})}"
-                                   class="btn text-uppercase text-light box1">Remove</a>
+                                   class="btn text-uppercase text-secondary box1">Remove</a>
                             </td>
                         </tr>
                         </tbody>
@@ -44,9 +44,9 @@
 
                     <h1 class="display-4 font-weight-light text-secondary m-2">Total: [[${total}]]</h1>
 
-                    <a th:href="@{/items}" class="btn text-uppercase text-light box1 my-1">Continue Shopping</a>
+                    <a th:href="@{/items}" class="btn text-uppercase text-secondary box1 my-1">Continue Shopping</a>
                     <a th:href="@{/user/cart/confirm}" class="btn text-uppercase
-                    text-light box1 my-1">Proceed to Checkout</a>
+                    text-secondary box1 my-1">Proceed to Checkout</a>
                 </div>
             </div>
         </div>

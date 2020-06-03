@@ -19,7 +19,7 @@
                     <h1 class="display-4 font-weight-light text-secondary m-2">Orders</h1>
 
                     <table class="table table-responsive-sm">
-                        <thead class="box1 text-light text-uppercase">
+                        <thead class="box1 text-secondary text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Order Id</th>
                             <th class="align-middle" scope="col">Date Purchased</th>
@@ -37,9 +37,9 @@
                             </td>
                             <td>
                                 <a th:href="@{/admin/user/order/shipped/{id}(id=${order.id})}"
-                                   class="btn text-uppercase text-light my-1 box1">Shipped</a>
+                                   class="btn text-uppercase text-secondary my-1 box1">Shipped</a>
                                 <a th:href="@{/admin/user/order/cancel/{id}(id=${order.id})}"
-                                   class="btn text-uppercase text-light box1">Cancelled</a>
+                                   class="btn text-uppercase text-secondary box1">Cancelled</a>
                             </td>
                         </tr>
                         </tbody>
@@ -47,10 +47,11 @@
 
                     <!-- items list -->
                     <h1 class="display-4 font-weight-light text-secondary m-2">Items</h1>
-                    <a th:href="@{/admin/items/create}" class="btn text-uppercase text-light box1 m-1">Add New Item</a>
+                    <a th:href="@{/admin/items/create}" class="btn text-uppercase text-secondary box1 m-1">Add New Item</a><br>
+                    <span class="text-secondary">* Please remove all reviews and photo before deleting this item</span>
 
                     <table class="table table-responsive-sm">
-                        <thead class="box1 text-light text-uppercase">
+                        <thead class="box1 text-secondary text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Title</th>
                             <th class="align-middle" scope="col">Quantity</th>
@@ -67,9 +68,9 @@
                             <td th:text="${item.price}"></td>
                             <td>
                                 <a th:href="@{/admin/items/edit/{id}(id=${item.id})}"
-                                   class="btn text-uppercase text-light my-1 box1">Edit</a>
+                                   class="btn text-uppercase text-secondary my-1 box1">Edit</a>
                                 <a th:href="@{/admin/items/delete/{id}(id=${item.id})}"
-                                   class="btn text-uppercase text-light box1">Delete</a>
+                                   class="btn text-uppercase text-secondary box1">Delete</a>
                             </td>
                         </tr>
                         </tbody>
@@ -77,9 +78,10 @@
 
                     <!-- users list -->
                     <h1 class="display-4 font-weight-light text-secondary m-2">Users</h1>
+                    <span class="text-secondary">* Please remove user's reviews and orders before deleting user</span>
 
                     <table class="table table-responsive-sm">
-                        <thead class="box1 text-light text-uppercase">
+                        <thead class="box1 text-secondary text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">User ID</th>
                             <th class="align-middle" scope="col">First Name</th>
@@ -95,9 +97,9 @@
                             <td th:text="${user.lastName}"></td>
                             <td th:text="${user.email}"></td>
                             <td><a th:href="@{/admin/user/info/{id}(id=${user.id})}"
-                                   class="btn my-1 text-uppercase text-light box1">View</a>
+                                   class="btn my-1 text-uppercase text-secondary box1">View</a>
                                 <a th:href="@{/admin/user/delete/{id}(id=${user.id})}"
-                                   class="btn my-1 text-uppercase text-light box1">Delete</a>
+                                   class="btn my-1 text-uppercase text-secondary box1">Delete</a>
                             </td>
                         </tr>
                         </tbody>

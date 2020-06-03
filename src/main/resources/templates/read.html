@@ -17,24 +17,26 @@
                     <!-- item photo -->
                     <div th:each="photo : ${item.photos}">
                         <img th:src="@{'/images/' + ${photo.fileName}}" width="700" class="img-fluid p-2" alt="Photo of a mask"/>
-                        <!-- admin: delete photo -->
+                        <!-- admin: delete photo button only appears if photo is present -->
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                             <a th:href="@{/admin/photo/delete/{id}(id=${photo.id})}" class="btn text-uppercase box1
-                            font-weight-light text-light">Remove Photo</a>
+                            font-weight-light text-secondary">Remove Photo</a>
                         </div>
                     </div>
 
                     <!-- admin: edit/delete item -->
                     <div sec:authorize="hasRole('ROLE_ADMIN')" class="my-1">
                         <a th:href="@{/admin/items/edit/{id}(id=${item.id})}" class="btn text-uppercase box1
-                        font-weight-light text-light">Edit</a>
+                        font-weight-light text-secondary">Edit</a>
                         <a th:href="@{/admin/items/delete/{id}(id=${item.id})}" class="btn text-uppercase box1
-                        font-weight-light text-light">Delete Item</a>
+                        font-weight-light text-secondary">Delete Item</a><br>
+                        <span class="text-secondary">* Please remove this photo before updating it</span><br>
+                        <span class="text-secondary">* Please remove all reviews and photo before deleting this item</span>
                     </div>
                 </div>
 
                 <!-- user: add item to cart button -->
-                <div class="col-md box1 m-1 text-white text-uppercase text-center">
+                <div class="col-md box1 m-1 text-secondary text-uppercase text-center">
                     <h1 class="display-3">[[${item.title}]]</h1>
                     <h1 class="font-weight-light">[[${item.description}]]</h1>
                     <h1 class="font-weight-light">In Stock: [[${item.quantity}]]</h1>
@@ -44,44 +46,46 @@
                 </div>
             </div>
 
-            <div class="row m-1 justify-content-center">
-                <!-- user: leave a review -->
-                <div class="col-md-6 p-1 m-1 text-center border border-light">
+            <div sec:authorize="isAuthenticated()">
+                <div class="row m-1 justify-content-center">
+                    <!-- user: leave a review -->
+                    <div class="col-md-6 p-1 m-1 text-center border border-light">
 
-                    <p th:if="${errorMessage}" class="validation-message alert box1 text-center text-secondary
-                    text-uppercase" role="alert" th:text="${errorMessage}"></p>
+                        <p th:if="${errorMessage}" class="validation-message alert box1 text-center text-secondary
+                        text-uppercase" role="alert" th:text="${errorMessage}"></p>
 
-                    <form action="#" th:action="@{/user/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
-                        <div class="controls">
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group text-secondary text-uppercase">
-                                        <label>Your Review:</label>
-                                        <textarea name="comment" class="form-control" rows="4" th:field="*{comment}"></textarea>
+                        <form action="#" th:action="@{/user/items/review/{id}(id=${item.id})}" th:object="${review}" method="post">
+                            <div class="controls">
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="form-group text-secondary text-uppercase">
+                                            <label>Your Review:</label>
+                                            <textarea name="comment" class="form-control" rows="4" th:field="*{comment}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col text-center">
+                                        <div class="form-group text-secondary text-uppercase">
+                                            <label for="rating">Your Rating:</label>
+                                            <select th:field="*{rating}" class="form-control" id="rating">
+                                                <option th:value="5" th:text="5" class="text-center"></option>
+                                                <option th:value="4" th:text="4"></option>
+                                                <option th:value="3" th:text="3"></option>
+                                                <option th:value="2" th:text="2"></option>
+                                                <option th:value="1" th:text="1"></option>
+                                                <option th:value="0" th:text="0"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <input type="submit" class="btn box1 font-weight-light text-uppercase
+                                        text-secondary m-1" value="Leave a Review">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row justify-content-center align-items-center">
-                                <div class="col text-center">
-                                    <div class="form-group text-secondary text-uppercase">
-                                        <label for="rating">Rate:</label>
-                                        <select th:field="*{rating}" class="form-control" id="rating">
-                                            <option th:value="5" th:text="5" class="text-center"></option>
-                                            <option th:value="4" th:text="4"></option>
-                                            <option th:value="3" th:text="3"></option>
-                                            <option th:value="2" th:text="2"></option>
-                                            <option th:value="1" th:text="1"></option>
-                                            <option th:value="0" th:text="0"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <input type="submit" class="btn box1 font-weight-light text-uppercase
-                                    text-light m-1" value="Leave a Review">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -102,7 +106,7 @@
                 <!-- admin: delete review -->
                 <div sec:authorize="hasRole('ROLE_ADMIN')" class="mt-3">
                     <a th:href="@{/admin/review/delete/{id}(id=${review.id})}" class="btn text-uppercase
-                    box1 font-weight-light text-light">Delete</a>
+                    box1 font-weight-light text-secondary">Delete</a>
                 </div>
             </div>
         </div>

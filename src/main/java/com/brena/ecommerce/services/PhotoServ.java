@@ -1,5 +1,6 @@
 package com.brena.ecommerce.services;
 
+import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.Photo;
 import com.brena.ecommerce.repositories.PhotoRepo;
 import org.springframework.core.io.Resource;
@@ -40,6 +41,10 @@ public class PhotoServ {
     public Photo findById(Long id) {
         Optional<Photo> photo = photoRepo.findById(id);
         return photo.orElse(null);
+    }
+
+    public Photo findByItem(Item item) {
+        return photoRepo.findByItem(item);
     }
 
     public void deletePhoto(Long id) {
