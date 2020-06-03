@@ -19,21 +19,8 @@
                           method="post" enctype="multipart/form-data">
 
                         <!-- form error messages -->
-                        <div th:if="${#fields.hasErrors('title')}"
-                             th:errors="*{title}"
-                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
-
-                        <div th:if="${#fields.hasErrors('quantity')}"
-                             th:errors="*{quantity}"
-                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
-
-                        <div th:if="${#fields.hasErrors('description')}"
-                             th:errors="*{description}"
-                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
-
-                        <div th:if="${#fields.hasErrors('price')}"
-                             th:errors="*{price}"
-                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
+                        <div th:each="err : ${#fields.errors('*')}" th:text="${err}"
+                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
 
                         <div class="form-row justify-content-center text-center">
                             <div class="form-group">

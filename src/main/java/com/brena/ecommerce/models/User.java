@@ -12,6 +12,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @NotBlank(message = "An email address is required")
     @Column(name = "email", unique = true, nullable = false)
     @Email(message = "Please provide a valid email")
     @Size(max = 50, message = "Email address is required and it cannot have more than 50 characters")

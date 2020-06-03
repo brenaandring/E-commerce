@@ -1,8 +1,7 @@
 package com.brena.ecommerce.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +17,12 @@ public class Address {
     @Size(min = 1, max = 100, message = "A NAME is required and it cannot contain more than 100 characters")
     private String name;
 
+    @NotBlank(message = "An email address is required")
+    @Column(name = "guestEmail")
+    @Email(message = "Please provide a valid email")
+    @Size(max = 50, message = "Email address cannot have more than 50 characters")
+    private String guestEmail;
+
     @Column(name = "street")
     @Size(min = 5, max = 50, message = "A STREET ADDRESS is required and it must contain 5 - 50 characters")
     private String street;
@@ -30,6 +35,7 @@ public class Address {
     @Size(min = 1, max = 15, message = "A STATE is required and it cannot contain more than 15 characters")
     private String state;
 
+    @NotNull(message = "Zip Code is required")
     @Column(name = "zip")
     private Integer zip;
 
@@ -62,6 +68,14 @@ public class Address {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getGuestEmail() {
+        return guestEmail;
+    }
+
+    public void setGuestEmail(String guestEmail) {
+        this.guestEmail = guestEmail;
     }
 
     public String getStreet() {

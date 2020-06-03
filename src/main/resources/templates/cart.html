@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
     <head>
         <div th:replace="/fragments/header :: header"></div>
@@ -35,7 +36,7 @@
                             </td>
                             <td th:text="${item.getKey().price}"></td>
                             <td th:text="${item.getValue()}"></td>
-                            <td><a th:href="@{/user/cart/remove/{id}(id=${item.getKey().id})}"
+                            <td><a th:href="@{/cart/remove/{id}(id=${item.getKey().id})}"
                                    class="btn text-uppercase text-secondary box1">Remove</a>
                             </td>
                         </tr>
@@ -44,9 +45,13 @@
 
                     <h1 class="display-4 font-weight-light text-secondary m-2">Total: [[${total}]]</h1>
 
+                    <a th:href="@{/cart/confirm}" class="btn text-uppercase
+                    text-secondary box1 my-1" sec:authorize="isAuthenticated()">Proceed to Checkout</a>
                     <a th:href="@{/items}" class="btn text-uppercase text-secondary box1 my-1">Continue Shopping</a>
-                    <a th:href="@{/user/cart/confirm}" class="btn text-uppercase
-                    text-secondary box1 my-1">Proceed to Checkout</a>
+                    <br><a th:href="@{/login}" class="btn text-uppercase
+                    text-secondary box1 my-1" sec:authorize="!isAuthenticated()">Register/Login to Checkout</a>
+                    <br><a th:href="@{/cart/confirm}" class="btn text-uppercase
+                    text-secondary box1 my-1" sec:authorize="isAnonymous()">Guest Checkout</a>
                 </div>
             </div>
         </div>

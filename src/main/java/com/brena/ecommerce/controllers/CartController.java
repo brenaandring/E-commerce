@@ -74,7 +74,7 @@ public class CartController {
     }
 
     //  user: view their cart
-    @GetMapping("/user/cart")
+    @GetMapping("/cart")
     public ModelAndView shoppingCart() {
         ModelAndView modelAndView = new ModelAndView("cart");
         modelAndView.addObject("items", cartServ.getItemsInCart());
@@ -83,7 +83,7 @@ public class CartController {
     }
 
     //  user: add items to their cart
-    @GetMapping("/user/cart/add/{id}")
+    @GetMapping("/cart/add/{id}")
     public ModelAndView addItemToCart(@PathVariable("id") Long id) {
         Item item = itemServ.findItem(id);
         if (item.getQuantity() > 0) {
@@ -93,7 +93,7 @@ public class CartController {
     }
 
     //  user: remove items from their cart
-    @GetMapping("/user/cart/remove/{id}")
+    @GetMapping("/cart/remove/{id}")
     public ModelAndView removeItemFromCart(@PathVariable("id") Long id) {
         Item item = itemServ.findItem(id);
         cartServ.removeItem(item);
@@ -101,9 +101,9 @@ public class CartController {
     }
 
     //  user: shows them their cart confirmation
-    @GetMapping("/user/cart/confirm")
+    @GetMapping("/cart/confirm")
     public Object confirm(RedirectAttributes redirectAttributes, ModelAndView modelAndView) {
-        RedirectView redirectView = new RedirectView("/user/cart");
+        RedirectView redirectView = new RedirectView("/cart");
         if (cartServ.getItemsInCart().isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Your cart is empty! Please add an item before proceeding.");
             return redirectView;
@@ -119,20 +119,20 @@ public class CartController {
     }
 
     //  user: checkout and saves information
-    @RequestMapping("/user/cart/checkout")
+    @RequestMapping("/cart/checkout")
     public Object checkout(@Valid Order order, RedirectAttributes redirectAttributes,
                            @Valid Address address,
                            BindingResult result, HttpServletRequest request,
                            @ModelAttribute NonceForm form, Map<String, Object> model) throws ApiException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        RedirectView redirectView = new RedirectView("/user/cart/confirm");
+        RedirectView redirectView = new RedirectView("/cart/confirm");
         if (order.getOrderItems() == null) {
             order.setOrderItems(new ArrayList<>());
         }
         orderServ.confirmItems(order);
         if (result.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Invalid address. Please try again!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid address/email. Please try again!");
             return redirectView;
         } else {
             addressServ.saveAddress(address, user);
@@ -163,7 +163,7 @@ public class CartController {
     }
 
     //  user: shows them the success page
-    @GetMapping("/user/cart/success")
+    @GetMapping("/cart/success")
     public ModelAndView cartSuccess() {
         return new ModelAndView("success");
     }

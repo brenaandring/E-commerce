@@ -41,7 +41,7 @@
                     <h1 class="font-weight-light">[[${item.description}]]</h1>
                     <h1 class="font-weight-light">In Stock: [[${item.quantity}]]</h1>
                     <h1 class="font-weight-light">Price: $[[${item.price}]]</h1>
-                    <a th:href="@{/user/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn mb-2
+                    <a th:href="@{/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0" class="btn mb-2
                     btn-light font-weight-light text-uppercase text-secondary">Add to Cart</a>
                 </div>
             </div>

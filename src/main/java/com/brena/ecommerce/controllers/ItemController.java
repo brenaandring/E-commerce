@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -49,7 +50,7 @@ public class ItemController {
         } else {
             itemServ.saveItem(item);
             Photo newPhoto = new Photo();
-            String generatedFilename = UUID.randomUUID().toString() + getFileExtension(imageFile.getOriginalFilename());
+            String generatedFilename = UUID.randomUUID().toString() + getFileExtension(Objects.requireNonNull(imageFile.getOriginalFilename()));
             newPhoto.setFileName(generatedFilename);
             newPhoto.setItem(item);
             try {

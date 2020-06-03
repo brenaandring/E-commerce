@@ -10,7 +10,7 @@
         <div th:replace="/fragments/header :: navbar"></div>
         <div class="container-fluid">
             <div class="row m-1">
-                <div class="col-md m-1 box1">
+                <div class="col-md m-1 box1 text-center">
                     <img th:src="@{/img/login.png}" class="img-fluid mt-2" alt="login">
 
                     <!-- logout success message -->
@@ -36,6 +36,9 @@
                             </div>
                         </div>
                     </form>
+
+                    <span class="text-secondary font-weight-light">Don't have an account? <a class="text-secondary" th:href="@{/registration}">Register here!</a></span>
+
                 </div>
 
                 <div class="bg-light col-md m-1 text-center">

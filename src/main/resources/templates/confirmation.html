@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
     <head>
         <title>Mask With Love</title>
@@ -56,11 +57,14 @@
                     text-secondary text-uppercase" role="alert"
                        th:text="${errorMessage}"></p>
 
-                    <form action="#" th:action="@{/user/cart/checkout}" th:object="${address}" id="nonce-form" method="post">
+                    <form action="#" th:action="@{/cart/checkout}" th:object="${address}" id="nonce-form" method="post">
                         <div class="form-row justify-content-center text-center ">
                             <div class="form-group col-md-7">
                                 <input type="text" class="form-control mb-3 text-secondary" th:field="*{name}"
                                        th:placeholder="Name">
+
+                                <input type="text" class="form-control mb-3 text-secondary" th:field="*{guestEmail}"
+                                       th:placeholder="Email">
 
                                 <input type="text" class="form-control mb-3 text-secondary" th:field="*{street}"
                                        th:placeholder="Street">
