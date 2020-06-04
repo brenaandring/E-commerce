@@ -44,10 +44,14 @@ public class ItemController {
     @PostMapping("/admin/items/create")
     public ModelAndView create(@Valid Item item,
                          BindingResult result,
-                         @RequestParam("imageFile") MultipartFile imageFile, ModelAndView modelAndView) {
+                         @RequestParam("imageFile") MultipartFile imageFile,
+                               ModelAndView modelAndView, HttpServletRequest request) {
         if (result.hasErrors()) {
             modelAndView.setViewName("create");
         } else {
+            HttpSession session = request.getSession();
+            User admin = (User) session.getAttribute("admin");
+            item.setUser(admin);
             itemServ.saveItem(item);
             Photo newPhoto = new Photo();
             String generatedFilename = UUID.randomUUID().toString() + getFileExtension(Objects.requireNonNull(imageFile.getOriginalFilename()));
@@ -94,10 +98,14 @@ public class ItemController {
     @PostMapping("/admin/items/edit/{id}")
     public ModelAndView update(@Valid Item item,
                          BindingResult result,
-                         @RequestParam("imageFile") MultipartFile imageFile, ModelAndView modelAndView) {
+                         @RequestParam("imageFile") MultipartFile imageFile,
+                               HttpServletRequest request, ModelAndView modelAndView) {
         if (result.hasErrors()) {
             modelAndView.setViewName("update");
         } else {
+            HttpSession session = request.getSession();
+            User admin = (User) session.getAttribute("admin");
+            item.setUser(admin);
             itemServ.saveItem(item);
             Photo photo = photoServ.findByItem(item);
             if (photo == null) {

@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -76,12 +77,15 @@ public class UserController {
     @RequestMapping("/login")
     public ModelAndView login(ModelAndView modelAndView,
                               @RequestParam(value = "error", required = false) String error,
-                              @RequestParam(value = "logout", required = false) String logout) {
+                              @RequestParam(value = "logout", required = false) String logout,
+                              HttpServletRequest request) {
         modelAndView.setViewName("login");
         if (error != null) {
             modelAndView.addObject("errorMessage", "Invalid credentials. Please try again.");
         }
         if (logout != null) {
+            HttpSession session = request.getSession();
+            session.invalidate();
             modelAndView.addObject("logoutMessage", "Logout successful!");
         }
         return modelAndView;
@@ -105,10 +109,13 @@ public class UserController {
     public ModelAndView adminPage(Principal principal,
                                   ModelAndView modelAndView,
                                   @RequestParam(value = "status", required = false, defaultValue = "asc")
-                                              Optional<String> statusParam) {
+                                              Optional<String> statusParam, HttpServletRequest request) {
         modelAndView.setViewName("admin");
         String email = principal.getName();
-        modelAndView.addObject("admin", userServ.findByEmail(email));
+        User admin = userServ.findByEmail(email);
+        HttpSession session = request.getSession();
+        session.setAttribute("admin", admin);
+        modelAndView.addObject("admin", admin);
         modelAndView.addObject("users", userServ.allUsers());
         modelAndView.addObject("items", itemServ.allItems());
         List<Order> orders = orderServ.allOrders();

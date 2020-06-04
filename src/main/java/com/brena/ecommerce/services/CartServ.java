@@ -4,7 +4,11 @@ import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.models.OrderItem;
 import com.brena.ecommerce.repositories.ItemRepo;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -13,6 +17,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Transactional
 public class CartServ {
     private final ItemRepo itemRepo;
 
