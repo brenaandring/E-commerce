@@ -7,10 +7,10 @@ INSERT INTO users (user_id, email, first_name, last_name, password) VALUES ('2',
 INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
 INSERT INTO users_roles (user_id, role_id) VALUES (2, 2);
 
-INSERT INTO items (item_id, description, price, quantity, title) VALUES ('1', 'face mask', '10', '5', 'AQUA');
-INSERT INTO items (item_id, description, price, quantity, title) VALUES ('2', 'face mask', '10', '5', 'RAINBOW');
-INSERT INTO items (item_id, description, price, quantity, title) VALUES ('3', 'face mask', '10', '5', 'DESERT');
-INSERT INTO items (item_id, description, price, quantity, title) VALUES ('4', 'face mask', '10', '5', 'SUMMER FESTIVAL');
+INSERT INTO items (item_id, description, price, quantity, title, user_id) VALUES ('1', 'face mask', '10', '5', 'AQUA', '1');
+INSERT INTO items (item_id, description, price, quantity, title, user_id) VALUES ('2', 'face mask', '10', '5', 'RAINBOW', '1');
+INSERT INTO items (item_id, description, price, quantity, title, user_id) VALUES ('3', 'face mask', '10', '5', 'DESERT', '1');
+INSERT INTO items (item_id, description, price, quantity, title, user_id) VALUES ('4', 'face mask', '10', '5', 'SUMMER FESTIVAL', '1');
 
 
 INSERT INTO photos (photo_id, file_name, item_id) VALUES ('1', '772f721c-24f1-4f0b-a332-2d04b68ed544.png', '4');

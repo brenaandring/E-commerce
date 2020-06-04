@@ -21,10 +21,11 @@ public class MainController {
     private final ItemServ itemServ;
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
-    public MainController(ItemServ itemServ) {
+    public MainController(ItemServ itemServ, JavaMailSender javaMailSender) {
         this.itemServ = itemServ;
+        this.javaMailSender = javaMailSender;
     }
 
     //  index/home page

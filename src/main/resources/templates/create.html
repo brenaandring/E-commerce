@@ -25,15 +25,15 @@
                                        th:placeholder="Title">
 
                                 <input type="number" class="form-control my-3 text-secondary" th:field="*{quantity}"
-                                       th:placeholder="Quantity">
+                                       th:placeholder="Quantity" required>
 
                                 <input type="text" class="form-control my-3 text-secondary" th:field="*{description}"
                                        th:placeholder="Description">
 
                                 <input type="number" class="form-control my-3 text-secondary" th:field="*{price}"
-                                       th:placeholder="Price">
+                                       th:placeholder="Price" required>
 
-                                <input type="file" class="form-control my-3"  name="imageFile">
+                                <input type="file" class="form-control my-3"  name="imageFile" required>
 
                                 <button type="submit" class="btn box1 font-weight-light text-uppercase
                                 text-secondary m-1">Add an Item</button>
