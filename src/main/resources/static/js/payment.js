@@ -10,10 +10,7 @@ let paymentForm = new SqPaymentForm({
     // Customize the CSS for SqPaymentForm iframe elements
     inputStyles: [{
         fontSize: '16px',
-        // lineHeight: '24px',
-        // padding: '16px',
         placeholderColor: '#6C757C',
-        // backgroundColor: 'white',
     }],
     // Initialize the credit card placeholders
     cardNumber: {
@@ -36,7 +33,6 @@ let paymentForm = new SqPaymentForm({
     callbacks: {
     // callback function: cardNonceResponseReceived
     // Triggered when: SqPaymentForm completes a card nonce request
-
         cardNonceResponseReceived: function(errors, nonce, cardData) {
             if (errors){
                 let error_html = "";

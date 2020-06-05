@@ -6,7 +6,6 @@ import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.repositories.ReviewRepo;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

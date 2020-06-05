@@ -2,7 +2,6 @@ package com.brena.ecommerce.services;
 
 import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.Order;
-import com.brena.ecommerce.models.OrderItem;
 import com.brena.ecommerce.repositories.ItemRepo;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

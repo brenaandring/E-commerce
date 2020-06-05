@@ -2,7 +2,6 @@ package com.brena.ecommerce.services;
 
 import com.brena.ecommerce.models.Role;
 import com.brena.ecommerce.models.User;
-import com.brena.ecommerce.repositories.RoleRepo;
 import com.brena.ecommerce.repositories.UserRepo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
