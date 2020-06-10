@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="/fragments/header :: header"></div>
+    <title>Mask With Love</title>
+</head>
+
+<body>
+<div th:replace="/fragments/header :: navbar"></div>
+<div class="container-fluid">
+    <img th:src="@{/img/admin.png}" class="img-fluid" alt="admin">
+
+    <div class="row m-1 justify-content-center text-center">
+        <div class="col-md-10">
+
+            <!-- users list -->
+            <h1 class="display-4 font-weight-light text-secondary m-2">Users</h1>
+            <span class="text-secondary">* Please remove user's reviews and orders before deleting user</span>
+
+            <table class="table table-responsive-sm">
+                <thead class="box1 text-secondary text-uppercase">
+                <tr>
+                    <th class="align-middle" scope="col">User ID</th>
+                    <th class="align-middle" scope="col">First Name</th>
+                    <th class="align-middle" scope="col">Last Name</th>
+                    <th class="align-middle" scope="col">Email Address</th>
+                    <th class="align-middle" scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody class="text-secondary border border-light">
+                <tr th:each="user : ${page}">
+                    <th scope="row" th:text="${user.id}"></th>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td><a th:href="@{/admin/user/info/{id}(id=${user.id})}"
+                           class="btn my-1 text-uppercase text-secondary box1">View</a>
+                        <a th:href="@{/admin/user/delete/{id}(id=${user.id})}"
+                           class="btn my-1 text-uppercase text-secondary box1">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- pagination -->
+            <ul class="pagination justify-content-center mt-2">
+                <li class="page-item" th:if="${page.hasPrevious()}">
+                    <a class="page-link font-weight-light text-secondary box1" th:href="@{/admin/users(page=${page.number - 1},size=${page.size})}">Previous</a>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                    <span th:if="${page.number == i}" class="page-link font-weight-bolder text-secondary box1">[[${i}+1]]</span>
+                    <span th:unless="${page.number == i}">
+                        <a class="page-link font-weight-light text-secondary box1" th:href="@{/admin/users(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                    </span>
+                </li>
+                <li class="page-item" th:if="${page.hasNext()}">
+                    <a class="page-link font-weight-light text-secondary box1" th:href="@{/admin/users(page=${page.number+1},size=${page.size})}">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div th:replace="/fragments/footer :: footer"></div>
+</body>
+</html>

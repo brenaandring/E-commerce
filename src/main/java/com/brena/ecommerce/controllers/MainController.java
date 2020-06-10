@@ -1,8 +1,13 @@
 package com.brena.ecommerce.controllers;
 
 import com.brena.ecommerce.models.Contact;
+import com.brena.ecommerce.models.Item;
+import com.brena.ecommerce.repositories.ItemRepo;
 import com.brena.ecommerce.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -19,13 +24,15 @@ import javax.validation.Valid;
 @Controller
 public class MainController {
     private final ItemServ itemServ;
+    private final ItemRepo itemRepo;
 
     @Autowired
     private final JavaMailSender javaMailSender;
 
-    public MainController(ItemServ itemServ, JavaMailSender javaMailSender) {
+    public MainController(ItemServ itemServ, JavaMailSender javaMailSender, ItemRepo itemRepo) {
         this.itemServ = itemServ;
         this.javaMailSender = javaMailSender;
+        this.itemRepo = itemRepo;
     }
 
     //  index/home page
@@ -60,11 +67,12 @@ public class MainController {
 
     //  shows all available items
     @GetMapping("/items")
-    public ModelAndView items(ModelAndView modelAndView) {
+    public ModelAndView items(@PageableDefault(value = 9) Pageable pageable, ModelAndView modelAndView) {
         modelAndView.setViewName("items");
-        modelAndView.addObject("items", itemServ.allItems());
+        Page<Item> page = itemRepo.findAll(pageable);
+        modelAndView.addObject("page", page);
         return modelAndView;
     }
-
-
 }
+
+

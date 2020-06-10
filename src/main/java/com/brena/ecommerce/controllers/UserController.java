@@ -1,9 +1,16 @@
 package com.brena.ecommerce.controllers;
 
+import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.models.Order;
 import com.brena.ecommerce.models.User;
+import com.brena.ecommerce.repositories.ItemRepo;
+import com.brena.ecommerce.repositories.OrderRepo;
+import com.brena.ecommerce.repositories.UserRepo;
 import com.brena.ecommerce.services.*;
 import com.brena.ecommerce.validator.UserValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,18 +27,25 @@ import static com.brena.ecommerce.services.OrderServ.*;
 @Controller
 public class UserController {
     private final UserServ userServ;
+    private final UserRepo userRepo;
     private final ItemServ itemServ;
     private final UserValidator userValidator;
     private final OrderServ orderServ;
+    private final OrderRepo orderRepo;
+    private final ItemRepo itemRepo;
 
     public UserController(UserServ userServ,
                           ItemServ itemServ,
                           UserValidator userValidator,
-                          OrderServ orderServ) {
+                          OrderServ orderServ, OrderRepo orderRepo,
+                          ItemRepo itemRepo, UserRepo userRepo) {
         this.userServ = userServ;
         this.itemServ = itemServ;
         this.userValidator = userValidator;
         this.orderServ = orderServ;
+        this.orderRepo = orderRepo;
+        this.itemRepo = itemRepo;
+        this.userRepo = userRepo;
     }
 
     private static final Map<String, Integer> statusLabels = new LinkedHashMap<String, Integer>() {{
@@ -108,27 +122,43 @@ public class UserController {
     public ModelAndView adminPage(Principal principal,
                                   ModelAndView modelAndView,
                                   @RequestParam(value = "status", required = false, defaultValue = "asc")
-                                              Optional<String> statusParam, HttpServletRequest request) {
+                                              Optional<String> statusParam, HttpServletRequest request,
+                                  @PageableDefault(value = 5) Pageable pageable) {
         modelAndView.setViewName("admin");
         String email = principal.getName();
         User admin = userServ.findByEmail(email);
         HttpSession session = request.getSession();
         session.setAttribute("admin", admin);
         modelAndView.addObject("admin", admin);
-        modelAndView.addObject("users", userServ.allUsers());
-        modelAndView.addObject("items", itemServ.allItems());
-        List<Order> orders = orderServ.allOrders();
-        Comparator<Order> status = Comparator.comparing(order -> order == null ? 0 :
-                statusLabels.getOrDefault(order.getStatus(), 0));
-        if (statusParam.isPresent() && "desc".equals(statusParam.get())) {
-            status = status.reversed();
-        }
-        orders.sort(status);
-        modelAndView.addObject("orders", orders);
+        Page<Order> orders = orderServ.allOrders(pageable);
+//        Comparator<Order> status = Comparator.comparing(order -> order == null ? 0 :
+//                statusLabels.getOrDefault(order.getStatus(), 0));
+//        if (statusParam.isPresent() && "desc".equals(statusParam.get())) {
+//            status = status.reversed();
+//        }
+//        orders.sort(status);
+        modelAndView.addObject("page", orders);
         return modelAndView;
     }
 
-    //  admin-only: view user info
+    @GetMapping("/admin/items")
+    public ModelAndView adminItems(ModelAndView modelAndView,
+                                   @PageableDefault(value = 5) Pageable pageable) {
+        modelAndView.setViewName("adminItems");
+        Page<Item> page = itemRepo.findAll(pageable);
+        modelAndView.addObject("page", page);
+        return modelAndView;
+    }
+
+    @GetMapping("/admin/users")
+    public ModelAndView adminUsers(ModelAndView modelAndView,
+                                   @PageableDefault(value = 5) Pageable pageable) {
+        modelAndView.setViewName("adminUsers");
+        Page<User> page = userRepo.findAll(pageable);
+        modelAndView.addObject("page", page);
+        return modelAndView;
+    }
+
     @GetMapping("/admin/user/info/{id}")
     public ModelAndView userInfo(@PathVariable("id") Long id, ModelAndView modelAndView) {
         modelAndView.setViewName("userInfo");

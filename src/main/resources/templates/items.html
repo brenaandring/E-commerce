@@ -9,11 +9,11 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
         <div class="container-fluid">
-            <img th:src="@{/img/mask_photo3.jpg}" class="img-fluid light" alt="photo of masks">
+            <img th:src="@{/img/woods2.jpg}" class="img-fluid light" alt="photo of masks">
 
             <!-- available items -->
-            <div class="row mx-3 row-cols-1 row-cols-md-3">
-                <div class="col mb-4" th:each="item : ${items}">
+            <div class="row mx-3 mt-2 row-cols-1 row-cols-md-3">
+                <div class="col mb-4" th:each="item : ${page}">
                     <div class="card border-light h-100">
                         <div th:each="photo : ${item.photos}">
                             <a th:href="@{/items/{id}(id=${item.id})}">
@@ -31,6 +31,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- pagination -->
+            <ul class="pagination justify-content-center mt-2">
+                <li class="page-item" th:if="${page.hasPrevious()}">
+                    <a class="page-link font-weight-light text-secondary box1" th:href="@{/items(page=${page.number - 1},size=${page.size})}">Previous</a>
+                </li>
+                <li class="page-item" th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                    <span th:if="${page.number == i}" class="page-link font-weight-bolder text-secondary box1">[[${i}+1]]</span>
+                    <span th:unless="${page.number == i}">
+                        <a class="page-link font-weight-light text-secondary box1" th:href="@{/items(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                    </span>
+                </li>
+                <li class="page-item" th:if="${page.hasNext()}">
+                    <a class="page-link font-weight-light text-secondary box1" th:href="@{/items(page=${page.number+1},size=${page.size})}">Next</a>
+                </li>
+            </ul>
         </div>
         <div th:replace="/fragments/footer :: footer"></div>
     </body>
