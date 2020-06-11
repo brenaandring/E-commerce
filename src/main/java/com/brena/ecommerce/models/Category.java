@@ -1,8 +1,6 @@
 package com.brena.ecommerce.models;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -13,7 +11,6 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
-    @Size(min = 3, max = 50, message = "CATEGORY is required and it must have between 3 - 50 characters")
     @Column(name = "name")
     private String name;
 

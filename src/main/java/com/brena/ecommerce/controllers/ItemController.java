@@ -146,13 +146,6 @@ public class ItemController {
         return new ModelAndView("redirect:/admin/items/create");
     }
 
-    @GetMapping("/items/category/{id}")
-    public ModelAndView getItemsCategory(@PathVariable("id") Long id,
-                                         ModelAndView modelAndView) {
-        modelAndView.addObject("category", categoryServ.findCategory(id));
-        return new ModelAndView("redirect:/items");
-    }
-
     //  user: create an item review
     @PostMapping("/user/items/review/{id}")
     public RedirectView createReview(@PathVariable("id") Long id,

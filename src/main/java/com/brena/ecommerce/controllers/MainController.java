@@ -12,9 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -72,10 +70,22 @@ public class MainController {
 
     //  shows all available items
     @GetMapping("/items")
-    public ModelAndView items(@PageableDefault(value = 9) Pageable pageable, ModelAndView modelAndView) {
+    public ModelAndView items(@PageableDefault(value = 9) Pageable pageable,
+                              ModelAndView modelAndView) {
         modelAndView.setViewName("items");
         modelAndView.addObject("category", categoryServ.allCategories());
         Page<Item> page = itemRepo.findAll(pageable);
+        modelAndView.addObject("page", page);
+        return modelAndView;
+    }
+
+    @GetMapping("/items/category/{id}")
+    public ModelAndView getItemsCategory(@PathVariable("id") Long id,
+                                         @PageableDefault(value = 9) Pageable pageable,
+                                         ModelAndView modelAndView) {
+        modelAndView.setViewName("items");
+        modelAndView.addObject("category", categoryServ.allCategories());
+        Page<Item> page = itemRepo.findAllItemsByCategoryId(id, pageable);
         modelAndView.addObject("page", page);
         return modelAndView;
     }

@@ -13,6 +13,7 @@
 
             <div class="row my-2 text-center">
                 <div class="col-md">
+                    <a th:href="@{/items}" class="btn mx-1 font-weight-light text-secondary box1">All Items</a>
                     <a th:href="@{/items/category/{id}(id=${category.id})}" class="btn mx-1 font-weight-light text-secondary box1" th:each="category : ${category}" th:text="${category.name}"></a>
                 </div>
             </div>
