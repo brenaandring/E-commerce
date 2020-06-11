@@ -25,14 +25,19 @@ import javax.validation.Valid;
 public class MainController {
     private final ItemServ itemServ;
     private final ItemRepo itemRepo;
+    private final CategoryServ categoryServ;
 
     @Autowired
     private final JavaMailSender javaMailSender;
 
-    public MainController(ItemServ itemServ, JavaMailSender javaMailSender, ItemRepo itemRepo) {
+    public MainController(ItemServ itemServ,
+                          JavaMailSender javaMailSender,
+                          ItemRepo itemRepo,
+                          CategoryServ categoryServ) {
         this.itemServ = itemServ;
         this.javaMailSender = javaMailSender;
         this.itemRepo = itemRepo;
+        this.categoryServ = categoryServ;
     }
 
     //  index/home page
@@ -69,6 +74,7 @@ public class MainController {
     @GetMapping("/items")
     public ModelAndView items(@PageableDefault(value = 9) Pageable pageable, ModelAndView modelAndView) {
         modelAndView.setViewName("items");
+        modelAndView.addObject("category", categoryServ.allCategories());
         Page<Item> page = itemRepo.findAll(pageable);
         modelAndView.addObject("page", page);
         return modelAndView;

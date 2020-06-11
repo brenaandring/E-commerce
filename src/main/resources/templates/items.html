@@ -11,6 +11,12 @@
         <div class="container-fluid">
             <img th:src="@{/img/woods2.jpg}" class="img-fluid light" alt="photo of masks">
 
+            <div class="row my-2 text-center">
+                <div class="col-md">
+                    <a th:href="@{/items/category/{id}(id=${category.id})}" class="btn mx-1 font-weight-light text-secondary box1" th:each="category : ${category}" th:text="${category.name}"></a>
+                </div>
+            </div>
+
             <!-- available items -->
             <div class="row mx-3 mt-2 row-cols-1 row-cols-md-3">
                 <div class="col mb-4" th:each="item : ${page}">

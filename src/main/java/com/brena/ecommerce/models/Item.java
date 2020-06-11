@@ -43,6 +43,10 @@ public class Item {
     @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
     private List<Photo> photos;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Item() {
     }
 
@@ -117,6 +121,14 @@ public class Item {
 
     public void setPhotos(List<Photo> photos) {
         this.photos = photos;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

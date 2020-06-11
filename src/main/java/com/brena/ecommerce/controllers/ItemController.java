@@ -24,13 +24,16 @@ public class ItemController {
     private final ItemServ itemServ;
     private final ReviewServ reviewServ;
     private final PhotoServ photoServ;
+    private final CategoryServ categoryServ;
 
     public ItemController(ItemServ itemServ,
                           ReviewServ reviewServ,
-                          PhotoServ photoServ) {
+                          PhotoServ photoServ,
+                          CategoryServ categoryServ) {
         this.itemServ = itemServ;
         this.reviewServ = reviewServ;
         this.photoServ = photoServ;
+        this.categoryServ = categoryServ;
     }
 
     //  admin-only: create a new item
@@ -38,19 +41,23 @@ public class ItemController {
     public ModelAndView createItem(ModelAndView modelAndView) {
         modelAndView.setViewName("create");
         modelAndView.addObject("item", new Item());
+        modelAndView.addObject("categories", categoryServ.allCategories());
+        modelAndView.addObject("category", new Category());
         return modelAndView;
     }
 
     @PostMapping("/admin/items/create")
     public ModelAndView create(@Valid Item item,
-                         BindingResult result,
-                         @RequestParam("imageFile") MultipartFile imageFile,
+                               @Valid Category category,
+                               BindingResult result,
+                               @RequestParam("imageFile") MultipartFile imageFile,
                                ModelAndView modelAndView, HttpServletRequest request) {
         if (result.hasErrors()) {
             modelAndView.setViewName("create");
         } else {
             HttpSession session = request.getSession();
             User admin = (User) session.getAttribute("admin");
+            item.setCategory(category);
             item.setUser(admin);
             itemServ.saveItem(item);
             Photo newPhoto = new Photo();
@@ -63,7 +70,7 @@ public class ItemController {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            return new ModelAndView("redirect:/admin");
+            return new ModelAndView("redirect:/admin/items");
         }
         return modelAndView;
     }
@@ -92,6 +99,7 @@ public class ItemController {
     public ModelAndView editItem(@PathVariable("id") Long id, ModelAndView modelAndView) {
         modelAndView.setViewName("update");
         modelAndView.addObject("item", itemServ.findItem(id));
+        modelAndView.addObject("categories", categoryServ.allCategories());
         return modelAndView;
     }
 
@@ -120,9 +128,29 @@ public class ItemController {
                     exception.printStackTrace();
                 }
             }
-            return new ModelAndView("redirect:/admin");
+            return new ModelAndView("redirect:/admin/items");
         }
         return modelAndView;
+    }
+
+    // admin-only: create category
+    @PostMapping("/admin/category/create")
+    public ModelAndView createCategory(@Valid Category category,
+                                       BindingResult result,
+                                       ModelAndView modelAndView) {
+        if (result.hasErrors()) {
+            modelAndView.setViewName("create");
+        } else {
+            categoryServ.saveCategory(category);
+        }
+        return new ModelAndView("redirect:/admin/items/create");
+    }
+
+    @GetMapping("/items/category/{id}")
+    public ModelAndView getItemsCategory(@PathVariable("id") Long id,
+                                         ModelAndView modelAndView) {
+        modelAndView.addObject("category", categoryServ.findCategory(id));
+        return new ModelAndView("redirect:/items");
     }
 
     //  user: create an item review
@@ -163,6 +191,12 @@ public class ItemController {
     public String deleteReview(@PathVariable("id") Long id) {
         reviewServ.deleteReview(id);
         return "redirect:/admin";
+    }
+
+    @RequestMapping("/admin/category/delete/{id}")
+    public String deleteCategory(@PathVariable("id") Long id) {
+        categoryServ.deleteCategory(id);
+        return "redirect:/admin/items/create";
     }
 
     //  admin-only: delete a photo

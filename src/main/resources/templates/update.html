@@ -36,6 +36,11 @@
                                 <input type="number" class="form-control my-3 text-secondary" th:field="*{price}"
                                        th:placeholder="Price" required>
 
+                                <select th:field="*{category}" class="form-control" id="category">
+                                    <option th:value="0" class="text-center">Select Category</option>
+                                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                                </select>
+
                                 <input type="file" class="form-control my-3"  name="imageFile">
 
                                 <button type="submit" class="btn box1 font-weight-light text-uppercase
@@ -43,7 +48,7 @@
                             </div>
                         </div>
                     </form>
-                    <a th:href="@{/admin}" class="btn box1 font-weight-light text-uppercase text-secondary">Cancel</a>
+                    <a th:href="@{/admin/items}" class="btn box1 font-weight-light text-uppercase text-secondary">Cancel</a>
                 </div>
             </div>
         </div>
