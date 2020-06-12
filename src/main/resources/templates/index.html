@@ -11,19 +11,42 @@
         <div class="container-fluid">
             <img th:src="@{/img/woods.jpg}" class="img-fluid" alt="photo of a woman in a mask">
 
+            <img th:src="@{/img/indexwords.png}" class="img-fluid" alt="image of text">
+
             <div class="row m-1 align-items-center">
-                <div class="box1 col-md m-1 text-center">
-                    <img th:src="@{/img/essential.png}" th:width="700" class="img-fluid p-2" alt="photo of text">
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/3.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
                 </div>
-                <div class="col-md m-1 bg-light text-center">
-                    <img th:src="@{/img/mask1.jpg}" th:width="700" class="img-fluid p-2" alt="photo of a mask">
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/9.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
+                </div>
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/7.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
+                </div>
+            </div>
+
+            <div class="row m-1 mt-3 align-items-center">
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/text1.png}" th:width="700" class="img-fluid p-2" alt="photo of text">
+                </div>
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/10.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
+                </div>
+            </div>
+
+            <div class="row m-1 mt-3 align-items-center">
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/6.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
+                </div>
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/text2.png}" th:width="700" class="img-fluid p-2" alt="photo of text">
                 </div>
             </div>
         </div>
 
         <!-- about section -->
         <div class="container-xl">
-            <div class="row m-2 p-3 text-secondary">
+            <div class="row m-2 p-3">
                 <div class="col text-center">
                     <img th:src="@{/img/parents.jpg}" th:width="700" class="img-fluid p-2" alt="photo of two people">
                     <h1 class="display-4">My mom has always loved to sew.</h1>
@@ -37,34 +60,31 @@
                 <p class="lead">My mom is the kind of human who uses her skills to help other people. She would
                     rather make you a gift than buy one. She cherishes homemade ones the most. Recently as the world
                     found itself unwell and people social-distancing, my mom decided to protect people by making face
-                    masks. Utilizing the fabrics in her sewing room, she has made masks for the family and friends.
-                    As a way to raise awareness about my mom's masks that she made with love, I create this website
-                    so people could have one.
-                </p>
+                    masks. Utilizing the fabrics in her sewing room, she has made masks for the family and friends. I created
+                    this website for my parents, so they could sell the masks, but it has expanded to include all of their
+                    handmade crafts. I hope you enjoy your product, because my parents made it with care.</p>
             </div>
         </div>
 
         <div class="container-fluid ">
-            <div class="row m-1">
-                <div class="col-md m-1 bg-light text-center">
-                    <img th:src="@{/img/wood_paint.jpg}" th:width="700" class="img-fluid p-2" alt="photo of a mask">
+            <div class="row m-1 align-items-center">
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/11.jpg}" th:width="700" class="img-fluid p-2" alt="photo of a mask">
                 </div>
 
-                <div class="box1 col-md m-1">
-                    <img th:src="@{/img/mask_photo2.jpg}" class="img-fluid m-1" alt="photo of a woman in a mask">
-
+                <div class="col-md m-1">
                     <p th:if="${message}" class="validation-message alert alert-light text-center text-uppercase"
                        role="alert" th:text="${message}"></p>
 
-                    <h1 class="display-4 text-white text-uppercase text-center">Contact Us</h1>
+                    <h1 class="display-4 text-uppercase text-center">Contact Us</h1>
 
                     <!-- contact form -->
                     <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
                         <div class="controls">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group text-secondary">
-                                        <input type="text" name="subject" class="form-control text-secondary
+                                    <div class="form-group">
+                                        <input type="text" name="subject" class="form-control
                                         font-weight-light" placeholder="Subject" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -72,15 +92,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-group text-secondary">
-                                        <input type="text" name="name" class="form-control text-secondary
+                                    <div class="form-group">
+                                        <input type="text" name="name" class="form-control
                                         font-weight-light" placeholder="Name" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group text-secondary">
-                                        <input type="email" name="email" class="form-control text-secondary
+                                    <div class="form-group">
+                                        <input type="email" name="email" class="form-control
                                         font-weight-light" placeholder="Email" required>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -89,12 +109,12 @@
                             <div class="row">
                                 <div class="col-md-12 text-center">
                                     <div class="form-group">
-                                        <textarea name="message" class="form-control text-secondary font-weight-light"
+                                        <textarea name="message" class="form-control font-weight-light"
                                                   rows="4" placeholder="Your message" required></textarea>
                                         <div class="help-block with-errors"></div>
                                     </div>
-                                    <input type="submit" class="btn btn-submit btn-light font-weight-light text-
-                                    uppercase text-secondary m-1" value="Send Message">
+                                    <input type="submit" class="btn btn-submit button1 font-weight-light text-
+                                    uppercase text-white m-1" value="Send Message">
                                 </div>
                             </div>
                         </div>

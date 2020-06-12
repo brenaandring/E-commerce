@@ -9,12 +9,12 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
         <div class="container-fluid">
-            <img th:src="@{/img/woods2.jpg}" class="img-fluid light" alt="photo of masks">
+            <img th:src="@{/img/workshop.jpg}" class="img-fluid light" alt="photo of masks">
 
             <div class="row my-2 text-center">
                 <div class="col-md">
-                    <a th:href="@{/items}" class="btn mx-1 font-weight-light text-secondary box1">All Items</a>
-                    <a th:href="@{/items/category/{id}(id=${category.id})}" class="btn mx-1 font-weight-light text-secondary box1" th:each="category : ${category}" th:text="${category.name}"></a>
+                    <a th:href="@{/items}" class="btn mx-1 font-weight-light text-white button1">All Items</a>
+                    <a th:href="@{/items/category/{id}(id=${category.id})}" class="btn mx-1 font-weight-light text-white button1" th:each="category : ${category}" th:text="${category.name}"></a>
                 </div>
             </div>
 
@@ -31,9 +31,9 @@
                             <h5 th:text="${item.title}" class="card-title"></h5>
                             <p class="card-text">Price: $[[${item.price}]]</p>
                             <p class="card-text">In Stock: [[${item.quantity}]]</p>
-                            <a th:href="@{/items/{id}(id=${item.id})}" class="btn text-secondary font-weight-light my-1 box1">View</a>
+                            <a th:href="@{/items/{id}(id=${item.id})}" class="btn text-secondary font-weight-light my-1 button1">View</a>
                             <a th:href="@{/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0"
-                               class="btn my-1 font-weight-light text-secondary box1">Add to Cart</a>
+                               class="btn my-1 font-weight-light text-secondary button1">Add to Cart</a>
                         </div>
                     </div>
                 </div>
@@ -42,16 +42,16 @@
             <!-- pagination -->
             <ul class="pagination justify-content-center mt-2">
                 <li class="page-item" th:if="${page.hasPrevious()}">
-                    <a class="page-link font-weight-light text-secondary box1" th:href="@{/items(page=${page.number - 1},size=${page.size})}">Previous</a>
+                    <a class="page-link font-weight-light text-secondary button1" th:href="@{/items(page=${page.number - 1},size=${page.size})}">Previous</a>
                 </li>
                 <li class="page-item" th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
-                    <span th:if="${page.number == i}" class="page-link font-weight-bolder text-secondary box1">[[${i}+1]]</span>
+                    <span th:if="${page.number == i}" class="page-link font-weight-bolder text-secondary button1">[[${i}+1]]</span>
                     <span th:unless="${page.number == i}">
-                        <a class="page-link font-weight-light text-secondary box1" th:href="@{/items(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                        <a class="page-link font-weight-light text-secondary button1" th:href="@{/items(page=${i},size=${page.size})}">[[${i}+1]]</a>
                     </span>
                 </li>
                 <li class="page-item" th:if="${page.hasNext()}">
-                    <a class="page-link font-weight-light text-secondary box1" th:href="@{/items(page=${page.number+1},size=${page.size})}">Next</a>
+                    <a class="page-link font-weight-light text-secondary button1" th:href="@{/items(page=${page.number+1},size=${page.size})}">Next</a>
                 </li>
             </ul>
         </div>
