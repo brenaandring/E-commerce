@@ -9,7 +9,7 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
         <div class="container-fluid">
-            <img th:src="@{/img/edit.png}" class="img-fluid" alt="add">
+            <img th:src="@{/img/editItem.png}" class="img-fluid" alt="add">
 
             <div class="row m-1 justify-content-center text-center">
                 <div class="col-md-5">
@@ -20,20 +20,20 @@
 
                         <!-- form error messages -->
                         <div th:each="err : ${#fields.errors('*')}" th:text="${err}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
                         <div class="form-row justify-content-center text-center">
                             <div class="form-group">
-                                <input type="text" class="form-control my-3 text-secondary" th:field="*{title}"
+                                <input type="text" class="form-control my-3 text-dark" th:field="*{title}"
                                        th:placeholder="Title">
 
-                                <input type="number" class="form-control my-3 text-secondary" th:field="*{quantity}"
+                                <input type="number" class="form-control my-3 text-dark" th:field="*{quantity}"
                                        th:placeholder="Quantity" required>
 
-                                <input type="text" class="form-control my-3 text-secondary" th:field="*{description}"
+                                <input type="text" class="form-control my-3 text-dark" th:field="*{description}"
                                        th:placeholder="Description">
 
-                                <input type="number" class="form-control my-3 text-secondary" th:field="*{price}"
+                                <input type="number" class="form-control my-3 text-dark" th:field="*{price}"
                                        th:placeholder="Price" required>
 
                                 <select th:field="*{category}" class="form-control" id="category">
@@ -43,12 +43,12 @@
 
                                 <input type="file" class="form-control my-3"  name="imageFile">
 
-                                <button type="submit" class="btn box1 font-weight-light text-uppercase
-                                text-secondary">Update Item</button>
+                                <button type="submit" class="btn bg-dark font-weight-light text-uppercase
+                                text-white">Update Item</button>
                             </div>
                         </div>
                     </form>
-                    <a th:href="@{/admin/items}" class="btn box1 font-weight-light text-uppercase text-secondary">Cancel</a>
+                    <a th:href="@{/admin/items}" class="btn bg-dark font-weight-light text-uppercase text-white">Cancel</a>
                 </div>
             </div>
         </div>

@@ -9,18 +9,18 @@
 <body>
 <div th:replace="/fragments/header :: navbar"></div>
 <div class="container-fluid">
-    <img th:src="@{/img/admin.png}" class="img-fluid" alt="admin">
+    <img th:src="@{/img/administrator.png}" class="img-fluid" alt="admin">
 
     <div class="row m-1 justify-content-center text-center">
         <div class="col-md-10">
 
             <!-- items list -->
-            <h1 class="display-4 font-weight-light text-secondary m-2">Items</h1>
-            <a th:href="@{/admin/items/create}" class="btn text-uppercase text-secondary box1 m-1">Add New Item/Category</a><br>
-            <span class="text-secondary">* Please remove all reviews and photo before deleting this item</span>
+            <h1 class="display-4 font-weight-light text-dark m-2">Items</h1>
+            <a th:href="@{/admin/items/create}" class="btn text-uppercase text-white bg-dark m-1">Add New Item/Category</a><br>
+            <span class="text-dark">* Please remove all reviews and photo before deleting this item</span>
 
             <table class="table table-responsive-sm">
-                <thead class="box1 text-secondary text-uppercase">
+                <thead class="bg-dark text-white text-uppercase">
                 <tr>
                     <th class="align-middle" scope="col">Title</th>
                     <th class="align-middle" scope="col">Quantity</th>
@@ -29,19 +29,19 @@
                     <th class="align-middle" scope="col">Actions</th>
                 </tr>
                 </thead>
-                <tbody class="text-secondary border border-light">
+                <tbody class="text-dark border border-light">
                 <tr th:each="item : ${page}">
                     <td><a th:href="@{/items/{id}(id=${item.id})}" th:text="${item.title}"
-                           class="font-weight-bold text-uppercase text-secondary"></a>
+                           class="font-weight-bold text-uppercase text-dark"></a>
                     </td>
                     <td th:text="${item.quantity}"></td>
                     <td th:text="${item.price}"></td>
                     <td th:each="category : ${item.category}" th:text="${category.name}"></td>
                     <td>
                         <a th:href="@{/admin/items/edit/{id}(id=${item.id})}"
-                           class="btn text-uppercase text-secondary my-1 box1">Edit</a>
+                           class="btn text-uppercase text-white my-1 bg-dark">Edit</a>
                         <a th:href="@{/admin/items/delete/{id}(id=${item.id})}"
-                           class="btn text-uppercase text-secondary box1">Delete</a>
+                           class="btn text-uppercase text-white bg-dark">Delete</a>
                     </td>
                 </tr>
                 </tbody>
@@ -50,16 +50,16 @@
             <!-- pagination -->
             <ul class="pagination justify-content-center mt-2">
                 <li class="page-item" th:if="${page.hasPrevious()}">
-                    <a class="page-link font-weight-light text-secondary box1" th:href="@{/admin/items(page=${page.number - 1},size=${page.size})}">Previous</a>
+                    <a class="page-link font-weight-light text-white bg-dark" th:href="@{/admin/items(page=${page.number - 1},size=${page.size})}">Previous</a>
                 </li>
                 <li class="page-item" th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
-                    <span th:if="${page.number == i}" class="page-link font-weight-bolder text-secondary box1">[[${i}+1]]</span>
+                    <span th:if="${page.number == i}" class="page-link font-weight-bolder text-white bg-dark">[[${i}+1]]</span>
                     <span th:unless="${page.number == i}">
-                        <a class="page-link font-weight-light text-secondary box1" th:href="@{/admin/items(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                        <a class="page-link font-weight-light text-white bg-dark" th:href="@{/admin/items(page=${i},size=${page.size})}">[[${i}+1]]</a>
                     </span>
                 </li>
                 <li class="page-item" th:if="${page.hasNext()}">
-                    <a class="page-link font-weight-light text-secondary box1" th:href="@{/admin/items(page=${page.number+1},size=${page.size})}">Next</a>
+                    <a class="page-link font-weight-light text-white bg-dark" th:href="@{/admin/items(page=${page.number+1},size=${page.size})}">Next</a>
                 </li>
             </ul>
         </div>

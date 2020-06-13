@@ -9,7 +9,7 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
         <div class="container-fluid">
-            <img th:src="@{/img/add.png}" class="img-fluid" alt="add">
+            <img th:src="@{/img/addItem.png}" class="img-fluid" alt="add">
 
             <!-- create item form -->
             <div class="row m-1 justify-content-center text-center">
@@ -17,20 +17,20 @@
                     <form action="#" class="border border-light" th:action="@{/admin/items/create}" th:object="${item}" method="post" enctype="multipart/form-data">
                         <!-- create item error messages -->
                         <div th:each="err : ${#fields.errors('*')}" th:text="${err}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
                         <div class="form-row justify-content-center text-center">
                             <div class="form-group">
-                                <input type="text" class="form-control my-3 text-secondary" th:field="*{title}"
+                                <input type="text" class="form-control my-3 text-dark" th:field="*{title}"
                                        th:placeholder="Title">
 
-                                <input type="number" class="form-control my-3 text-secondary" th:field="*{quantity}"
+                                <input type="number" class="form-control my-3 text-dark" th:field="*{quantity}"
                                        th:placeholder="Quantity" required>
 
-                                <input type="text" class="form-control my-3 text-secondary" th:field="*{description}"
+                                <input type="text" class="form-control my-3 text-dark" th:field="*{description}"
                                        th:placeholder="Description">
 
-                                <input type="number" class="form-control my-3 text-secondary" th:field="*{price}"
+                                <input type="number" class="form-control my-3 text-dark" th:field="*{price}"
                                        th:placeholder="Price" required>
 
                                 <select th:field="*{category}" class="form-control" id="category">
@@ -40,31 +40,31 @@
 
                                 <input type="file" class="form-control my-3"  name="imageFile" required>
 
-                                <button type="submit" class="btn box1 font-weight-light text-uppercase
-                                text-secondary m-1">Add an Item</button>
+                                <button type="submit" class="btn bg-dark font-weight-light text-uppercase
+                                text-white m-1">Add an Item</button>
                             </div>
                         </div>
                     </form>
 
-                    <h1 class="display-4 font-weight-light text-secondary m-2">Add a Category</h1>
+                    <h1 class="display-4 font-weight-light text-dark m-2">Add a Category</h1>
 
                     <!-- create category error messages -->
                     <div th:each="err : ${#fields.errors('*')}" th:text="${err}"
-                         class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                         class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
                     <!-- create category form -->
                     <form action="#" class="border border-light" th:action="@{/admin/category/create}" th:object="${category}" method="post">
                         <!-- create category error messages -->
                         <div th:each="err : ${#fields.errors('*')}" th:text="${err}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
                         <div class="form-row justify-content-center text-center">
                             <div class="form-group">
-                                <input type="text" class="form-control my-3 text-secondary" th:field="*{name}"
+                                <input type="text" class="form-control my-3 text-dark" th:field="*{name}"
                                        th:placeholder="Category" required>
 
-                                <button type="submit" class="btn box1 font-weight-light text-uppercase
-                                    text-secondary m-1">Save Category</button>
+                                <button type="submit" class="btn bg-dark font-weight-light text-uppercase
+                                    text-white m-1">Save Category</button>
                             </div>
                         </div>
                     </form>
@@ -72,22 +72,22 @@
 
                 <!-- all categories -->
                 <div class="col-md-5 border border-light" >
-                    <h1 class="display-4 font-weight-light text-secondary m-2">Categories</h1>
+                    <h1 class="display-4 font-weight-light text-dark m-2">Categories</h1>
 
                     <table class="table">
-                        <thead class="box1 text-secondary text-uppercase">
+                        <thead class="bg-dark text-white text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Category</th>
                             <th class="align-middle" scope="col">Actions</th>
                         </tr>
                         </thead>
-                        <tbody class="text-secondary border border-light">
+                        <tbody class="text-dark border border-light">
                         <tr th:each="category : ${categories}">
                             <td><a th:href="@{/admin}"  class="font-weight-bold
-                                    text-uppercase text-secondary" th:text="${category.name}"></a></td>
+                                    text-uppercase text-dark" th:text="${category.name}"></a></td>
                             <td>
                                 <a th:href="@{/admin/category/delete/{id}(id=${category.id})}"
-                                   class="btn text-uppercase text-secondary box1">Delete</a>
+                                   class="btn text-uppercase text-white bg-dark">Delete</a>
                             </td>
                         </tr>
                         </tbody>

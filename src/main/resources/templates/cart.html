@@ -14,14 +14,14 @@
                 <div class="col-md-10">
 
                     <!-- empty cart error message -->
-                    <p th:if="${errorMessage}" class="validation-message alert box1 text-center
-                    text-secondary text-uppercase" role="alert" th:text="${errorMessage}"></p>
+                    <p th:if="${errorMessage}" class="validation-message alert text-center
+                    text-dark text-uppercase" role="alert" th:text="${errorMessage}"></p>
 
-                    <h1 class="display-4 font-weight-light text-secondary m-2">Cart Summary</h1>
+                    <h1 class="display-4 font-weight-light text-dark m-2">Cart Summary</h1>
 
                     <!-- items in user's cart -->
                     <table class="table">
-                        <thead class="box1 text-secondary text-uppercase">
+                        <thead class="bg-dark text-white text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Item</th>
                             <th class="align-middle" scope="col">Price</th>
@@ -29,29 +29,29 @@
                             <th class="align-middle" scope="col">Action</th>
                         </tr>
                         </thead>
-                        <tbody class="text-secondary border border-light">
+                        <tbody class="text-dark border border-light">
                         <tr th:each="item : ${items.entrySet()}">
                             <td><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}"
-                                   class="font-weight-bold text-uppercase text-secondary"></a>
+                                   class="font-weight-bold text-uppercase text-dark"></a>
                             </td>
                             <td th:text="${item.getKey().price}"></td>
                             <td th:text="${item.getValue()}"></td>
                             <td><a th:href="@{/cart/remove/{id}(id=${item.getKey().id})}"
-                                   class="btn text-uppercase text-secondary box1">Remove</a>
+                                   class="btn text-uppercase text-white bg-dark">Remove</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
 
-                    <h1 class="display-4 font-weight-light text-secondary m-2">Total: [[${total}]]</h1>
+                    <h1 class="display-4 font-weight-light text-dark m-2">Total: [[${total}]]</h1>
 
                     <a th:href="@{/cart/confirm}" class="btn text-uppercase
-                    text-secondary box1 my-1" sec:authorize="isAuthenticated()">Proceed to Checkout</a>
-                    <a th:href="@{/items}" class="btn text-uppercase text-secondary box1 my-1">Continue Shopping</a>
+                    text-white bg-dark my-1" sec:authorize="isAuthenticated()">Proceed to Checkout</a>
+                    <a th:href="@{/items}" class="btn text-uppercase text-white bg-dark my-1">Continue Shopping</a>
                     <br><a th:href="@{/login}" class="btn text-uppercase
-                    text-secondary box1 my-1" sec:authorize="!isAuthenticated()">Register/Login to Checkout</a>
+                    text-white bg-dark my-1" sec:authorize="!isAuthenticated()">Register/Login to Checkout</a>
                     <br><a th:href="@{/cart/confirm}" class="btn text-uppercase
-                    text-secondary box1 my-1" sec:authorize="isAnonymous()">Guest Checkout</a>
+                    text-white bg-dark my-1" sec:authorize="isAnonymous()">Guest Checkout</a>
                 </div>
             </div>
         </div>

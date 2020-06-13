@@ -9,19 +9,19 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
         <div class="container-fluid">
-            <img th:src="@{/img/user_order.png}" class="img-fluid" alt="user info">
+            <img th:src="@{/img/userOrder.png}" class="img-fluid" alt="user info">
 
             <div class="row m-1 justify-content-center text-center">
                 <div class="col-md-10">
 
                     <a th:href="@{/admin/user/order/shipped/{id}(id=${order.id})}" class="btn text-uppercase
-                    text-secondary my-1 box1">Shipped</a>
+                    text-white my-1 bg-dark">Shipped</a>
                     <a th:href="@{/admin/user/order/cancel/{id}(id=${order.id})}" class="btn text-uppercase
-                    text-secondary box1">Cancelled</a>
+                    text-white bg-dark">Cancelled</a>
 
                     <!-- admin: user's order info -->
                     <table class="table table-responsive-sm">
-                        <thead class="box1 text-secondary text-uppercase">
+                        <thead class="bg-dark text-white text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Order Id</th>
                             <th class="align-middle" scope="col">Item Title</th>
@@ -30,7 +30,7 @@
                             <th class="align-middle" scope="col">Date Purchased</th>
                         </tr>
                         </thead>
-                        <tbody class="text-secondary border border-light">
+                        <tbody class="text-dark border border-light">
                         <tr th:each="orderItem : ${order.orderItems}">
                             <td th:text="${orderItem.order.getId()}"></td>
                             <td th:text="${orderItem.item.getTitle()}"></td>
@@ -46,10 +46,10 @@
             <!-- admin: user's order shipping info -->
             <div class="row m-1 justify-content-center text-center">
                 <div class="col-md-10">
-                    <h1 class="display-4 font-weight-light text-secondary m-2">Shipping Address</h1>
+                    <h1 class="display-4 font-weight-light text-dark m-2">Shipping Address</h1>
 
                     <table class="table table-responsive-sm">
-                        <thead class="box1 text-secondary text-uppercase">
+                        <thead class="bg-dark text-white text-uppercase">
                         <tr>
                             <th class="align-middle" scope="col">Name</th>
                             <th class="align-middle" scope="col">Street Address</th>
@@ -58,7 +58,7 @@
                             <th class="align-middle" scope="col">Zip Code</th>
                         </tr>
                         </thead>
-                        <tbody class="text-secondary border border-light">
+                        <tbody class="text-dark border border-light">
                         <tr th:each="address : ${order.address}">
                             <td th:text="${address.name}"></td>
                             <td th:text="${address.street}"></td>

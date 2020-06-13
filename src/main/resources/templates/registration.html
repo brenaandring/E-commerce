@@ -9,46 +9,46 @@
     <body>
         <div th:replace="/fragments/header :: navbar"></div>
         <div class="container-fluid">
-            <div class="row m-1">
-                <div class="col-md m-1 box1">
-                    <img th:src="@{/img/register.png}" class="img-fluid mt-2" alt="register">
+            <div class="row m-1 align-items-center">
+                <div class="col-md m-1 text-center">
+                    <h1 class="display-4 font-weight-light text-dark m-2">Register</h1>
 
                     <!--duplicate email error message-->
-                    <p th:if="${errorMessage}" class="validation-message alert alert-light text-center text-uppercase" role="alert"
+                    <p th:if="${errorMessage}" class="validation-message alert alert-secondary text-center text-uppercase" role="alert"
                        th:text="${errorMessage}"></p>
 
                     <!-- registration form -->
                     <form action="#" th:action="@{/registration}" th:object="${user}" method="post" data-toggle="validator">
                         <!--form error messages-->
                         <div th:each="err : ${#fields.errors('*')}" th:text="${err}"
-                             class="validation-message alert alert-light text-center text-uppercase" role="alert"></div>
+                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
 
-                        <div class="form-row justify-content-center text-center ">
+                        <div class="form-row justify-content-center text-center">
                             <div class="form-group col-md-7">
-                                <input type="text" class="form-control mb-3 text-secondary" th:field="*{firstName}"
+                                <input type="text" class="form-control mb-3 text-dark" th:field="*{firstName}"
                                        th:placeholder="First">
 
-                                <input type="text" class="form-control my-3 text-secondary" th:field="*{lastName}"
+                                <input type="text" class="form-control my-3 text-dark" th:field="*{lastName}"
                                        th:placeholder="Last">
 
-                                <input type="email" class="form-control my-3 text-secondary" th:field="*{email}"
+                                <input type="email" class="form-control my-3 text-dark" th:field="*{email}"
                                        th:placeholder="Email">
 
-                                <input type="password" class="form-control my-3 text-secondary" th:field="*{password}"
+                                <input type="password" class="form-control my-3 text-dark" th:field="*{password}"
                                        th:placeholder="Password">
 
-                                <input type="password" class="form-control my-3 text-secondary"
+                                <input type="password" class="form-control my-3 text-dark"
                                        th:field="*{passwordConfirmation}" th:placeholder="Confirm">
 
-                                <button type="submit" class="btn btn-light font-weight-light text-uppercase
-                                text-secondary m-1">Register</button>
+                                <button type="submit" class="btn btn-dark font-weight-light text-uppercase
+                                text-white m-1">Register</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
-                <div class="bg-light col-md m-1 text-center">
-                    <img th:src="@{/img/mask_photo5.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
+                <div class="col-md m-1 text-center">
+                    <img th:src="@{/img/1.jpg}" th:width="700" class="img-fluid p-2" alt="photo of woods">
                 </div>
             </div>
         </div>
