@@ -2,8 +2,6 @@ package com.brena.ecommerce.services;
 
 import com.brena.ecommerce.models.Item;
 import com.brena.ecommerce.repositories.ItemRepo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
