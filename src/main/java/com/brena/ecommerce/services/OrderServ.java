@@ -14,7 +14,7 @@ import java.util.Optional;
 public class OrderServ {
 
     public static final String STATUS_NEW = "New";
-    public static final String STATUS_SHIPPED = "Shipped";
+    public static final String STATUS_COMPLETED = "Completed";
     public static final String STATUS_CANCELLED = "Cancelled";
 
     private final OrderRepo orderRepo;
@@ -37,7 +37,7 @@ public class OrderServ {
         Optional<Order> orderOp = orderRepo.findById(id);
         if (orderOp.isPresent()) {
             Order order = orderOp.get();
-            order.setStatus(STATUS_SHIPPED);
+            order.setStatus(STATUS_COMPLETED);
             orderRepo.save(order);
         }
     }

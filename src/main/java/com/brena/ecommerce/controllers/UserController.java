@@ -10,6 +10,7 @@ import com.brena.ecommerce.services.*;
 import com.brena.ecommerce.validator.UserValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,9 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.*;
-
-import static com.brena.ecommerce.services.OrderServ.*;
 
 @Controller
 public class UserController {
@@ -47,12 +45,6 @@ public class UserController {
         this.itemRepo = itemRepo;
         this.userRepo = userRepo;
     }
-
-    private static final Map<String, Integer> statusLabels = new LinkedHashMap<String, Integer>() {{
-        put(STATUS_NEW, 0);
-        put(STATUS_SHIPPED, 1);
-        put(STATUS_CANCELLED, 2);
-    }};
 
     //  user registration
     @GetMapping("/registration")
@@ -120,10 +112,8 @@ public class UserController {
     //  admin dashboard
     @GetMapping("/admin")
     public ModelAndView adminPage(Principal principal,
-                                  ModelAndView modelAndView,
-                                  @RequestParam(value = "status", required = false, defaultValue = "asc")
-                                              Optional<String> statusParam, HttpServletRequest request,
-                                  @PageableDefault(value = 5) Pageable pageable) {
+                                  ModelAndView modelAndView, HttpServletRequest request,
+                                  @PageableDefault(value = 5, sort = "status", direction = Sort.Direction.DESC) Pageable pageable) {
         modelAndView.setViewName("admin");
         String email = principal.getName();
         User admin = userServ.findByEmail(email);
@@ -131,12 +121,6 @@ public class UserController {
         session.setAttribute("admin", admin);
         modelAndView.addObject("admin", admin);
         Page<Order> orders = orderServ.allOrders(pageable);
-//        Comparator<Order> status = Comparator.comparing(order -> order == null ? 0 :
-//                statusLabels.getOrDefault(order.getStatus(), 0));
-//        if (statusParam.isPresent() && "desc".equals(statusParam.get())) {
-//            status = status.reversed();
-//        }
-//        orders.sort(status);
         modelAndView.addObject("page", orders);
         return modelAndView;
     }
