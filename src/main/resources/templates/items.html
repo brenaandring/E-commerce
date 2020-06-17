@@ -1,60 +1,62 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <div th:replace="/fragments/header :: header"></div>
-        <title>Mask With Love</title>
-    </head>
+<head>
+    <div th:replace="/fragments/header :: header"></div>
+    <title>Workbench 42</title>
+</head>
 
-    <body>
-        <div th:replace="/fragments/header :: navbar"></div>
-        <div class="container-fluid">
-            <img th:src="@{/img/workshop.jpg}" class="img-fluid light" alt="photo of masks">
-
-            <div class="row my-2 text-center">
-                <div class="col-md">
-                    <a th:href="@{/items}" class="btn mx-1 font-weight-light text-white bg-dark">All Items</a>
-                    <a th:href="@{/items/category/{id}(id=${category.id})}" class="btn mx-1 font-weight-light text-white bg-dark" th:each="category : ${category}" th:text="${category.name}"></a>
-                </div>
+<body>
+    <div th:replace="/fragments/header :: navbar"></div>
+    <div class="container-fluid">
+        <img th:src="@{/img/workshop.jpg}" class="img-fluid light" alt="photo of masks">
+        <div class="row my-2 text-center">
+            <div class="col-md">
+                <a th:href="@{/items}" class="btn mx-1 font-weight-light text-white bg-dark">All Items</a>
+                <a th:href="@{/items/category/{id}(id=${category.id})}"
+                   class="btn mx-1 font-weight-light text-white bg-dark" th:each="category : ${category}"
+                   th:text="${category.name}"></a>
             </div>
-
-            <!-- available items -->
-            <div class="row mx-5 mt-2 row-cols-1 row-cols-md-3">
-                <div class="col mb-4" th:each="item : ${page}">
-                    <div class="card border-light h-100">
-                        <div th:each="photo : ${item.photos}">
-                            <a th:href="@{/items/{id}(id=${item.id})}">
-                                <img th:src="@{'/images/' + ${photo.fileName}}" class="card-img-top" alt="Photo of a mask"/>
-                            </a>
-                        </div>
-                        <div class="card-body text-dark text-center font-weight-light text-uppercase">
-                            <h5 th:text="${item.title}" class="card-title"></h5>
-                            <p class="card-text">Price: $[[${item.price}]]</p>
-                            <p class="card-text">In Stock: [[${item.quantity}]]</p>
-                            <a th:href="@{/items/{id}(id=${item.id})}" class="btn text-white font-weight-light my-1 bg-dark">View</a>
-                            <a th:href="@{/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0"
-                               class="btn my-1 font-weight-light text-white bg-dark">Add to Cart</a>
-                        </div>
+        </div>
+        <!-- available items -->
+        <div class="row mx-5 mt-2 row-cols-1 row-cols-md-3">
+            <div class="col mb-4" th:each="item : ${page}">
+                <div class="card border-light h-100">
+                    <div th:each="photo : ${item.photos}">
+                        <a th:href="@{/items/{id}(id=${item.id})}">
+                            <img th:src="@{'/images/' + ${photo.fileName}}" class="card-img-top" alt="Photo of a mask"/>
+                        </a>
+                    </div>
+                    <div class="card-body text-dark text-center font-weight-light text-uppercase">
+                        <h5 th:text="${item.title}" class="card-title"></h5>
+                        <p class="card-text">Price: $[[${item.price}]]</p>
+                        <p class="card-text">In Stock: [[${item.quantity}]]</p>
+                        <a th:href="@{/items/{id}(id=${item.id})}" class="btn text-white font-weight-light my-1 bg-dark">View</a>
+                        <a th:href="@{/cart/add/{id}(id=${item.id})}" th:if="${item.quantity} > 0"
+                           class="btn my-1 font-weight-light text-white bg-dark">Add to Cart</a>
                     </div>
                 </div>
             </div>
-
-            <!-- pagination -->
-            <ul class="pagination justify-content-center mt-2">
-                <li class="page-item" th:if="${page.hasPrevious()}">
-                    <a class="page-link font-weight-light text-white bg-dark" th:href="@{/items(page=${page.number - 1},size=${page.size})}">Previous</a>
-                </li>
-                <li class="page-item" th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
-                    <span th:if="${page.number == i}" class="page-link font-weight-bolder text-white bg-dark">[[${i}+1]]</span>
-                    <span th:unless="${page.number == i}">
-                        <a class="page-link font-weight-light text-white bg-dark" th:href="@{/items(page=${i},size=${page.size})}">[[${i}+1]]</a>
-                    </span>
-                </li>
-                <li class="page-item" th:if="${page.hasNext()}">
-                    <a class="page-link font-weight-light text-white bg-dark" th:href="@{/items(page=${page.number+1},size=${page.size})}">Next</a>
-                </li>
-            </ul>
         </div>
-        <div th:replace="/fragments/footer :: footer"></div>
-    </body>
+        <!-- pagination -->
+        <ul class="pagination justify-content-center mt-2">
+            <li class="page-item" th:if="${page.hasPrevious()}">
+                <a class="page-link font-weight-light text-white bg-dark"
+                   th:href="@{/items(page=${page.number - 1},size=${page.size})}">Previous</a>
+            </li>
+            <li class="page-item" th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+                <span th:if="${page.number == i}" class="page-link font-weight-bolder text-white bg-dark">[[${i}+1]]</span>
+                <span th:unless="${page.number == i}">
+                    <a class="page-link font-weight-light text-white bg-dark"
+                       th:href="@{/items(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                </span>
+            </li>
+            <li class="page-item" th:if="${page.hasNext()}">
+                <a class="page-link font-weight-light text-white bg-dark"
+                   th:href="@{/items(page=${page.number+1},size=${page.size})}">Next</a>
+            </li>
+        </ul>
+    </div>
+    <div th:replace="/fragments/footer :: footer"></div>
+</body>
 </html>

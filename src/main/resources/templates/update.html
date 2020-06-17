@@ -1,57 +1,49 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <div th:replace="/fragments/header :: header"></div>
-        <title>Mask With Love</title>
-    </head>
+<head>
+    <div th:replace="/fragments/header :: header"></div>
+    <title>Workbench 42</title>
+</head>
 
-    <body>
-        <div th:replace="/fragments/header :: navbar"></div>
-        <div class="container-fluid">
-            <img th:src="@{/img/editItem.png}" class="img-fluid" alt="add">
-
-            <div class="row m-1 justify-content-center text-center">
-                <div class="col-md-5">
-
-                    <!-- update item form -->
-                    <form action="#" th:action="@{/admin/items/edit/{id}(id=${item.id})}" th:object="${item}"
-                          method="post" enctype="multipart/form-data">
-
-                        <!-- form error messages -->
-                        <div th:each="err : ${#fields.errors('*')}" th:text="${err}"
-                             class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
-
-                        <div class="form-row justify-content-center text-center">
-                            <div class="form-group">
-                                <input type="text" class="form-control my-3 text-dark" th:field="*{title}"
-                                       th:placeholder="Title">
-
-                                <input type="number" class="form-control my-3 text-dark" th:field="*{quantity}"
-                                       th:placeholder="Quantity" required>
-
-                                <input type="text" class="form-control my-3 text-dark" th:field="*{description}"
-                                       th:placeholder="Description">
-
-                                <input type="number" class="form-control my-3 text-dark" th:field="*{price}"
-                                       th:placeholder="Price" required>
-
-                                <select th:field="*{category}" class="form-control" id="category">
-                                    <option th:value="0" class="text-center">Select Category</option>
-                                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
-                                </select>
-
-                                <input type="file" class="form-control my-3"  name="imageFile">
-
-                                <button type="submit" class="btn bg-dark font-weight-light text-uppercase
-                                text-white">Update Item</button>
-                            </div>
+<body>
+    <div th:replace="/fragments/header :: navbar"></div>
+    <div class="container-fluid">
+        <img th:src="@{/img/editItem.png}" class="img-fluid" alt="add">
+        <div class="row m-1 justify-content-center text-center">
+            <div class="col-md-5">
+                <!-- update item form -->
+                <form action="#" th:action="@{/admin/items/edit/{id}(id=${item.id})}" th:object="${item}"
+                      method="post" enctype="multipart/form-data">
+                    <!-- form error messages -->
+                    <div th:each="err : ${#fields.errors('*')}" th:text="${err}"
+                         class="validation-message alert alert-secondary text-center text-uppercase" role="alert"></div>
+                    <div class="form-row justify-content-center text-center">
+                        <div class="form-group">
+                            <input type="text" class="form-control my-3 text-dark" th:field="*{title}"
+                                   th:placeholder="Title">
+                            <input type="number" class="form-control my-3 text-dark" th:field="*{quantity}"
+                                   th:placeholder="Quantity" required>
+                            <input type="text" class="form-control my-3 text-dark" th:field="*{description}"
+                                   th:placeholder="Description">
+                            <input type="number" class="form-control my-3 text-dark" th:field="*{price}"
+                                   th:placeholder="Price" required>
+                            <select th:field="*{category}" class="form-control" id="category">
+                                <option th:value="0" class="text-center">Select Category</option>
+                                <option th:each="category : ${categories}" th:value="${category.id}"
+                                        th:text="${category.name}"></option>
+                            </select>
+                            <input type="file" class="form-control my-3" name="imageFile">
+                            <button type="submit" class="btn bg-dark font-weight-light text-uppercase
+                                    text-white">Update Item
+                            </button>
                         </div>
-                    </form>
-                    <a th:href="@{/admin/items}" class="btn bg-dark font-weight-light text-uppercase text-white">Cancel</a>
-                </div>
+                    </div>
+                </form>
+                <a th:href="@{/admin/items}" class="btn bg-dark font-weight-light text-uppercase text-white">Cancel</a>
             </div>
         </div>
-        <div th:replace="/fragments/footer :: footer"></div>
-    </body>
+    </div>
+    <div th:replace="/fragments/footer :: footer"></div>
+</body>
 </html>

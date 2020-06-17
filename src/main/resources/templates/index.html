@@ -1,127 +1,120 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <div th:replace="/fragments/header :: header"></div>
-        <title>Mask With Love</title>
-    </head>
+<head>
+    <div th:replace="/fragments/header :: header"></div>
+    <title>Workbench 42</title>
+</head>
 
-    <body>
-        <div th:replace="/fragments/header :: navbar"></div>
-        <div class="container-fluid">
-            <img th:src="@{/img/woods.jpg}" class="img-fluid" alt="photo of a woman in a mask">
-
-            <img th:src="@{/img/indexwords.png}" class="img-fluid" alt="image of text">
-
-            <div class="row m-1 align-items-center">
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/3.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/9.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/7.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
+<body>
+    <div th:replace="/fragments/header :: navbar"></div>
+    <div class="container-fluid">
+        <img th:src="@{/img/woods.jpg}" class="img-fluid" alt="photo of a woman in a mask">
+        <img th:src="@{/img/indexwords.png}" class="img-fluid" alt="image of text">
+        <div class="row m-1 align-items-center">
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/3.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
             </div>
-
-            <div class="row m-1 mt-3 align-items-center">
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/text1.png}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/10.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/9.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
             </div>
-
-            <div class="row m-1 mt-3 align-items-center">
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/6.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/text2.png}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/7.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
             </div>
         </div>
-
-        <!-- about section -->
-        <div class="container-xl">
-            <div class="row m-2 p-3">
-                <div class="col text-center">
-                    <img th:src="@{/img/parents.jpg}" th:width="700" class="img-fluid p-2" alt="photo of two people">
-                    <h1 class="display-4">My mom has always loved to sew.</h1>
-                </div>
-                <p class="lead">Growing up, she would sew us clothing like sweaters, socks, hats, and pajama bottoms.
-                    As a teenager, I never wanted to wear anything she made, because I wanted to wear something I could purchase,
-                    something that the cool kids at school were wearing. However, as I have grown into adulthood, I've come to appreciate
-                    the gift my mom has. My mom is the type of individual who can follow any sewing pattern and present you with
-                    a beautifully and sturdy made item. She also has the gift to look past patterns and sew pieces from memory, from intuition.
-                </p>
-                <p class="lead">My mom is the kind of human who uses her skills to help other people. She would
-                    rather make you a gift than buy one. She cherishes homemade ones the most. Recently as the world
-                    found itself unwell and people social-distancing, my mom decided to protect people by making face
-                    masks. Utilizing the fabrics in her sewing room, she has made masks for the family and friends. I created
-                    this website for my parents, so they could sell the masks, but it has expanded to include all of their
-                    handmade crafts. I hope you enjoy your product, because my parents made it with care.</p>
+        <div class="row m-1 mt-3 align-items-center">
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/text1.png}" th:width="700" class="img-fluid p-2" alt="photo of text">
+            </div>
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/10.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
             </div>
         </div>
-
-        <div class="container-fluid ">
-            <div class="row m-1 align-items-center">
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/11.jpg}" th:width="700" class="img-fluid p-2" alt="photo of a mask">
-                </div>
-
-                <div class="col-md m-1">
-                    <h1 class="display-4 text-uppercase text-center">Contact Us</h1>
-
-                    <p th:if="${message}" class="validation-message alert alert-light text-center text-uppercase"
-                       role="alert" th:text="${message}"></p>
-
-                    <!-- contact form -->
-                    <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
-                        <div class="controls">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" name="subject" class="form-control
-                                        font-weight-light" placeholder="Subject" required>
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="name" class="form-control
-                                        font-weight-light" placeholder="Name" required>
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="email" name="email" class="form-control
-                                        font-weight-light" placeholder="Email" required>
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control font-weight-light"
-                                                  rows="4" placeholder="Your message" required></textarea>
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                    <input type="submit" class="btn btn-submit bg-dark font-weight-light text-
-                                    uppercase text-white m-1" value="Send Message">
+        <div class="row m-1 mt-3 align-items-center">
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/6.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
+            </div>
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/text2.png}" th:width="700" class="img-fluid p-2" alt="photo of text">
+            </div>
+        </div>
+    </div>
+    <!-- about section -->
+    <div class="container-xl">
+        <div class="row m-2 p-3">
+            <div class="col text-center">
+                <img th:src="@{/img/parents.jpg}" th:width="700" class="img-fluid p-2" alt="photo of two people">
+                <h1 class="display-4">My mom has always loved to sew.</h1>
+            </div>
+            <p class="lead">Growing up, she would sew us clothing like sweaters, socks, hats, and pajama bottoms.
+                As a teenager, I never wanted to wear anything she made, because I wanted to wear something I could
+                purchase, something that the cool kids at school were wearing. However, as I have grown into adulthood, I've come to
+                appreciate the gift my mom has. My mom is the type of individual who can follow any sewing pattern and present you with
+                a beautifully and sturdy made item. She also has the gift to look past patterns and sew pieces from memory,
+                from intuition.
+            </p>
+            <p class="lead">My mom is the kind of human who uses her skills to help other people. She would
+                rather make you a gift than buy one. She cherishes homemade ones the most. Recently as the world
+                found itself unwell and people social-distancing, my mom decided to protect people by making face
+                masks. Utilizing the fabrics in her sewing room, she has made masks for the family and friends. I created
+                this website for my parents, so they could sell the masks, but it has expanded to include all of their
+                handmade crafts. I hope you enjoy your product, because my parents made it with care.
+            </p>
+        </div>
+    </div>
+    <div class="container-fluid ">
+        <div class="row m-1 align-items-center">
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/11.jpg}" th:width="700" class="img-fluid p-2" alt="photo of a mask">
+            </div>
+            <div class="col-md m-1">
+                <h1 class="display-4 text-uppercase text-center">Contact Us</h1>
+                <p th:if="${message}" class="validation-message alert alert-light text-center text-uppercase"
+                   role="alert" th:text="${message}"></p>
+                <!-- contact form -->
+                <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
+                    <div class="controls">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" name="subject" class="form-control
+                                            font-weight-light" placeholder="Subject" required>
+                                    <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="name" class="form-control
+                                            font-weight-light" placeholder="Name" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control
+                                            font-weight-light" placeholder="Email" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="form-group">
+                                            <textarea name="message" class="form-control font-weight-light"
+                                                      rows="4" placeholder="Your message" required></textarea>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                                <input type="submit" class="btn btn-submit bg-dark font-weight-light text-
+                                        uppercase text-white m-1" value="Send Message">
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <div th:replace="/fragments/footer :: footer"></div>
-    </body>
+    </div>
+    <div th:replace="/fragments/footer :: footer"></div>
+</body>
 </html>

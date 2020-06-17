@@ -1,28 +1,27 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <div th:replace="/fragments/header :: header"></div>
-        <title>Mask With Love</title>
-    </head>
+<head>
+    <div th:replace="/fragments/header :: header"></div>
+    <title>Workbench 42</title>
+</head>
 
-    <body>
-        <div th:replace="/fragments/header :: navbar"></div>
-        <div class="container-fluid">
-            <div class="row m-1 align-items-center">
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/13.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
-
-                <div class="col-md m-1 border border-light text-center">
-                    <h3 class="text-dark font-weight-light text-center m-2">
-                        Thank you for your order!
-                        <br>You will receive an email confirmation from us.
-                        <br>- WORKBENCH 42
-                    </h3>
-                </div>
+<body>
+    <div th:replace="/fragments/header :: navbar"></div>
+    <div class="container-fluid">
+        <div class="row m-1 align-items-center">
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/13.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
+            </div>
+            <div class="col-md m-1 border border-light text-center">
+                <h3 class="text-dark font-weight-light text-center m-2">
+                    Thank you for your order!
+                    <br>You will receive an email confirmation from us.
+                    <br>- WORKBENCH 42
+                </h3>
             </div>
         </div>
-        <div th:replace="/fragments/footer :: footer"></div>
-    </body>
+    </div>
+    <div th:replace="/fragments/footer :: footer"></div>
+</body>
 </html>

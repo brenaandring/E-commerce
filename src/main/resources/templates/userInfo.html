@@ -1,74 +1,71 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-    <head>
-        <div th:replace="/fragments/header :: header"></div>
-        <title>Mask With Love</title>
-    </head>
+<head>
+    <div th:replace="/fragments/header :: header"></div>
+    <title>Workbench 42</title>
+</head>
 
-    <body>
-        <div th:replace="/fragments/header :: navbar"></div>
-        <div class="container-fluid">
-            <img th:src="@{/img/userInfo.png}" class="img-fluid" alt="user info">
-
-            <div class="row m-1 justify-content-center text-center">
-                <div class="col-md-10">
-                    <h1 class="display-4 font-weight-light text-dark m-1">[[${user.firstName}]] [[${user.lastName}]]</h1>
-                    <h1 class="display-4 font-weight-light text-dark mb-3">[[${user.email}]]</h1>
-                    <h1 class="display-4 font-weight-light text-dark m-2">Order History</h1>
-
-                    <!-- admin: user's order history -->
-                    <table class="table table-responsive-sm">
-                        <thead class="bg-dark text-white text-uppercase">
-                        <tr>
-                            <th class="align-middle" scope="col">Order Id</th>
-                            <th class="align-middle" scope="col">Date Purchased</th>
-                            <th class="align-middle" scope="col">Status</th>
-                            <th class="align-middle" scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody class="text-dark border border-light">
-                        <tr th:each="order : ${user.orders}">
-                            <th scope="row" th:text="${order.id}"></th>
-                            <td th:text="${#dates.format(order.createdAt, 'MM-dd-yyyy')}"></td>
-                            <td><div th:text="${order.status}"></div>
-                                <div th:text="${#dates.format(order.updatedAt, 'MM-dd-yyyy')}"></div>
-                            </td>
-                            <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}"
-                                   class="btn text-uppercase text-white my-1 bg-dark">View</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- admin: user's reviews -->
-                    <h1 class="display-4 font-weight-light text-dark m-2">Reviews</h1>
-
-                    <table class="table table-responsive-sm">
-                        <thead class="bg-dark text-white text-uppercase">
-                        <tr>
-                            <th class="align-middle" scope="col">Item Title</th>
-                            <th class="align-middle" scope="col">Comment</th>
-                            <th class="align-middle" scope="col">Rating</th>
-                            <th class="align-middle" scope="col">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody class="text-dark border border-light">
-                        <tr th:each="review : ${user.reviews}">
-                            <th scope="row" th:text="${review.item.title}"></th>
-                            <td th:text="${review.comment}"></td>
-                            <td th:text="${review.rating}"></td>
-                            <td><a th:href="@{/items/{id}(id=${review.item.id})}"
-                                   class="btn text-uppercase text-white my-1 bg-dark">View</a>
-                                <a th:href="@{/admin/review/delete/{id}(id=${review.id})}"
-                                   class="btn text-uppercase text-white my-1 bg-dark">Delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+<body>
+    <div th:replace="/fragments/header :: navbar"></div>
+    <div class="container-fluid">
+        <img th:src="@{/img/userInfo.png}" class="img-fluid" alt="user info">
+        <div class="row m-1 justify-content-center text-center">
+            <div class="col-md-10">
+                <h1 class="display-4 font-weight-light text-dark m-1">[[${user.firstName}]] [[${user.lastName}]]</h1>
+                <h1 class="display-4 font-weight-light text-dark mb-3">[[${user.email}]]</h1>
+                <h1 class="display-4 font-weight-light text-dark m-2">Order History</h1>
+                <!-- admin: user's order history -->
+                <table class="table table-responsive-sm">
+                    <thead class="bg-dark text-white text-uppercase">
+                    <tr>
+                        <th class="align-middle" scope="col">Order Id</th>
+                        <th class="align-middle" scope="col">Date Purchased</th>
+                        <th class="align-middle" scope="col">Status</th>
+                        <th class="align-middle" scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-dark border border-light">
+                    <tr th:each="order : ${user.orders}">
+                        <th scope="row" th:text="${order.id}"></th>
+                        <td th:text="${#dates.format(order.createdAt, 'MM-dd-yyyy')}"></td>
+                        <td>
+                            <div th:text="${order.status}"></div>
+                            <div th:text="${#dates.format(order.updatedAt, 'MM-dd-yyyy')}"></div>
+                        </td>
+                        <td><a th:href="@{/admin/user/order/{id}(id=${order.id})}"
+                               class="btn text-uppercase text-white my-1 bg-dark">View</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- admin: user's reviews -->
+                <h1 class="display-4 font-weight-light text-dark m-2">Reviews</h1>
+                <table class="table table-responsive-sm">
+                    <thead class="bg-dark text-white text-uppercase">
+                    <tr>
+                        <th class="align-middle" scope="col">Item Title</th>
+                        <th class="align-middle" scope="col">Comment</th>
+                        <th class="align-middle" scope="col">Rating</th>
+                        <th class="align-middle" scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-dark border border-light">
+                    <tr th:each="review : ${user.reviews}">
+                        <th scope="row" th:text="${review.item.title}"></th>
+                        <td th:text="${review.comment}"></td>
+                        <td th:text="${review.rating}"></td>
+                        <td><a th:href="@{/items/{id}(id=${review.item.id})}"
+                               class="btn text-uppercase text-white my-1 bg-dark">View</a>
+                            <a th:href="@{/admin/review/delete/{id}(id=${review.id})}"
+                               class="btn text-uppercase text-white my-1 bg-dark">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div th:replace="/fragments/footer :: footer"></div>
-    </body>
+    </div>
+    <div th:replace="/fragments/footer :: footer"></div>
+</body>
 </html>

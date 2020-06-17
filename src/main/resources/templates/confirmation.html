@@ -2,112 +2,98 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 
-    <head>
-        <title>Mask With Love</title>
-        <div th:replace="/fragments/header :: header"></div>
+<head>
+    <title>Workbench 42</title>
+    <div th:replace="/fragments/header :: header"></div>
+    <!-- Square JS -->
+    <script type="text/javascript" src="https://js.squareupsandbox.com/v2/paymentform"></script>
+    <script type="application/javascript">
+        window.applicationId = '[[${appId}]]';
+        window.locationId = '[[${locationId}]]';
+    </script>
+    <script type="text/javascript" src="/js/payment.js"></script>
+</head>
 
-        <!-- Square JS -->
-        <script type="text/javascript" src="https://js.squareupsandbox.com/v2/paymentform"></script>
-        <script type="application/javascript">
-            window.applicationId = '[[${appId}]]';
-            window.locationId = '[[${locationId}]]';
-        </script>
-
-        <script type="text/javascript" src="/js/payment.js"></script>
-    </head>
-
-    <body>
-        <div th:replace="/fragments/header :: navbar"></div>
-        <div class="container-fluid">
-            <img th:src="@{/img/woods2.jpg}" class="img-fluid" alt="photo of wood">
-
-            <div class="row m-1">
-                <div class="col-md m-1 text-center">
-                    <h1 class="display-4 font-weight-light text-dark m-2">Cart Summary</h1>
-
-                    <!-- items in user's cart -->
-                    <table class="table">
-                        <thead class="bg-dark text-white text-uppercase">
-                        <tr>
-                            <th class="align-middle" scope="col">Item</th>
-                            <th class="align-middle" scope="col">Price</th>
-                            <th class="align-middle" scope="col">Quantity</th>
-                        </tr>
-                        </thead>
-                        <tbody class="text-dark border border-light">
-                        <tr th:each="item : ${items.entrySet()}">
-                            <td><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}"
-                                   class="font-weight-bold text-uppercase text-dark"></a>
-                            </td>
-                            <td th:text="${item.getKey().price}"></td>
-                            <td th:text="${item.getValue()}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <h1 class="display-4 font-weight-light text-dark m-2">Total: [[${total}]]</h1>
-                </div>
-
-                <!-- address/payment form -->
-                <div class="col-md m-1">
-                    <h3 class="text-dark font-weight-light text-center m-2">Address</h3>
-
-                    <!-- address error message -->
-                    <p th:if="${errorMessage}" class="validation-message alert alert-light text-center
-                    text-dark text-uppercase" role="alert"
-                       th:text="${errorMessage}"></p>
-
-                    <form action="#" th:action="@{/cart/checkout}" th:object="${address}" id="nonce-form" method="post">
-                        <div class="form-row justify-content-center text-center ">
-                            <div class="form-group col-md-7">
-                                <input type="text" class="form-control mb-3 text-dark" th:field="*{name}"
-                                       th:placeholder="Name">
-
-                                <input type="text" class="form-control mb-3 text-dark" th:field="*{guestEmail}"
-                                       th:placeholder="Email">
-
-                                <input type="text" class="form-control mb-3 text-dark" th:field="*{street}"
-                                       th:placeholder="Street">
-
-                                <input type="text" class="form-control mb-3 text-dark" th:field="*{city}"
-                                       th:placeholder="City">
-
-                                <input type="text" class="form-control mb-3 text-dark" th:field="*{state}"
-                                       th:placeholder="State">
-
-                                <input type="number" class="form-control mb-3 text-dark" th:field="*{zip}"
-                                       th:placeholder="Zip">
-
-                                <h3 class="text-dark font-weight-light text-center mt-3">Payment</h3>
-
-                                <!-- payment error message -->
-                                <div id="error" class="text-center
-                                   text-dark text-uppercase" ></div>
-
-                                <!-- Square payment form with Bootstrap -->
-                                <div id="form-container">
-                                    <div class="form-control mb-3 text-dark" id="sq-card-number"></div>
-                                    <div class="third form-control mb-3 text-dark" id="sq-expiration-date"></div>
-                                    <div class="third form-control mb-3 text-dark" id="sq-cvv"></div>
-                                    <div class="third form-control mb-3 text-dark" id="sq-postal-code"></div>
-                                    <button id="sq-creditcard" class="button-credit-card btn btn-dark font-weight-light text-uppercase
-                                    text-white m-1" onclick="onGetCardNonce(event)">Place Order</button>
-                                </div>
-                                <!-- After a nonce is generated it will be assigned to this hidden input field. -->
-                                <input type="hidden" id="card-nonce" name="nonce">
-
-                                <div class="small text-muted mt-2">
-                                    <span class="font-weight-bold">All sales are final. We do not offer refunds.</span>
-                                    <br>Pay securely with <a class="text-dark font-weight-bold" target="_blank" th:href="@{/}">Square</a>.
-                                    By clicking the button above, you agree to our <a class="text-dark font-weight-bold" target="_blank" href="https://squareup.com/us/en/legal/general/ua">Terms of Service</a>
-                                    and <a class="text-dark font-weight-bold" target="_blank" href="https://squareup.com/us/en/legal/general/privacy">Privacy</a> policies.
-                                </div>
+<body>
+    <div th:replace="/fragments/header :: navbar"></div>
+    <div class="container-fluid">
+        <img th:src="@{/img/woods2.jpg}" class="img-fluid" alt="photo of wood">
+        <div class="row m-1">
+            <div class="col-md m-1 text-center">
+                <h1 class="display-4 font-weight-light text-dark m-2">Cart Summary</h1>
+                <!-- items in user's cart -->
+                <table class="table">
+                    <thead class="bg-dark text-white text-uppercase">
+                    <tr>
+                        <th class="align-middle" scope="col">Item</th>
+                        <th class="align-middle" scope="col">Price</th>
+                        <th class="align-middle" scope="col">Quantity</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-dark border border-light">
+                    <tr th:each="item : ${items.entrySet()}">
+                        <td><a th:href="@{/items/{id}(id=${item.getKey().id})}" th:text="${item.getKey().title}"
+                               class="font-weight-bold text-uppercase text-dark"></a>
+                        </td>
+                        <td th:text="${item.getKey().price}"></td>
+                        <td th:text="${item.getValue()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h1 class="display-4 font-weight-light text-dark m-2">Total: [[${total}]]</h1>
+            </div>
+            <!-- address/payment form -->
+            <div class="col-md m-1">
+                <h3 class="text-dark font-weight-light text-center m-2">Address</h3>
+                <!-- address error message -->
+                <p th:if="${errorMessage}" class="validation-message alert alert-light text-center
+                        text-dark text-uppercase" role="alert"
+                   th:text="${errorMessage}"></p>
+                <form action="#" th:action="@{/cart/checkout}" th:object="${address}" id="nonce-form" method="post">
+                    <div class="form-row justify-content-center text-center ">
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control mb-3 text-dark" th:field="*{name}"
+                                   th:placeholder="Name">
+                            <input type="text" class="form-control mb-3 text-dark" th:field="*{guestEmail}"
+                                   th:placeholder="Email">
+                            <input type="text" class="form-control mb-3 text-dark" th:field="*{street}"
+                                   th:placeholder="Street">
+                            <input type="text" class="form-control mb-3 text-dark" th:field="*{city}"
+                                   th:placeholder="City">
+                            <input type="text" class="form-control mb-3 text-dark" th:field="*{state}"
+                                   th:placeholder="State">
+                            <input type="number" class="form-control mb-3 text-dark" th:field="*{zip}"
+                                   th:placeholder="Zip">
+                            <h3 class="text-dark font-weight-light text-center mt-3">Payment</h3>
+                            <!-- payment error message -->
+                            <div id="error" class="text-center
+                                       text-dark text-uppercase">
+                            </div>
+                            <!-- Square payment form with Bootstrap -->
+                            <div id="form-container">
+                                <div class="form-control mb-3 text-dark" id="sq-card-number"></div>
+                                <div class="third form-control mb-3 text-dark" id="sq-expiration-date"></div>
+                                <div class="third form-control mb-3 text-dark" id="sq-cvv"></div>
+                                <div class="third form-control mb-3 text-dark" id="sq-postal-code"></div>
+                                <button id="sq-creditcard" class="button-credit-card btn btn-dark font-weight-light text-uppercase
+                                        text-white m-1" onclick="onGetCardNonce(event)">Place Order
+                                </button>
+                            </div>
+                            <!-- After a nonce is generated it will be assigned to this hidden input field. -->
+                            <input type="hidden" id="card-nonce" name="nonce">
+                            <div class="small text-muted mt-2">
+                                <span class="font-weight-bold">All sales are final. We do not offer refunds.</span>
+                                <br>Pay securely with <a class="text-dark font-weight-bold" target="_blank" th:href="@{/}">Square</a>.
+                                By clicking the button above, you agree to our
+                                <a class="text-dark font-weight-bold" target="_blank" href="https://squareup.com/us/en/legal/general/ua">Terms
+                                of Service</a> and <a class="text-dark font-weight-bold" target="_blank" href="https://squareup.com/us/en/legal/general/privacy">Privacy</a> policies.
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
-        <div th:replace="/fragments/footer :: footer"></div>
-    </body>
+    </div>
+    <div th:replace="/fragments/footer :: footer"></div>
+</body>
 </html>

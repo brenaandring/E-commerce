@@ -1,51 +1,46 @@
 <!DOCTYPE HTML>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <div th:replace="/fragments/header :: header"></div>
-        <title>Mask With Love</title>
-    </head>
+<head>
+    <div th:replace="/fragments/header :: header"></div>
+    <title>Workbench 42</title>
+</head>
 
-    <body>
-        <div th:replace="/fragments/header :: navbar"></div>
-        <div class="container-fluid">
-            <div class="row m-1 align-items-center">
-                <div class="col-md m-1 text-center">
-                    <h1 class="display-4 font-weight-light text-dark">Login</h1>
-
-                    <!-- logout success message -->
-                    <p th:if="${logoutMessage}" class="validation-message alert alert-secondary text-center text-uppercase"
-                       role="alert" th:text="${logoutMessage}"></p>
-
-                    <!-- login error message -->
-                    <p th:if="${errorMessage}" class="validation-message alert alert-secondary text-center text-uppercase"
-                       role="alert" th:text="${errorMessage}"></p>
-
-                    <!-- login form -->
-                    <form th:action="@{/login}" method="post">
-                        <div class="form-row justify-content-center text-center">
-                            <div class="form-group col-md-7">
-                                <input type="email" class="form-control my-3 text-dark" name="username"
-                                       placeholder="Email">
-
-                                <input type="password" class="form-control my-3 text-dark" name="password"
-                                       placeholder="Password">
-
-                                <button type="submit" class="btn btn-dark font-weight-light text-uppercase
-                                text-white m-1">Login</button>
-                            </div>
+<body>
+    <div th:replace="/fragments/header :: navbar"></div>
+    <div class="container-fluid">
+        <div class="row m-1 align-items-center">
+            <div class="col-md m-1 text-center">
+                <h1 class="display-4 font-weight-light text-dark">Login</h1>
+                <!-- logout success message -->
+                <p th:if="${logoutMessage}" class="validation-message alert alert-secondary text-center text-uppercase"
+                   role="alert" th:text="${logoutMessage}"></p>
+                <!-- login error message -->
+                <p th:if="${errorMessage}" class="validation-message alert alert-secondary text-center text-uppercase"
+                   role="alert" th:text="${errorMessage}"></p>
+                <!-- login form -->
+                <form th:action="@{/login}" method="post">
+                    <div class="form-row justify-content-center text-center">
+                        <div class="form-group col-md-7">
+                            <input type="email" class="form-control my-3 text-dark" name="username"
+                                   placeholder="Email">
+                            <input type="password" class="form-control my-3 text-dark" name="password"
+                                   placeholder="Password">
+                            <button type="submit" class="btn btn-dark font-weight-light text-uppercase
+                                    text-white m-1">Login
+                            </button>
                         </div>
-                    </form>
-
-                    <span class="text-dark font-weight-light">Don't have an account? <a class="text-dark" th:href="@{/registration}">Register here!</a></span>
-
-                </div>
-
-                <div class="col-md m-1 text-center">
-                    <img th:src="@{/img/14.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
-                </div>
+                    </div>
+                </form>
+                <span class="text-dark font-weight-light">Don't have an account?
+                    <a class="text-dark" th:href="@{/registration}">Register here!</a>
+                </span>
+            </div>
+            <div class="col-md m-1 text-center">
+                <img th:src="@{/img/14.jpg}" th:width="700" class="img-fluid p-2" alt="photo of text">
             </div>
         </div>
-        <div th:replace="/fragments/footer :: footer"></div>
-    </body>
+    </div>
+    <div th:replace="/fragments/footer :: footer"></div>
+</body>
 </html>
