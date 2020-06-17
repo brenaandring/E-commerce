@@ -73,10 +73,10 @@
                 </div>
 
                 <div class="col-md m-1">
+                    <h1 class="display-4 text-uppercase text-center">Contact Us</h1>
+
                     <p th:if="${message}" class="validation-message alert alert-light text-center text-uppercase"
                        role="alert" th:text="${message}"></p>
-
-                    <h1 class="display-4 text-uppercase text-center">Contact Us</h1>
 
                     <!-- contact form -->
                     <form action="#" th:action="@{/contact}" th:object="${contact}" method="post">
