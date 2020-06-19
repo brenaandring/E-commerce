@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  ecommerce:
+    image: ecommerce-image
+    ports:
+      - "8080:8080"
+    networks:
+      - ecommerce-network
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:8
+    restart: always
+    networks:
+      - ecommerce-network
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=data
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - my-db:/var/lib/mysql
+
+volumes:
+  my-db:
+
+networks:
+  ecommerce-network:
