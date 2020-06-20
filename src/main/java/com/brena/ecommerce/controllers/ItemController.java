@@ -16,8 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class ItemController {
@@ -48,7 +47,7 @@ public class ItemController {
 
     @PostMapping("/admin/items/create")
     public ModelAndView create(@Valid Item item,
-                               @Valid Category category,
+                               Category category,
                                BindingResult result,
                                @RequestParam("imageFile") MultipartFile imageFile,
                                ModelAndView modelAndView, HttpServletRequest request) {
@@ -57,7 +56,9 @@ public class ItemController {
         } else {
             HttpSession session = request.getSession();
             User admin = (User) session.getAttribute("admin");
-            item.setCategory(category);
+            if (category != null && category.getId() != null) {
+                item.setCategory(category);
+            }
             item.setUser(admin);
             itemServ.saveItem(item);
             Photo newPhoto = new Photo();
@@ -183,7 +184,7 @@ public class ItemController {
     @RequestMapping("/admin/review/delete/{id}")
     public String deleteReview(@PathVariable("id") Long id) {
         reviewServ.deleteReview(id);
-        return "redirect:/admin";
+        return "redirect:/admin/items";
     }
 
     @RequestMapping("/admin/category/delete/{id}")
@@ -196,14 +197,14 @@ public class ItemController {
     @RequestMapping("/admin/photo/delete/{id}")
     public String deletePhoto(@PathVariable("id") Long id) {
         photoServ.deletePhoto(id);
-        return "redirect:/admin";
+        return "redirect:/admin/items";
     }
 
     //  admin-only: delete an item
     @RequestMapping("/admin/items/delete/{id}")
     public String destroy(@PathVariable("id") Long id) {
         itemServ.deleteItem(id);
-        return "redirect:/admin";
+        return "redirect:/admin/items";
     }
 
     private String getFileExtension(String filename) {

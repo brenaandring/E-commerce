@@ -18,8 +18,9 @@ public class Category {
     }
 
     //  model relationships
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<Item> items;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     //  getters and setters
     public Long getId() {
@@ -38,11 +39,11 @@ public class Category {
         this.name = name;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

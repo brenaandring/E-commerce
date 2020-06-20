@@ -47,7 +47,7 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Order> orders;
 
     public Address() {

@@ -28,6 +28,10 @@ public class CategoryServ {
         return category.orElse(null);
     }
 
+    public Category findCategoryByName(Category category) {
+        return categoryRepo.findCategoryByName(category);
+    }
+
     public void deleteCategory(Long id) {
         categoryRepo.deleteById(id);
     }

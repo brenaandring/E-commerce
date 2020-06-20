@@ -1,6 +1,8 @@
 package com.brena.ecommerce.services;
 
+import com.brena.ecommerce.models.Category;
 import com.brena.ecommerce.models.Item;
+import com.brena.ecommerce.models.User;
 import com.brena.ecommerce.repositories.ItemRepo;
 import org.springframework.stereotype.Service;
 

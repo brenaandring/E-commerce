@@ -154,6 +154,6 @@ public class UserController {
     @RequestMapping("/admin/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userServ.deleteUser(id);
-        return "redirect:/admin";
+        return "redirect:/admin/users";
     }
 }

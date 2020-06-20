@@ -37,10 +37,10 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Photo> photos;
 
     @ManyToOne(fetch = FetchType.LAZY)
