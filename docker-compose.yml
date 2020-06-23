@@ -7,18 +7,8 @@ services:
       - "8080:8080"
     networks:
       - ecommerce-network
-    environment:
-      - MYSQL-PW=/run/secrets/mysql-pw
-      - GMAIL=/run/secrets/gmail
-      - GMAIL-PW=/run/secrets/gmail-pw
-
-    secrets:
-      - mysql-pw
-      - gmail
-      - gmail-pw
     depends_on:
       - mysqldb
-
 
   mysqldb:
     image: mysql:8
@@ -27,8 +17,8 @@ services:
       - ecommerce-network
     environment:
       - MYSQL_USER=root
-      - MYSQL_ROOT_PASSWORD=yes
-      - MYSQL_PASSWORD_FILE=/run/secrets/mysql-pw
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=data
 #    ports:
 #      - 3306:3306
@@ -36,19 +26,9 @@ services:
 #      - 3306
     volumes:
       - my-db:/var/lib/mysql
-    secrets:
-      - mysql-pw
 
 volumes:
   my-db:
 
 networks:
   ecommerce-network:
-
-secrets:
-  mysql-pw:
-    external: true
-  gmail:
-    external: true
-  gmail-pw:
-    external: true
