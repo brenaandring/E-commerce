@@ -58,6 +58,12 @@ public class MainController {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("message", "Invalid submission, please try again");
         } else {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> debug");
+            String gmail_email = System.getenv("GMAIL_EMAIL");
+            System.out.println("gmail_email = " + gmail_email);
+            String gmail_password = System.getenv("GMAIL_PASSWORD");
+            System.out.println("gmail_password = " + gmail_password);
+
             simpleMailMessage.setTo("maskwithlove19@gmail.com");
             simpleMailMessage.setText(content);
             simpleMailMessage.setReplyTo(email);
