@@ -4,7 +4,7 @@
 
 <head>
     <title>Workbench 42</title>
-    <div th:replace="/fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
     <!-- Square JS -->
     <script type="text/javascript" src="https://js.squareupsandbox.com/v2/paymentform"></script>
     <script type="application/javascript">
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div th:replace="/fragments/header :: navbar"></div>
+    <div th:replace="fragments/header :: navbar"></div>
     <div class="container-fluid">
         <img th:src="@{/img/woods2.jpg}" class="img-fluid" alt="photo of wood">
         <div class="row m-1">
@@ -82,6 +82,13 @@
                             <!-- After a nonce is generated it will be assigned to this hidden input field. -->
                             <input type="hidden" id="card-nonce" name="nonce">
                             <div class="small text-muted mt-2">
+                                <span class="font-weight-bold">Test payment by using the fake credentials below</span>
+                                <br>Card Number : 4111 1111 1111 1111
+                                <br>MM/YY : Put anything in the future
+                                <br>CV : 111
+                                <br>Zip : Put any zip code
+                            </div>
+                            <div class="small text-muted mt-2">
                                 <span class="font-weight-bold">All sales are final. We do not offer refunds.</span>
                                 <br>Pay securely with <a class="text-dark font-weight-bold" target="_blank" th:href="@{/}">Square</a>.
                                 By clicking the button above, you agree to our
@@ -94,6 +101,6 @@
             </div>
         </div>
     </div>
-    <div th:replace="/fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

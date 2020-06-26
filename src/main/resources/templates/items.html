@@ -2,12 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <div th:replace="/fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
     <title>Workbench 42</title>
 </head>
 
 <body>
-    <div th:replace="/fragments/header :: navbar"></div>
+    <div th:replace="fragments/header :: navbar"></div>
     <div class="container-fluid">
         <img th:src="@{/img/workshop.jpg}" class="img-fluid light" alt="photo of masks">
         <div class="row my-2 text-center">
@@ -57,6 +57,6 @@
             </li>
         </ul>
     </div>
-    <div th:replace="/fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

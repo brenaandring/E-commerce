@@ -3,12 +3,12 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <div th:replace="/fragments/header :: header"></div>
+    <div th:replace="fragments/header :: header"></div>
     <title>Workbench 42</title>
 </head>
 
 <body>
-    <div th:replace="/fragments/header :: navbar"></div>
+    <div th:replace="fragments/header :: navbar"></div>
     <div class="container-fluid">
         <img th:src="@{/img/road.jpg}" class="img-fluid mb-2" alt="photo of masks">
         <div class="row m-1 align-items-center">
@@ -104,6 +104,6 @@
             </div>
         </div>
     </div>
-    <div th:replace="/fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

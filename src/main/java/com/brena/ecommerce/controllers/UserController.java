@@ -72,7 +72,7 @@ public class UserController {
                 } else {
                     userServ.saveWithUserRole(user);
                 }
-                modelAndView.setViewName("/login");
+                modelAndView.setViewName("login");
             }
         }
         return modelAndView;
