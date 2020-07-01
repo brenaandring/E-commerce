@@ -3,7 +3,6 @@ package com.brena.ecommerce.services;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +30,6 @@ public class AwsS3Serv {
     public void uploadFileToS3Bucket(MultipartFile multipartFile, boolean enablePublicReadAccess) {
         String fileName = multipartFile.getOriginalFilename();
         try {
-            //creating the file in the server (temporarily)
             File file = new File(fileName);
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(multipartFile.getBytes());
@@ -41,35 +39,9 @@ public class AwsS3Serv {
                 putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
             }
             this.amazonS3.putObject(putObjectRequest);
-            //removing the file created in the server
             file.delete();
         } catch (IOException | AmazonServiceException ex) {
             LOGGER.error("error [" + ex.getMessage() + "] occurred while uploading [" + fileName + "] ");
         }
     }
-
-    @Async
-    public void deleteFileFromS3Bucket(String fileName) {
-        try {
-            LOGGER.info("Deleting file with name= " + fileName);
-            amazonS3.deleteObject(new DeleteObjectRequest(bucketName, fileName));
-            LOGGER.info("File deleted successfully.");
-        } catch (AmazonServiceException ex) {
-            LOGGER.error("error occurred while removing= " + fileName);
-        }
-    }
-
-    @Async
-    public void deleteFile(String fileName) {
-        LOGGER.info("Deleting file with name= " + fileName);
-        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucketName, fileName);
-        amazonS3.deleteObject(deleteObjectRequest);
-        LOGGER.info("File deleted successfully.");
-    }
-
-    public void deleteFileFromBucket(String fileUrl) {
-        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-        amazonS3.deleteObject(new DeleteObjectRequest(bucketName, fileName));
-    }
-
 }

@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+//  NOT USED
 @Service
 public class PhotoServ {
     public final PhotoRepo photoRepo;

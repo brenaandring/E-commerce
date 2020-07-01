@@ -3,6 +3,7 @@ package com.brena.ecommerce.models;
 import javax.persistence.*;
 import java.util.Date;
 
+// NOT USED
 @Entity
 @Table(name = "photos")
 public class Photo {
