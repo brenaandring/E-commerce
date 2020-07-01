@@ -10,19 +10,20 @@
 <body>
     <div th:replace="fragments/header :: navbar"></div>
     <div class="container-fluid">
-        <img th:src="@{/img/road.jpg}" class="img-fluid mb-2" alt="photo of masks">
+        <img th:src="@{/img/road.jpg}" class="img-fluid mb-2" alt="photo">
         <div class="row m-1 align-items-center">
             <div class="col-md m-1 text-center">
                 <!-- item photo -->
-                <div th:each="photo : ${item.photos}">
-                    <img th:src="@{'/images/' + ${photo.fileName}}" width="700" class="img-fluid p-2"
-                         alt="Photo of a mask"/>
-                    <!-- admin: delete photo button only appears if photo is present -->
-                    <div sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a th:href="@{/admin/photo/delete/{id}(id=${photo.id})}" class="btn text-uppercase bg-dark
-                                font-weight-light text-white">Remove Photo</a>
-                    </div>
+                <a th:href="${item.image}">
+                    <img th:src="${item.image}" alt="Card image cap">
+                </a>
+
+                <!-- admin: delete photo button only appears if photo is present -->
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{'/admin/photo/delete?fileName=' + item.image}" class="btn text-uppercase bg-dark
+                            font-weight-light text-white">Remove Photo</a>
                 </div>
+
                 <!-- admin: edit/delete item -->
                 <div sec:authorize="hasRole('ROLE_ADMIN')" class="my-1">
                     <a th:href="@{/admin/items/edit/{id}(id=${item.id})}" class="btn text-uppercase bg-dark

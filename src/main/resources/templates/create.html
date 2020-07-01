@@ -10,6 +10,20 @@
     <div th:replace="fragments/header :: navbar"></div>
     <div class="container-fluid">
         <img th:src="@{/img/addItem.png}" class="img-fluid" alt="add">
+
+
+        <form action="#" class="border border-light" th:action="@{/upload}" method="post" enctype="multipart/form-data">
+            <div class="form-row justify-content-center text-center">
+                <div class="form-group">
+                    <input type="file" class="form-control my-3" name="file" required>
+                    <button type="submit" class="btn bg-dark font-weight-light text-uppercase text-white m-1">Upload to S3</button>
+                </div>
+            </div>
+        </form>
+
+
+
+
         <div class="row m-1 justify-content-center text-center">
             <div class="col-md-5 border border-light">
                 <!-- create item form -->

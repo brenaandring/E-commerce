@@ -22,11 +22,11 @@
         <div class="row mx-5 mt-2 row-cols-1 row-cols-md-3">
             <div class="col mb-4" th:each="item : ${page}">
                 <div class="card border-light h-100">
-                    <div th:each="photo : ${item.photos}">
+<!--                    <div th:each="photo : ${item.image}">-->
                         <a th:href="@{/items/{id}(id=${item.id})}">
-                            <img th:src="@{'/images/' + ${photo.fileName}}" class="card-img-top" alt="Photo of a mask"/>
+                            <img th:src="${item.image}" class="card-img-top" alt="Photo"/>
                         </a>
-                    </div>
+<!--                    </div>-->
                     <div class="card-body text-dark text-center font-weight-light text-uppercase">
                         <h5 th:text="${item.title}" class="card-title"></h5>
                         <p class="card-text">Price: $[[${item.price}]]</p>

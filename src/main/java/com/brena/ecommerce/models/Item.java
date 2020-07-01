@@ -29,6 +29,8 @@ public class Item {
     @Min(value = 0, message = "Quantity has to be non negative number")
     private Integer quantity;
 
+    private String image = "https://s3.us-west-2.amazonaws.com/neighborshare-images/default.png";
+
     @Column(name = "createdAt", updatable = false)
     private Date createdAt;
 
@@ -129,6 +131,14 @@ public class Item {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
