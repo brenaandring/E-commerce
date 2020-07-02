@@ -78,6 +78,45 @@ public class ItemController {
         return modelAndView;
     }
 
+//    @PostMapping("/admin/items/create")
+//    public ModelAndView create(@Valid Item item,
+//                               Category category,
+//                               BindingResult result,
+//                               @RequestParam("imageFile") MultipartFile imageFile,
+//                               ModelAndView modelAndView, HttpServletRequest request) {
+//        if (result.hasErrors()) {
+//            modelAndView.setViewName("create");
+//        } else {
+//            HttpSession session = request.getSession();
+//            User admin = (User) session.getAttribute("admin");
+//            if (category != null && category.getId() != null) {
+//                item.setCategory(category);
+//            }
+//            item.setUser(admin);
+//            itemServ.saveItem(item);
+//            Photo newPhoto = new Photo();
+//            String generatedFilename = UUID.randomUUID().toString() + getFileExtension(Objects.requireNonNull(imageFile.getOriginalFilename()));
+//            newPhoto.setFileName(generatedFilename);
+//            newPhoto.setItem(item);
+//            try {
+//                photoServ.savePhotoImage(imageFile, generatedFilename);
+//                photoServ.savePhoto(newPhoto);
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//            return new ModelAndView("redirect:/admin/items");
+//        }
+//        return modelAndView;
+//    }
+
+//    @GetMapping("/images/{filename:.+}")
+//    @ResponseBody
+//    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+//        Resource file = photoServ.loadAsResource(filename);
+//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+//                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+//    }
+
     //  show an item
     @GetMapping("/items/{id}")
     public ModelAndView showItem(@PathVariable("id") Long id, ModelAndView modelAndView) {
@@ -118,6 +157,36 @@ public class ItemController {
         }
         return modelAndView;
     }
+
+//    @PostMapping("/admin/items/edit/{id}")
+//    public ModelAndView update(@Valid Item item,
+//                               BindingResult result,
+//                               @RequestParam("imageFile") MultipartFile imageFile,
+//                               HttpServletRequest request, ModelAndView modelAndView) {
+//        if (result.hasErrors()) {
+//            modelAndView.setViewName("update");
+//        } else {
+//            HttpSession session = request.getSession();
+//            User admin = (User) session.getAttribute("admin");
+//            item.setUser(admin);
+//            itemServ.saveItem(item);
+//            Photo photo = photoServ.findByItem(item);
+//            if (photo == null) {
+//                Photo newPhoto = new Photo();
+//                String generatedFilename = UUID.randomUUID().toString() + getFileExtension(imageFile.getOriginalFilename());
+//                newPhoto.setFileName(generatedFilename);
+//                newPhoto.setItem(item);
+//                try {
+//                    photoServ.savePhotoImage(imageFile, generatedFilename);
+//                    photoServ.savePhoto(newPhoto);
+//                } catch (Exception exception) {
+//                    exception.printStackTrace();
+//                }
+//            }
+//            return new ModelAndView("redirect:/admin/items");
+//        }
+//        return modelAndView;
+//    }
 
     // admin-only: create category
     @PostMapping("/admin/category/create")
@@ -184,4 +253,12 @@ public class ItemController {
         itemServ.deleteItem(id);
         return "redirect:/admin/items";
     }
+
+//    private String getFileExtension(String filename) {
+//        int lastIndexOf = filename.lastIndexOf(".");
+//        if (lastIndexOf == -1) {
+//            return ""; // empty extension
+//        }
+//        return filename.substring(lastIndexOf);
+//    }
 }

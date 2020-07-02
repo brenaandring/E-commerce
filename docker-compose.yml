@@ -1,43 +1,45 @@
-version: "3.8"
+# Not used
 
-services:
-  ecommerce:
-    image: ecommerce-image
-    ports:
-      - "8080:8080"
-    networks:
-      - ecommerce-network
-    depends_on:
-      - mysqldb
-    environment:
-      GMAIL_EMAIL: /run/secrets/gmail_email
-      GMAIL_PASSWORD: /run/secrets/gmail_password
-    secrets:
-      - gmail_email
-      - gmail_password
-
-  mysqldb:
-    image: mysql:8
-    restart: always
-    networks:
-      - ecommerce-network
-    environment:
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=data
-
-    volumes:
-      - my-db:/var/lib/mysql
-
-secrets:
-  gmail_email:
-    external: true
-  gmail_password:
-    external: true
-
-volumes:
-  my-db:
-
-networks:
-  ecommerce-network:
+#version: "3.8"
+#
+#services:
+#  ecommerce:
+#    image: ecommerce-image
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - ecommerce-network
+#    depends_on:
+#      - mysqldb
+#    environment:
+#      GMAIL_EMAIL: /run/secrets/gmail_email
+#      GMAIL_PASSWORD: /run/secrets/gmail_password
+#    secrets:
+#      - gmail_email
+#      - gmail_password
+#
+#  mysqldb:
+#    image: mysql:8
+#    restart: always
+#    networks:
+#      - ecommerce-network
+#    environment:
+#      - MYSQL_USER=root
+#      - MYSQL_PASSWORD=root
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_DATABASE=data
+#
+#    volumes:
+#      - my-db:/var/lib/mysql
+#
+#secrets:
+#  gmail_email:
+#    external: true
+#  gmail_password:
+#    external: true
+#
+#volumes:
+#  my-db:
+#
+#networks:
+#  ecommerce-network:

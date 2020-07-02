@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Service
 public class AwsS3Serv {
@@ -30,18 +32,19 @@ public class AwsS3Serv {
     public void uploadFileToS3Bucket(MultipartFile multipartFile, boolean enablePublicReadAccess) {
         String fileName = multipartFile.getOriginalFilename();
         try {
-            File file = new File(fileName);
-            FileOutputStream fos = new FileOutputStream(file);
+            Path tempDirectory = Files.createTempDirectory("item-image");
+            File tempFile = new File(tempDirectory.toFile(), fileName);
+            FileOutputStream fos = new FileOutputStream(tempFile);
             fos.write(multipartFile.getBytes());
             fos.close();
-            PutObjectRequest putObjectRequest = new PutObjectRequest(this.bucketName, fileName, file);
+            PutObjectRequest putObjectRequest = new PutObjectRequest(this.bucketName, fileName, tempFile);
             if (enablePublicReadAccess) {
                 putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
             }
             this.amazonS3.putObject(putObjectRequest);
-            file.delete();
+            tempFile.delete();
         } catch (IOException | AmazonServiceException ex) {
-            LOGGER.error("error [" + ex.getMessage() + "] occurred while uploading [" + fileName + "] ");
+            LOGGER.error("error occurred while uploading file", ex);
         }
     }
 }
