@@ -34,7 +34,7 @@ public class CartController {
     private final AddressServ addressServ;
     private final OrderServ orderServ;
 
-    //  sandbox fake credentials. Change to production environments when deployed
+    //  sandbox fake credentials.
     private static final String SQUARE_ACCESS_TOKEN_ENV_VAR = "EAAAEAKAEE1Pk_9XHhI666sDkgbv_ZS7AXqPf-KyCJO6YNDZY9Ta2zTwsvkamoWZ";
     private static final String SQUARE_APP_ID_ENV_VAR = "sandbox-sq0idb-zgCfDsE9CFHRnH6DDmUGVA";
     private static final String SQUARE_LOCATION_ID_ENV_VAR = "S2XEKDH2Z15TA";
